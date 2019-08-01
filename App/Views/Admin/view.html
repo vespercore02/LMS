@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}View - {{ loan_info.id }} {% endblock %}
+
+{% block body %}
+
+<div class="col-lg-2"></div>
+<div class="col-lg-8">
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan ID:</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.id }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan Email:</label>
+        </div>
+
+        <label for="" class="col-lg-4">{{ loan_info.loan_email }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan Amount:</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.loan_amount }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan Payable Months:</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.loan_payment_months }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan Interset Rate:</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.interestRate }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan Monthly Interest:</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.monthlyinterest }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan Overall Interest:</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.overallmonthlyinterest }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Overall Loan (Loan+(Interest x Payable Months)):</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.totalLoan }}</label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4 text-right">
+            <label for="" class="font-weight-bold">Loan Monthly Payment with Interest:</label>
+        </div>
+        <label for="" class="col-lg-4">{{ loan_info.monthlyPayment }}</label>
+    </div>
+
+    {% if loan_info.payment_status == "Fully Paid." %}
+
+    {% else %}
+    <div class="form-group row">
+        <div class="col-lg-4 text-right"></div>
+        <button class="col-lg-4 btn btn-success"
+            onclick="location.href='/loan/public/admin/users/update/{{ loan_info.id }}';">Update</button>
+    </div>
+    {% endif %}
+
+
+    <table class="table table-boredered">
+        <thead>
+            <tr>
+                <th>
+                    Date Paid
+                </th>
+                <th>
+                    Amount Paid
+                </th>
+                <th>
+                    Amount Left
+                </th>
+                <th>
+                    Month/s Paid
+                </th>
+                <th>
+                    Month/s Left
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if loan_records %}
+
+            {% for loan_record in loan_records %}
+            <tr>
+                <td>
+                    {{ loan_record.date_paid }}
+                </td>
+                <td>
+                    {{ loan_record.amount_paid }}
+                </td>
+                <td>
+                    {{ loan_record.amount_left }}
+                </td>
+                <td>
+                    {{ loan_record.month_paid }}
+                </td>
+                <td>
+                    {{ loan_record.month_left }}
+                </td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <tr class="text-center">
+                <td colspan="5">
+                    No payment have made.
+                </td>
+            </tr>
+            {% endif %}
+
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}

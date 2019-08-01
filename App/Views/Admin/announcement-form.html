@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Announcement - Form{% endblock %}
+
+{% block body %}
+<style>
+textarea {
+   resize: none;
+}
+
+.announcement-form {
+    background-color: white;
+}
+
+</style>
+<div class="col-lg-2"></div>
+<div class="col-lg-8">
+
+    {% if announcement.errors is not empty %}
+    <p>Errors:</p>
+    <ul>
+        {% for error in announcement.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/loan/public/admin/users/create-announcement" method="post" class="announcement-form">
+
+        <h4>Annoucement Form</h4>
+        <div class="form-group row">
+            <label for="inputLoanId" class="col-lg-4 col-form-label">Title by</label>
+            <input type="text" class="col-lg-8 form-control-plaintext" id="inputLoanId" name="announcement_title"
+                placeholder="Announcement Title" autofocus value="{{ announcement.announcement_title }}" required />
+        </div>
+
+        <div class="form-group row">
+            <label for="inputLoanId" class="col-lg-4 col-form-label">Message :</label>
+            <textarea class="form-control col-lg-8" name="announcement_message" id="" cols="50" rows="10" value="{{ announcement.announcement_message }}"></textarea>
+        </div>
+        
+        <div class="form-group row">
+            <label for="inputLoanId" class="col-lg-4 col-form-label">Created by</label>
+            <input type="text" class="col-lg-8 form-control-plaintext disabled" id="inputLoanId" name="created_by"
+                placeholder="Announcement Title" autofocus value="{{ current_user.name }}" readonly />
+        </div>
+
+        <div class="form-group row">
+            <label for="inputLoanId" class="col-lg-4 col-form-label">Created by ID</label>
+            <input type="text" class="col-lg-8 form-control-plaintext disabled" id="inputLoanId" name="created_by_id"
+                placeholder="Announcement Title" autofocus value="{{ current_user.id }}" readonly />
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-4"></div>
+            <button type="submit" class="col-lg-8 btn btn-success">Save</button>
+        </div>
+    </form>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block footer %}
+<script>
+    $(function () {
+
+        //autocomplete
+        $(".id").autocomplete({
+            source: '/loan/public/account/get-id',
+            minLength: 1
+        });
+
+        $(".loan_date").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+
+    });
+
+</script>
+{% endblock %}

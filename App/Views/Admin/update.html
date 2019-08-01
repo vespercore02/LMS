@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Update - {{ loan_info.id }} {% endblock %}
+
+{% block body %}
+
+
+
+<div class="col-lg-2"></div>
+
+<div class="col-lg-8">
+
+    <form action="/loan/public/admin/users/update" method="POST">
+
+        <div class="form-group row">
+            <label for="inputLoanID" class="col-lg-4 col-form-label">Loan ID</label>
+            <input type="text" class="col-lg-8 form-control " id="inputLoanID" name="loan_id" placeholder="Loan by"
+                autofocus value="{{ loan_info.id }}" readonly />
+        </div>
+
+        <div class="form-group row">
+            <label for="inputAmountPay" class="col-lg-4 col-form-label">Amount Pay</label>
+            <input type="text" class="col-lg-8 form-control-plaintext" id="inputAmountPay" name="amount_paid"
+                placeholder="Amount Pay" autofocus required />
+        </div>
+        <div class="form-group row">
+            <label for="inputForTheMonthOf" class="col-lg-4 col-form-label">For the Month of</label>
+            <input type="text" class="col-lg-8 form-control-plaintext pay_date" id="inputForTheMonthOf"
+                name="month_paid" placeholder="For the Month of" autofocus required />
+        </div>
+
+        <div class="form-group row">
+            <label for="inputDatePay" class="col-lg-4 col-form-label">Date Pay</label>
+            <input type="text" class="col-lg-8 form-control-plaintext date_pay" id="inputDatePay" name="date_paid"
+                placeholder="Date Pay" autofocus required />
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-lg-4"></div>
+            <button type="submit" class="col-lg-8 btn btn-success">Save</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
+{% block footer %}
+<script>
+    $(function () {
+
+
+        $(".date_pay").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+
+        $('.pay_date').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: 'yy-mm',
+            onClose: function (dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).datepicker('setDate', new Date(year, month, 1));
+            }
+        });
+    });
+
+</script>
+{% endblock %}

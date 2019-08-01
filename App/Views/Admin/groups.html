@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Groups{% endblock %}
+
+{% block body %}
+
+<div class="col-sm-2">
+
+</div>
+<div class="col-sm-8">
+    <div class="row mb-3">
+        <div class="col-sm-4">
+            <h1 class="">Manage Group</h1>
+        </div>
+        <div class="col-sm-8 pt-2">
+        </div>
+    </div>
+
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Add Group</h4>
+        </div>
+        <div class="card-body">
+            <form action="/loan/public/admin/users/add-groups" method="post">
+
+                
+                <div class="form-group row">
+                    <label for="inputLoanId" class="col-sm-4 col-form-label">Group Name</label>
+                    <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="group_name"
+                        placeholder="Name" autofocus value="{{ group.group_name }}" required />
+                </div>
+        
+                <div class="form-group row">
+                    <div class="col-sm-4"></div>
+                    <button type="submit" class="col-sm-8 btn btn-success">Add</button>
+                </div>
+            </form>
+
+            
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr>
+                <td>
+                    {{ group.groups_id }}
+                </td>
+                <td>
+                    {{ group.group_name }}
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

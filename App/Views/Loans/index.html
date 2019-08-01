@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Loan{% endblock %}
+
+{% block body %}
+
+<div class="col-lg-2"></div>
+<div class="col-lg-8">
+    <h1>Loan</h1>
+    <p>Here is the page of Loan.</p>
+
+
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Your Loan Information</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Loan ID
+                        </th>
+                        <th>
+                            Amount Loan
+                        </th>
+                        <th>
+                            Month/s
+                        </th>
+                        <th>
+                            Monthly Payments
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if loans %}
+                    {% for user_loan in loans %}
+                    <tr>
+                        <td>
+                            
+                            <a href="/loan/public/loans/view/{{ user_loan.id}}">{{ user_loan.id}}</a>
+                        </td>
+                        <td>
+                            {{ user_loan.loan_amount}}
+                        </td>
+                        <td>
+                            {{ user_loan.loan_payment_months}}
+                        </td>
+                        <td>
+                            {{ user_loan.monthlyPayment}}
+                        </td>
+                        <td>
+                            {{ user_loan.payment_status}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr class="text-center">
+                        <td colspan="5">
+                            No payment have made.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
