@@ -17,6 +17,91 @@
     </div>
 
 
+    {% if info[0]['access_rights'] == 0 %}
+    <div class="card mb-4">
+        {% if loan_records %}
+        <div class="card-header">
+            <h4>Update Loan</h4>
+        </div>
+        <div class="card-body">
+            <form action="/loan/public/admin/users/update" method="POST">
+
+                <div class="form-group row">
+                    <label for="inputLoanID" class="col-lg-4 col-form-label">Loan ID</label>
+                    <input type="text" class="col-lg-8 form-control " id="inputLoanID" name="loan_id"
+                        placeholder="Loan by" autofocus value="{{ loan_info.id }}" readonly />
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputAmountPay" class="col-lg-4 col-form-label">Amount Pay</label>
+                    <input type="text" class="col-lg-8 form-control-plaintext" id="inputAmountPay" name="amount_paid"
+                        placeholder="Amount Pay" autofocus required />
+                </div>
+                <div class="form-group row">
+                    <label for="inputForTheMonthOf" class="col-lg-4 col-form-label">For the Month of</label>
+                    <input type="text" class="col-lg-8 form-control-plaintext pay_date" id="inputForTheMonthOf"
+                        name="month_paid" placeholder="For the Month of" autofocus required />
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputDatePay" class="col-lg-4 col-form-label">Date Pay</label>
+                    <input type="text" class="col-lg-8 form-control-plaintext date_pay" id="inputDatePay"
+                        name="date_paid" placeholder="Date Pay" autofocus required />
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-lg-4"></div>
+                    <button type="submit" class="col-lg-8 btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+        {% else %}
+        <div class="card-header">
+            <h4>Loan Form</h4>
+        </div>
+        <div class="card-body">
+            <form action="/loan/public/admin/users/create" method="post">
+
+                <!--
+                <div class="form-group row">
+                    <label for="inputLoanId" class="col-lg-4 col-form-label">Loan by</label>
+                    
+                </div>
+                -->
+                <input type="hidden" class="col-lg-8 form-control-plaintext id" id="inputLoanId" name="loan_by"
+                        placeholder="Loan by" autofocus value="{{ info[0]['id']}} " required />
+                <div class="form-group row">
+                    <label for="inputLoanDate" class="col-lg-4 col-form-label">Loan Date</label>
+                    <input type="date" class="col-lg-8 form-control-plaintext loan_date" id="inputLoanDate"
+                        name="loan_date" placeholder="Loan by" autofocus value="{{ loan.loan_date }}" required />
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputLoanAmount" class="col-lg-4 col-form-label">Loan Amount</label>
+                    <input type="text" class="col-lg-8 form-control-plaintext" id="inputLoanAmount" name="loan_amount"
+                        placeholder="Loan Amount" autofocus value="{{ loan.loan_amount }}" required />
+                </div>
+                <div class="form-group row">
+                    <label for="inputMonthtoPay" class="col-lg-4 col-form-label">Month/s to Pay</label>
+                    <input type="text" class="col-lg-8 form-control-plaintext" id="inputMonthtoPay" name="months_to_pay"
+                        placeholder="Month/s to Pay" autofocus value="{{ loan.months_to_pay }}" required />
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-lg-4"></div>
+                    <button type="submit" class="col-lg-8 btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+
+        {% endif %}
+    </div>
+
+    {% include 'LoanRecords.html' %}
+
+    {% elseif (info[0]['access_rights'] == 1) or (info[0]['access_rights'] == 9) %}
     <div class="card mb-4">
         <div class="card-header">
             <h4>Add Contribution</h4>
@@ -37,13 +122,14 @@
                     <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="contri"
                         placeholder="Contribution" autofocus value="{{ announcement.announcement_title }}" required />
                 </div>
-        
+
                 <div class="form-group row">
                     <label for="inputLoanId" class="col-sm-4 col-form-label">Estimated Earning</label>
                     <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="contri_esti_earns"
-                        placeholder="Estimated Earning" autofocus value="{{ announcement.announcement_title }}" required />
+                        placeholder="Estimated Earning" autofocus value="{{ announcement.announcement_title }}"
+                        required />
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="inputLoanId" class="col-sm-4 col-form-label">Actual Earning</label>
                     <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="contri_act_earns"
@@ -53,62 +139,22 @@
                 <div class="form-group row">
                     <label for="inputLoanId" class="col-sm-4 col-form-label">Conbtri + Earning</label>
                     <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="contri_plus_earns"
-                        placeholder="Conbtri + Earning" autofocus value="{{ announcement.announcement_title }}" required />
+                        placeholder="Conbtri + Earning" autofocus value="{{ announcement.announcement_title }}"
+                        required />
                 </div>
-                        
+
                 <div class="form-group row">
                     <div class="col-sm-4"></div>
                     <button type="submit" class="col-sm-8 btn btn-success">Add</button>
                 </div>
             </form>
 
-            
+
         </div>
     </div>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Contribution
-                </th>
-                <th>
-                    Estimated Earning
-                </th>
-                <th>
-                    Actual Earning
-                </th>
-                <th>
-                    Contri + Earning
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for contri in contributions %}
-            <tr>
-                <td>
-                    {{ member.name }}
-                </td>
-                <td>
-                    {{ member.email }}
-                </td>
-                <td>
-                    {{ member.access_rights }}
-                </td>
-                <td>
-                    {{ member.belonging_group }}
-                </td>
-                <td>
-                    <button type="button" onclick="window.location.href='/loan/public/admin/users/members/{{ member.id }}'">Update</button>
-                </td>
-            </tr>
-
-            {% endfor %}
-        </tbody>
-    </table>
+    {% include 'ContriRecords.html' %}
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -5,36 +5,35 @@
 {% block body %}
 
 <style>
+    .news {
+        height: 300px;
+        max-height: 330px;
+        overflow-y: scroll;
+        background: ivory;
+    }
 
-.news {
-    height: 300px;
-    max-height: 330px;
-    overflow-y: scroll;
-    background: ivory;
-}
-.news::-webkit-scrollbar {
-    width: .5em;
-}
+    .news::-webkit-scrollbar {
+        width: .5em;
+    }
 
-.news::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
- 
-.news::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}
+    .news::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
 
+    .news::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+    }
 </style>
 
-<div class="col-lg-2">
+<div class="col-md-2">
 
 </div>
-<div class="col-lg-8">
+<div class="col-md-8 mb-4">
     <h1 class="mb-4">Welcome</h1>
 
     {% if current_user %}
-    
+
 
     {% if announcements %}
 
@@ -53,13 +52,46 @@
         </div>
         {% endfor %}
     </div>
-    
+
     {% endif %}
-    
+
 
     {% else %}
     <a href="/loan/public/signup/new">Sign up</a> or <a href="/loan/public/login">log in</a>.
     {% endif %}
+
+
 </div>
+<div class="col-md-2">
+
+</div>
+
+{% if current_user.access_rights == 0 %}
+<div class="col-md-2">
+
+    </div>
+<div class="col-md-8">
+
+    {% include 'LoanRecords.html '%}
+
+</div>
+<div class="col-md-2">
+
+    </div>
+{% elseif current_user.access_rights != 0 %}
+
+<div class="col-lg-6">
+
+    {% include 'LoanRecords.html '%}
+
+</div>
+
+
+<div class="col-lg-6">
+
+    {% include 'ContriRecords.html '%}
+
+</div>
+{% endif %}
 
 {% endblock %}

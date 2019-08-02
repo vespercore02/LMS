@@ -222,12 +222,16 @@ class Users extends \App\Controllers\Authenticated
      */
     public function membersAction()
     {
-        if ($this->route_params['id']) {
+        if (isset($this->route_params['id'])) {
             # code...
-            $info = User::searchById($this->route_params['id']);
+            $info           = User::searchById($this->route_params['id']);
+            $contri         = Contribution::records($this->route_params['id']);
+            $loan_records   = Loan::records($this->route_params['id']);
 
             View::renderTemplate('Admin/member-info.html', [
-                'info' => $info
+                'info' => $info,
+                'contributions' => $contri,
+                'loan_records' => $loan_records
             ]);
 
         } else {

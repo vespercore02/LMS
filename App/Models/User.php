@@ -151,7 +151,7 @@ class User extends \Core\Model
     /**
      * Search a user model by email address
      *
-     * @param string $email email address to search for
+     * @param string $id id to search for
      *
      * @return mixed User object if found, false otherwise
      */

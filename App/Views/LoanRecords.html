@@ -1,0 +1,53 @@
+<table class="table table-boredered">
+    <thead>
+        <tr>
+            <th>
+                Date Paid
+            </th>
+            <th>
+                Amount Paid
+            </th>
+            <th>
+                Amount Left
+            </th>
+            <th>
+                Month/s Paid
+            </th>
+            <th>
+                Month/s Left
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if loan_records %}
+
+        {% for loan_record in loan_records %}
+        <tr>
+            <td>
+                {{ loan_record.date_paid }}
+            </td>
+            <td>
+                {{ loan_record.amount_paid }}
+            </td>
+            <td>
+                {{ loan_record.amount_left }}
+            </td>
+            <td>
+                {{ loan_record.month_paid }}
+            </td>
+            <td>
+                {{ loan_record.month_left }}
+            </td>
+        </tr>
+        {% endfor %}
+
+        {% else %}
+        <tr class="text-center">
+            <td colspan="5">
+                No payment have made.
+            </td>
+        </tr>
+        {% endif %}
+
+    </tbody>
+</table>

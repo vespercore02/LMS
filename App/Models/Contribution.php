@@ -30,6 +30,11 @@ class Contribution extends \Core\Model
         };
     }
 
+    /**
+     * Save Contribution of a Member
+     * 
+     * @return boolean  True if the user was saved, false otherwise
+     */
     public function save()
     {
         $sql = 'INSERT INTO contribution_records (user_id, contri_date, contri, contri_esti_earns, contri_act_earns, contri_plus_earns)
@@ -46,6 +51,26 @@ class Contribution extends \Core\Model
         $stmt->bindValue(':contri_plus_earns', $this->contri_plus_earns, PDO::PARAM_STR);
 
         return $stmt->execute();
+    }
+
+    /**
+     * View Contribution of a Member
+     * 
+     * @param $id id to search for
+     * 
+     * @return mixed User object if found, false otherwise
+     */
+    public static function records($id)
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE user_id like :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $id, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 }
 

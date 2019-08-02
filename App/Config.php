@@ -65,12 +65,12 @@ class Config
      *
      * @var string
      */
-    const MAILER_USERNAME = 'your mail';
+    const MAILER_USERNAME = 'wee.standtogether@gmail.com';
 
     /**
      * PHP mailer
      *
      * @var string
      */
-    const MAILER_PASSWORD = 'your mail password';
+    const MAILER_PASSWORD = 'reqotdgphpvedzet';
 }

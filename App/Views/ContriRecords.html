@@ -1,0 +1,43 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Date
+            </th>
+            <th>
+                Contribution
+            </th>
+            <th>
+                Estimated Earning
+            </th>
+            <th>
+                Actual Earning
+            </th>
+            <th>
+                Contri + Earning
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contri in contributions %}
+        <tr>
+            <td>
+                {{ contri.contri_date | date("m/d/Y")}}
+            </td>
+            <td>
+                {{ contri.contri }}
+            </td>
+            <td>
+                {{ contri.contri_esti_earns }}
+            </td>
+            <td>
+                {{ contri.contri_act_earns }}
+            </td>
+            <td>
+                {{ contri.contri_plus_earns }}
+            </td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>

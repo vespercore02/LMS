@@ -5,6 +5,8 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\Announcement;
+use \App\Models\loan;
+use \App\Models\Contribution;
 
 /**
  * Home controller
@@ -21,10 +23,15 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
+        $contri         = Contribution::records($_SESSION['user_id']);
+        $loan_records   = Loan::records($_SESSION['user_id']);
+
         $announcement = Announcement::load();
 
         View::renderTemplate('Home/index.html',[
-            'announcements' => $announcement
+            'announcements' => $announcement,
+            'contributions' => $contri,
+            'loan_records' => $loan_records
         ]);
     }
 }
