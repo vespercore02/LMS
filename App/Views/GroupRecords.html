@@ -2,13 +2,21 @@
 
     <div class="card-body">
 
-        {% if contri_records %}
+        {% if group_records %}
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>
-                        Date
+                        Name
                     </th>
+
+                    <!--
+
+                        for adjustment of dates needed
+                        * for change of interface due to possible long information
+
+                        start here
+                    -->
                     <th>
                         Contribution
                     </th>
@@ -21,14 +29,24 @@
                     <th>
                         Contri + Earning
                     </th>
+
+                    <!-- until here-->
                 </tr>
             </thead>
             <tbody>
-                {% for contri in contri_records %}
+                {% for contri in group_records %}
                 <tr>
                     <td>
                         {{ contri.contri_date | date("m/d/Y")}}
                     </td>
+
+                    <!--
+
+                        for adjustment of dates needed
+                        * for change of interface due to possible long information
+
+                        start here
+                    -->
                     <td>
                         {{ contri.contri }}
                     </td>
@@ -41,6 +59,9 @@
                     <td>
                         {{ contri.contri_plus_earns }}
                     </td>
+
+                    
+                    <!-- until here-->
                 </tr>
 
                 {% endfor %}
@@ -49,7 +70,7 @@
         {% else %}
 
         <div class="text-center">
-            No Contribution have made.
+            Your members do not have Contribution made.
         </div>
 
 

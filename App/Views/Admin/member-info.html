@@ -101,7 +101,7 @@
 
     {% include 'LoanRecords.html' %}
 
-    {% elseif (info[0]['access_rights'] == 1) or (info[0]['access_rights'] == 9) %}
+    {% elseif (info[0]['access_rights'] == 1) or (info[0]['access_rights'] == 2) %}
     <div class="card mb-4">
         <div class="card-header">
             <h4>Add Contribution</h4>
@@ -153,7 +153,10 @@
         </div>
     </div>
 
+
     {% include 'ContriRecords.html' %}
+
+    {% include 'LoanRecords.html' %}
     {% endif %}
 </div>
 

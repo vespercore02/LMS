@@ -230,7 +230,7 @@ class Users extends \App\Controllers\Authenticated
 
             View::renderTemplate('Admin/member-info.html', [
                 'info' => $info,
-                'contributions' => $contri,
+                'contri_records' => $contri,
                 'loan_records' => $loan_records
             ]);
 

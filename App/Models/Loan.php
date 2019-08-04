@@ -187,7 +187,7 @@ class Loan extends \Core\Model
         return $stmt->fetch();
     }
 
-    public static function viewUserLoan($loan_user_id)
+    public static function info($loan_user_id)
     {
         $sql = 'SELECT * FROM loan_info WHERE loan_user_id = :loan_user_id';
 

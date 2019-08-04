@@ -26,15 +26,21 @@
     }
 </style>
 
-<div class="col-md-2">
+<div class="col-sm-2">
 
 </div>
-<div class="col-md-8 mb-4">
-    <h1 class="mb-4">Welcome</h1>
+<div class="col-sm-8 mb-4">
 
-    {% if current_user %}
+    <div class="card">
+        <div class="card-body">
+            <h1 class="mb-4">Welcome</h1>
 
+            {% if current_user %}
+            <div class="text-center">
+                {{ current_user.name }}
 
+            </div>
+            <!--
     {% if announcements %}
 
     <div class="news">
@@ -55,6 +61,9 @@
 
     {% endif %}
 
+    -->
+        </div>
+    </div>
 
     {% else %}
     <a href="/loan/public/signup/new">Sign up</a> or <a href="/loan/public/login">log in</a>.
@@ -62,36 +71,116 @@
 
 
 </div>
-<div class="col-md-2">
+<div class="col-sm-2">
 
 </div>
-
+{% if current_user %}
 {% if current_user.access_rights == 0 %}
-<div class="col-md-2">
+<div class="col-sm-2">
 
-    </div>
-<div class="col-md-8">
+</div>
+<div class="col-sm-8">
 
     {% include 'LoanRecords.html '%}
 
 </div>
-<div class="col-md-2">
-
-    </div>
-{% elseif current_user.access_rights != 0 %}
-
-<div class="col-lg-6">
-
-    {% include 'LoanRecords.html '%}
+<div class="col-sm-2">
 
 </div>
+{% elseif current_user.access_rights == 1 %}
 
+<div class="col-sm-2"></div>
 
-<div class="col-lg-6">
+<div class="col-sm-8">
 
     {% include 'ContriRecords.html '%}
 
+    {% include 'LoanRecords.html '%}
+
 </div>
+
+<div class="col-sm-2"></div>
+
+{% elseif current_user.access_rights == 2 %}
+
+<div class="col-sm-2"></div>
+
+<div class="col-sm-8">
+
+    {% include 'GroupRecords.html '%}
+
+    {% include 'ContriRecords.html '%}
+
+    {% include 'LoanRecords.html '%}
+
+</div>
+
+<div class="col-sm-2"></div>
+
+{% elseif current_user.access_rights == 9 %}
+
+<div class="col-sm-2"></div>
+
+<div class="col-sm-8">
+
+    <div class="card mb-4">
+        <div class="card-body">
+            
+            <div class="text-center mb-4">
+                <h4>Admin Tools</h4>
+            </div>
+            <div class="form-group row mb-3">
+
+                <div class="col-sm-1"></div>
+
+                <button class="btn btn-success col-sm-4"
+                    onclick="location.href='/loan/public/admin/users/members';">Members</button>
+
+
+                <div class="col-sm-2"></div>
+
+                <button class="btn btn-success col-sm-4"
+                    onclick="location.href='/loan/public/admin/users/loan-form';">Loan Form</button>
+
+                <div class="col-sm-1"></div>
+            </div>
+
+            <div class="form-group row mb-3">
+
+                <div class="col-sm-1"></div>
+
+                <button class="btn btn-success col-sm-4"
+                    onclick="location.href='/loan/public/admin/users/groups';">Groups</button>
+
+                <div class="col-sm-2"></div>
+
+                <button class="btn btn-success col-sm-4"
+                    onclick="location.href='/loan/public/admin/users/announcement-form';">Announcement Form</button>
+
+                <div class="col-sm-1"></div>
+            </div>
+
+            <div class="form-group row mb-3">
+
+                <div class="col-sm-1"></div>
+
+                <button class="btn btn-success col-sm-4"
+                    onclick="location.href='/loan/public/admin/users/access';">Access</button>
+
+                <div class="col-sm-2"></div>
+
+
+
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-sm-2"></div>
 {% endif %}
 
+
+{% endif %}
 {% endblock %}

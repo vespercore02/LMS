@@ -68,7 +68,49 @@
         </div>
     </div>
 
-    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Loan ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Loan Date
+                </th>
+                <th>
+                    Loan Amount
+                </th>
+                <th>
+                    Months to Pay
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in loans %}
+            <tr>
+                <td>
+                    <a href="/loan/public/admin/users/view/{{ post.id }}">{{ post.id }}</a>
+                </td>
+                <td>
+                    {{ post.loan_user_id }}
+                </td>
+                <td>
+                    {{ post.loan_date }}
+                </td>
+                <td>
+                    {{ post.loan_amount }}
+                </td>
+                <td>
+                    {{ post.loan_payment_months }}
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}

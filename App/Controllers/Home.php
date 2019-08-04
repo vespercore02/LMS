@@ -23,15 +23,24 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
-        $contri         = Contribution::records($_SESSION['user_id']);
-        $loan_records   = Loan::records($_SESSION['user_id']);
+        if (isset($_SESSION['user_id'])) {
+            # code...
+            $contri_records = Contribution::records($_SESSION['user_id']);
+            $loan_records   = Loan::records($_SESSION['user_id']);
+            $loan_info   = Loan::info($_SESSION['user_id']);
 
-        $announcement = Announcement::load();
+            $announcement = Announcement::load();
 
-        View::renderTemplate('Home/index.html',[
-            'announcements' => $announcement,
-            'contributions' => $contri,
-            'loan_records' => $loan_records
-        ]);
+            View::renderTemplate('Home/index.html',[
+                'announcements' => $announcement,
+                'contri_records'=> $contri_records,
+                'loan_records'  => $loan_records,
+                'loan_info'     => $loan_info
+            ]);
+        }else {
+            # code...
+            View::renderTemplate('Home/index.html');
+        }
+        
     }
 }
