@@ -210,7 +210,7 @@ class User extends \Core\Model
 
         $stmt->execute();
 
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
