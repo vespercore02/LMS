@@ -72,6 +72,33 @@ class Contribution extends \Core\Model
 
         return $stmt->fetchAll();
     }
+
+    /**
+     * GET Group Members contribution
+     * 
+     * @return mixed list of member or none
+     */
+    public static function getGroupMembersContri($members)
+    {
+        $member_count = count($members);
+
+        for ($i=0; $i < $member_count ; $i++) { 
+            # code...
+        }
+        
+
+        $sql = 'SELECT * FROM users WHERE belonging_group = :belonging_group and id != :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':belonging_group', $groupId, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>

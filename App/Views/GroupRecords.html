@@ -2,7 +2,7 @@
 
     <div class="card-body">
 
-        {% if group_records %}
+        {% if group_members %}
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -34,10 +34,10 @@
                 </tr>
             </thead>
             <tbody>
-                {% for contri in group_records %}
+                {% for group in group_members %}
                 <tr>
                     <td>
-                        {{ contri.contri_date | date("m/d/Y")}}
+                        {{ group.name}}
                     </td>
 
                     <!--

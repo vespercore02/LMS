@@ -26,10 +26,18 @@ class Home extends \Core\Controller
     {
         if (isset($_SESSION['user_id'])) {
             # code...
-            $contri_records = Contribution::records($_SESSION['user_id']);
-            $loan_records   = Loan::records($_SESSION['user_id']);
-            $loan_info      = Loan::info($_SESSION['user_id']);
-            $rights         = User::findByID($_SESSION['user_id']);
+            $contri_records         = Contribution::records($_SESSION['user_id']);
+            $loan_records           = Loan::records($_SESSION['user_id']);
+            $loan_info              = Loan::info($_SESSION['user_id']);
+            $rights                 = User::findByID($_SESSION['user_id']);
+            $group_members          = User::getGroupMembers($rights['belonging_group'], $_SESSION['user_id']);
+            $group_members_contri   = Contribution::getGroupMembersContri($group_members);
+            $members_count = count($group_members);
+
+            for ($i=0; $i < $members_count; $i++) { 
+                # code...
+                echo $group_members[$i]['id']."<br>";
+            }
 
             $announcement = Announcement::load();
 
@@ -37,11 +45,13 @@ class Home extends \Core\Controller
                 'announcements' => $announcement,
                 'contri_records'=> $contri_records,
                 'loan_records'  => $loan_records,
-                'loan_info'     => $loan_info
+                'loan_info'     => $loan_info,
+                'rights'        => $rights,
+                'group_members' => $group_members
             ]);
 
-                print_r($rights);
-            echo $rights['access_rights'];
+            //print_r($group_members);
+            //echo $rights['access_rights'];
         }else {
             # code...
             View::renderTemplate('Home/index.html');

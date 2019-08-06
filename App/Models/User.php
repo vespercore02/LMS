@@ -527,4 +527,26 @@ class User extends \Core\Model
 
         $stmt->execute();
     }
+
+    /**
+     * GET Group Members
+     * 
+     * @return mixed list of member or none
+     */
+    public static function getGroupMembers($groupId, $id)
+    {
+        $sql = 'SELECT id, name FROM users WHERE belonging_group = :belonging_group and id != :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':belonging_group', $groupId, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
 }

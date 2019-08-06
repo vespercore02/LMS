@@ -25,11 +25,6 @@ class Users extends \App\Controllers\Authenticated
      */
     protected function after()
     {
-        // Make sure an admin user is logged in for example
-        // return false;
-        //var_dump(Auth::getUser());
-
-        //print_r(Auth::getUser());
         
         $rights = Auth::getUser();
         
@@ -84,7 +79,6 @@ class Users extends \App\Controllers\Authenticated
         $_POST['totalLoan']                = $_POST['overallmonthlyinterest'] + $_POST['loan_amount'];
         $_POST['monthlyPayment']           = $_POST['totalLoan'] / $_POST['months_to_pay'];
 
-        //echo $monthlyinterest."<br>".$overallmonthlyinterest."<br>".$totalLoan."<br>".$monthlyPayment;
 
         array_push(
             $_POST,
@@ -95,7 +89,7 @@ class Users extends \App\Controllers\Authenticated
             $_POST['monthlyPayment']
         );
 
-        print_r($_POST);
+        //print_r($_POST);
         
         $loan = new Loan($_POST);
 
@@ -123,8 +117,6 @@ class Users extends \App\Controllers\Authenticated
             'loan_records'    => $loan_records
         ]);
             
-        //print_r($this->route_params);
-            //echo $this->route_params['id'];
     }
 
     public function updateAction()
@@ -133,13 +125,7 @@ class Users extends \App\Controllers\Authenticated
             if (Loan::lastRecord($_POST['loan_id'])) {
                 # code...
                 $loan_info      = Loan::lastRecord($_POST['loan_id']);
-                /*
-                echo $loan_info['amount_left']."<br>";
-                echo $loan_info['month_left']."<br>";
-
-                echo $_POST['amount_paid']."<br>";
-                echo $_POST['month_paid']."<br>";
-                */
+                
                 $_POST['amount_left'] = ($loan_info['amount_left'] - $_POST['amount_paid']);
                 $_POST['month_left'] = $loan_info['month_left'] - 1;
 
@@ -147,13 +133,7 @@ class Users extends \App\Controllers\Authenticated
                 print_r($_POST);
             } else {
                 $loan_info      = Loan::view($_POST['loan_id']);
-                /*
-                echo $loan_info['loan_amount']."<br>";
-                echo $loan_info['loan_payment_months']."<br>";
-
-                echo $_POST['amount_paid']."<br>";
-                echo $_POST['month_paid']."<br>";
-                */
+                
                 $_POST['amount_left'] = ($loan_info['totalLoan'] - $_POST['amount_paid']);
                 $_POST['month_left'] = $loan_info['loan_payment_months'] - 1;
 
@@ -174,8 +154,6 @@ class Users extends \App\Controllers\Authenticated
             'loan_records'    => $loan_records
         ]);
             
-            //print_r($this->route_params);
-            //echo $this->route_params['id'];
         }
     }
 
@@ -247,7 +225,6 @@ class Users extends \App\Controllers\Authenticated
             'accesses' => $accesses
         ]);
 
-            //print_r($members);
         }
     }
 
@@ -263,7 +240,7 @@ class Users extends \App\Controllers\Authenticated
 
             $_POST['name']          = $_POST['member_firstname']." ".$_POST['member_lastname'];
             $_POST['email']         = strtolower($_POST['member_firstname']."@".$_POST['member_lastname'].".com");
-            $_POST['password']      = "Defaulat@01";
+            $_POST['password']      = "Default@01";
 
             $member = new User($_POST);
 
@@ -292,7 +269,6 @@ class Users extends \App\Controllers\Authenticated
             'accesses' => $accesses
         ]);
 
-        //print_r($accesses);
     }
 
     /**
