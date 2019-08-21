@@ -31,14 +31,13 @@ class Home extends \Core\Controller
             $loan_info              = Loan::info($_SESSION['user_id']);
             $rights                 = User::findByID($_SESSION['user_id']);
             $group_members          = User::getGroupMembers($rights['belonging_group'], $_SESSION['user_id']);
-            $group_members_contri   = Contribution::getGroupMembersContri($group_members);
+            $group_members_contri   = Contribution::getGroupMembersContri($rights['belonging_group']);
             $members_count = count($group_members);
-
-            for ($i=0; $i < $members_count; $i++) { 
-                # code...
-                echo $group_members[$i]['id']."<br>";
-            }
-
+            /*
+            echo "<pre>";
+            print_r($group_members_contri);
+            echo "</pre>";
+            */
             $announcement = Announcement::load();
 
             View::renderTemplate('Home/index.html',[
@@ -47,7 +46,8 @@ class Home extends \Core\Controller
                 'loan_records'  => $loan_records,
                 'loan_info'     => $loan_info,
                 'rights'        => $rights,
-                'group_members' => $group_members
+                'group_members' => $group_members,
+                'group_members_contri' => $group_members_contri
             ]);
 
             //print_r($group_members);

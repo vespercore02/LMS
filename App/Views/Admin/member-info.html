@@ -24,7 +24,7 @@
             <h4>Update Loan</h4>
         </div>
         <div class="card-body">
-            <form action="/loan/public/admin/users/update" method="POST">
+            <form action="/admin/users/update" method="POST">
 
                 <div class="form-group row">
                     <label for="inputLoanID" class="col-lg-4 col-form-label">Loan ID</label>
@@ -61,7 +61,7 @@
             <h4>Loan Form</h4>
         </div>
         <div class="card-body">
-            <form action="/loan/public/admin/users/create" method="post">
+            <form action="/admin/users/create" method="post">
 
                 <!--
                 <div class="form-group row">
@@ -107,10 +107,10 @@
             <h4>Add Contribution</h4>
         </div>
         <div class="card-body">
-            <form action="/loan/public/admin/users/add-contribution" method="post">
+            <form action="/admin/users/add-contribution" method="post">
 
                 <input type="hidden" name="user_id" id="" value="{{ info[0]['id']}}">
-
+                <input type="hidden" name="belonging_group" id="" value="{{ info[0]['belonging_group']}}">
                 <div class="form-group row">
                     <label for="inputLoanId" class="col-sm-4 col-form-label">Date</label>
                     <input type="date" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="contri_date"

@@ -1,12 +1,38 @@
 <div class="card mb-4">
+    <style>
+        .group-records {
 
-    <div class="card-body">
+            width: 80%;
+            overflow: auto;
+            white-space: nowrap;
+            overflow-x: scroll;
+            overflow-y: visible;
+
+            margin-left: 130px;
+        }
+
+        .group-records td,
+        .group-records th {
+            white-space: nowrap;
+            border: 1px solid black;
+            padding: 10px 10px;
+            height: 47px;
+        }
+
+        .group-records th.first-col {
+            position: absolute;
+            width: 130px;
+            margin-left: -129px;
+            background: #ffffff;
+        }
+    </style>
+    <div class="card-body group-records">
 
         {% if group_members %}
-        <table class="table table-bordered">
+        <table class="">
             <thead>
                 <tr>
-                    <th>
+                    <th class="first-col">
                         Name
                     </th>
 
@@ -18,27 +44,87 @@
                         start here
                     -->
                     <th>
-                        Contribution
+                        15-OCT
                     </th>
                     <th>
-                        Estimated Earning
+                        30-OCT
                     </th>
                     <th>
-                        Actual Earning
+                        15-NOV
                     </th>
                     <th>
-                        Contri + Earning
+                        30-NOV
                     </th>
-
+                    <th>
+                        15-DEC
+                    </th>
+                    <th>
+                        30-DEC
+                    </th>
+                    <th>
+                        15-JAN
+                    </th>
+                    <th>
+                        30-JAN
+                    </th>
+                    <th>
+                        15-FEB
+                    </th>
+                    <th>
+                        28-FEB
+                    </th>
+                    <th>
+                        15-MAR
+                    </th>
+                    <th>
+                        30-MAR
+                    </th>
+                    <th>
+                        15-APR
+                    </th>
+                    <th>
+                        30-APR
+                    </th>
+                    <th>
+                        15-MAY
+                    </th>
+                    <th>
+                        30-MAY
+                    </th>
+                    <th>
+                        15-JUN
+                    </th>
+                    <th>
+                        30-JUN
+                    </th>
+                    <th>
+                        15-JUL
+                    </th>
+                    <th>
+                        30-JUL
+                    </th>
+                    <th>
+                        15-AUG
+                    </th>
+                    <th>
+                        31-AUG
+                    </th>
+                    <th>
+                        15-SEPT
+                    </th>
+                    <th>
+                        30-SEPT
+                    </th>
                     <!-- until here-->
                 </tr>
             </thead>
             <tbody>
-                {% for group in group_members %}
-                <tr>
-                    <td>
+
+                {% for group in group_members_contri %}
+                <tr class="records">
+                    <th class="first-col">
                         {{ group.name}}
-                    </td>
+                    </th>
 
                     <!--
 
@@ -47,24 +133,112 @@
 
                         start here
                     -->
-                    <td>
-                        {{ contri.contri }}
+                    <td class="oct15">
+                        {{ group.oct15 }}
                     </td>
-                    <td>
-                        {{ contri.contri_esti_earns }}
+                    <td class="oct31">
+                        {{ group.oct31}}
                     </td>
-                    <td>
-                        {{ contri.contri_act_earns }}
+                    <td class="nov15">
+                        {{ group.nov15}}
                     </td>
-                    <td>
-                        {{ contri.contri_plus_earns }}
+                    <td class="nov30">
+                        {{ group.nov30}}
                     </td>
-
-                    
+                    <td class="dec15">
+                        {{ group.dec15}}
+                    </td>
+                    <td class="dec31">
+                        {{ group.dec31}}
+                    </td>
+                    <td class="jan15">
+                        {{ group.jan15}}
+                    </td>
+                    <td class="jan31">
+                        {{ group.jan31}}
+                    </td>
+                    <td class="feb15">
+                        {{ group.feb15}}
+                    </td>
+                    <td class="feb28">
+                        {{ group.feb28}}
+                    </td>
+                    <td class="mar15">
+                        {{ group.mar15}}
+                    </td>
+                    <td class="mar31">
+                        {{ group.mar31}}
+                    </td>
+                    <td class="apr15">
+                        {{ group.apr15}}
+                    </td>
+                    <td class="apr30">
+                        {{ group.apr30}}
+                    </td>
+                    <td class="may15">
+                        {{ group.may15}}
+                    </td>
+                    <td class="may31">
+                        {{ group.may31}}
+                    </td>
+                    <td class="jun15">
+                        {{ group.jun15}}
+                    </td>
+                    <td class="jun30">
+                        {{ group.jun30}}
+                    </td>
+                    <td class="jul15">
+                        {{ group.jul15}}
+                    </td>
+                    <td class="jul31">
+                        {{ group.jul31}}
+                    </td>
+                    <td class="aug15">
+                        {{ group.aug15}}
+                    </td>
+                    <td class="aug31">
+                        {{ group.aug31}}
+                    </td>
+                    <td class="sep15">
+                        {{ group.sep15}}
+                    </td>
+                    <td class="sep30">
+                        {{ group.sep30}}
+                    </td>
                     <!-- until here-->
                 </tr>
 
                 {% endfor %}
+
+
+                <tr>
+                    <th class="first-col">Total</th>
+                    <td class="totaloct15"></td>
+                    <td class="totaloct31"></td>
+                    <td class="totalnov15"></td>
+                    <td class="totalnov30"></td>
+                    <td class="totaldec15"></td>
+                    <td class="totaldec31"></td>
+                    <td class="totaljan15"></td>
+                    <td class="totaljan31"></td>
+                    <td class="totalfeb15"></td>
+                    <td class="totalfeb28"></td>
+                    <td class="totalmar15"></td>
+                    <td class="totalmar31"></td>
+                    <td class="totalapr15"></td>
+                    <td class="totalapr30"></td>
+                    <td class="totalmay15"></td>
+                    <td class="totalmay31"></td>
+                    <td class="totaljun15"></td>
+                    <td class="totaljun30"></td>
+                    <td class="totaljul15"></td>
+                    <td class="totaljul31"></td>
+                    <td class="totalaug15"></td>
+                    <td class="totalaug31"></td>
+                    <td class="totalsep15"></td>
+                    <td class="totalsep30"></td>
+                </tr>
+
             </tbody>
         </table>
         {% else %}

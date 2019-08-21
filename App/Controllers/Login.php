@@ -64,7 +64,7 @@ class Login extends \Core\Controller
     {
         Auth::logout();
 
-        $this->redirect('/loan/public/login/show-logout-message');
+        $this->redirect('/login/show-logout-message');
     }
 
     /**
@@ -78,6 +78,6 @@ class Login extends \Core\Controller
     {
         Flash::addMessage('Logout successful');
 
-        $this->redirect('/loan/public/');
+        $this->redirect('/');
     }
 }

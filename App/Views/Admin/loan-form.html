@@ -15,7 +15,7 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form action="/loan/public/admin/users/create" method="post">
+    <form action="/admin/users/create" method="post">
 
         <h4>Loan Form</h4>
         <div class="form-group row">
@@ -60,7 +60,7 @@
 
         //autocomplete
         $(".id").autocomplete({
-            source: '/loan/public/account/get-id',
+            source: '/account/get-id',
             minLength: 1
         });
 

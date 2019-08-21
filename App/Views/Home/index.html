@@ -66,7 +66,7 @@
     </div>
 
     {% else %}
-    <a href="/loan/public/signup/new">Sign up</a> or <a href="/loan/public/login">log in</a>.
+    <a href="/signup/new">Sign up</a> or <a href="/login">log in</a>.
     {% endif %}
 
 
@@ -104,19 +104,17 @@
 {% elseif current_user.access_rights == 2 %}
 
 <div class="col-sm-2"></div>
-
 <div class="col-sm-8">
 
     {% include 'GroupRecords.html '%}
+</div>
+<div class="col-sm-2"></div>
 
+<!--
     {% include 'ContriRecords.html '%}
 
     {% include 'LoanRecords.html '%}
-
-</div>
-
-<div class="col-sm-2"></div>
-
+-->
 {% elseif current_user.access_rights == 9 %}
 
 <div class="col-sm-2"></div>
@@ -134,13 +132,13 @@
                 <div class="col-sm-1"></div>
 
                 <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/loan/public/admin/users/members';">Members</button>
+                    onclick="location.href='/admin/users/members';">Members</button>
 
 
                 <div class="col-sm-2"></div>
 
                 <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/loan/public/admin/users/loan-form';">Loan Form</button>
+                    onclick="location.href='/admin/users/loan-form';">Loan Form</button>
 
                 <div class="col-sm-1"></div>
             </div>
@@ -150,12 +148,12 @@
                 <div class="col-sm-1"></div>
 
                 <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/loan/public/admin/users/groups';">Groups</button>
+                    onclick="location.href='/admin/users/groups';">Groups</button>
 
                 <div class="col-sm-2"></div>
 
                 <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/loan/public/admin/users/announcement-form';">Announcement Form</button>
+                    onclick="location.href='/admin/users/announcement-form';">Announcement Form</button>
 
                 <div class="col-sm-1"></div>
             </div>
@@ -165,7 +163,7 @@
                 <div class="col-sm-1"></div>
 
                 <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/loan/public/admin/users/access';">Access</button>
+                    onclick="location.href='/admin/users/access';">Access</button>
 
                 <div class="col-sm-2"></div>
 

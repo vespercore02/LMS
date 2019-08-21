@@ -535,7 +535,7 @@ class User extends \Core\Model
      */
     public static function getGroupMembers($groupId, $id)
     {
-        $sql = 'SELECT id, name FROM users WHERE belonging_group = :belonging_group and id != :id';
+        $sql = 'SELECT id, name FROM users WHERE belonging_group = :belonging_group and id != :id ORDER BY id ASC';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);

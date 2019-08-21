@@ -4,24 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="/loan/public/css/styles.css" />
-    <link rel="stylesheet" href="/loan/public/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/loan/public/css/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
 
     <style>
-        body{
+        body {
             background-color: #ecf0f5;
         }
-
-        
-    
     </style>
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <a class="navbar-brand" href="/loan/public">Loan</a>
+        <a class="navbar-brand" href="/">Loan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,20 +31,20 @@
             {% if current_user %}
             <ul class="navbar-nav my-2 my-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/loan/public">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
 
                 {% if current_user.access_rights == 9 %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/loan/public/admin/users/index">Manage</a>
+                    <a class="nav-link" href="/admin/users/index">Manage</a>
                 </li>
                 {% endif %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/loan/public/loans/index">Loan</a>
+                    <a class="nav-link" href="/loans/index">Loan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/loan/public/logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out</a>
                 </li>
             </ul>
             {% endif %}
@@ -74,15 +71,61 @@
         </div>
     </div>
 
-    <script src="/loan/public/js/jquery-3.3.1.slim.min.js"></script>
-    <script src="/loan/public/js/jquery-ui.js"></script>
-    <script src="/loan/public/js/jquery.validate.min.js"></script>
-    <script src="/loan/public/js/popper.min.js"></script>
-    <script src="/loan/public/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            /*
+            var sum = 0;
+
+            $('.aug15').each(function () {
+                var overall = $(this).attr("class");
+                var values = parseFloat($(this).html());
+                sum += isNaN(values) ? 0 : values;
+
+                $('.total' + overall).text(sum)
+            });
+
+            var className = $('td').attr('class');
+            console.log(('tr:first-child').length);
+            */
+            
+            $('tr:first-child td').each(function () {
+                var tdname = $(this).attr("class");
+                console.log(tdname);
+                var sum = 0;
+
+                $('.'+tdname).each(function () {
+                    var values = parseFloat($(this).html());
+                    sum += isNaN(values) ? 0 : values;
+
+                    $('.total' + tdname).text(sum)
+                });
+            })
+        });
+        /*
+        $(document).ready(function () {
+            var sum = 0;
+
+            $('.aug31').each(function () {
+                var values = parseFloat($(this).html());
+                    sum += isNaN(values) ? 0 : values;
+
+                var overall = $(this).attr("class")
+
+                $('.total'+overall).text(sum)
+            });
+
+        });
+        */
+    </script>
     {% block footer %}
     {% endblock %}
-    
+
 </body>
 
 </html>

@@ -94,7 +94,7 @@ class Users extends \App\Controllers\Authenticated
         $loan = new Loan($_POST);
 
         if ($loan->save()) {
-            $this->redirect('/loan/public/signup/success');
+            $this->redirect('/signup/success');
         } else {
             View::renderTemplate('Admin/form.html', [
                 'loan' => $loan
@@ -143,7 +143,7 @@ class Users extends \App\Controllers\Authenticated
             
             $loan = new Loan($_POST);
             if ($loan->update()) {
-                $this->redirect('/loan/public/signup/success');
+                $this->redirect('/signup/success');
             }
         } else {
             $loan_info      = Loan::view($this->route_params['id']);
@@ -184,7 +184,7 @@ class Users extends \App\Controllers\Authenticated
 
                 Flash::addMessage('Announce successful');
 
-                $this->redirect('/loan/public/admin/users/index');
+                $this->redirect('/admin/users/index');
             } else {
                 View::renderTemplate('Admin/announcement-form.html', [
                     'announcement' => $announcement
@@ -247,7 +247,7 @@ class Users extends \App\Controllers\Authenticated
             if ($member->save()) {
                 Flash::addMessage('Member successful added');
 
-                $this->redirect('/loan/public/admin/users/members');
+                $this->redirect('/admin/users/members');
             } else {
                 View::renderTemplate('Signup/new.html', [
                 'user' => $user
@@ -287,11 +287,11 @@ class Users extends \App\Controllers\Authenticated
 
                 Flash::addMessage('Access Rights successful added');
 
-                $this->redirect('/loan/public/admin/users/access');
+                $this->redirect('/admin/users/access');
             } else {
                 Flash::addMessage('Access Rights Failed added', WARNING);
 
-                $this->redirect('/loan/public/admin/users/access');
+                $this->redirect('/admin/users/access');
             }
         }
     }
@@ -328,11 +328,11 @@ class Users extends \App\Controllers\Authenticated
 
                 Flash::addMessage('Access Rights successful added');
 
-                $this->redirect('/loan/public/admin/users/groups');
+                $this->redirect('/admin/users/groups');
             } else {
                 Flash::addMessage('Access Rights Failed added', WARNING);
 
-                $this->redirect('/loan/public/admin/users/groups');
+                $this->redirect('/admin/users/groups');
             }
         }
     }
@@ -346,21 +346,41 @@ class Users extends \App\Controllers\Authenticated
         if ($_POST) {
             # code...
 
-            $groups = new Contribution($_POST);
+            $newDate = date("Md", strtotime($_POST['contri_date']));
+            $_POST['column_name'] = strtolower($newDate);
 
+            $groups = new Contribution($_POST);
+            /*
+            echo "<pre>";
+            print_r($_POST);
+            echo "</pre>";
+            
+            $newDate = date("d-M", strtotime($_POST['contri_date']));
+            echo strtolower($newDate);
+            */
+            //echo $groups->checkTermRecord();
+
+            echo $groups->checkTermRecord();
+            
             if ($groups->save()) {
                 # code...
 
-                echo $_POST['contri_date'];
+                $groups->saveTermRecord();
 
+                //echo $_POST['contri_date'];
+                
                 Flash::addMessage('Contribution is successful added');
 
-                $this->redirect('/loan/public/admin/users/members/'.$_POST['user_id']);
+                $this->redirect('/admin/users/members/'.$_POST['user_id']);
+                
             } else {
-                Flash::addMessage('Contribution is Failed to added', WARNING);
+                
+                Flash::addMessage('Contribution is Failed to added', 'warning');
 
-                $this->redirect('/loan/public/admin/users/members/'.$_POST['user_id']);
+                $this->redirect('/admin/users/members/'.$_POST['user_id']);
+                
             }
+            
         }
     }
 }

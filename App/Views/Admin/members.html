@@ -22,7 +22,7 @@
             <h4>Add Member</h4>
         </div>
         <div class="card-body">
-            <form action="/loan/public/admin/users/add-member" method="post">
+            <form action="/admin/users/add-member" method="post">
 
                 <h4>Member Form</h4>
                 <div class="form-group row">
@@ -109,7 +109,7 @@
                     {{ member.belonging_group }}
                 </td>
                 <td>
-                    <button type="button" onclick="window.location.href='/loan/public/admin/users/members/{{ member.id }}'">Update</button>
+                    <button type="button" onclick="window.location.href='/admin/users/members/{{ member.id }}'">Update</button>
                 </td>
             </tr>
 
