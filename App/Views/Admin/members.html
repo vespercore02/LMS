@@ -4,17 +4,10 @@
 
 {% block body %}
 
-<div class="col-sm-2">
-
-</div>
-<div class="col-sm-8">
-    <div class="row mb-3">
-        <div class="col-sm-8">
-            <h1 class="">Manage Members</h1>
-        </div>
-        <div class="col-sm-4 pt-2">
-        </div>
+<div class="col-sm-12 text-center">
+        <h1 class="">Manage Members</h1>
     </div>
+<div class="col-sm-12 col-md-4">
 
 
     <div class="card mb-4">
@@ -23,99 +16,119 @@
         </div>
         <div class="card-body">
             <form action="/admin/users/add-member" method="post">
-
-                <h4>Member Form</h4>
                 <div class="form-group row">
-                    <label for="inputLoanId" class="col-sm-4 col-form-label">Last Name</label>
-                    <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="member_lastname"
+                    <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label">Last Name</label>
+                    <input type="text" class="col-sm-8 col-md-12 col-xl-8 form-control-plaintext" id="inputLoanId" name="member_lastname"
                         placeholder="Last Name" autofocus value="{{ announcement.announcement_title }}" required />
                 </div>
-        
+
                 <div class="form-group row">
-                    <label for="inputLoanId" class="col-sm-4 col-form-label">First Name</label>
-                    <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="member_firstname"
+                    <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label">First Name</label>
+                    <input type="text" class="col-sm-8 col-md-12 col-xl-8 form-control-plaintext" id="inputLoanId" name="member_firstname"
                         placeholder="First Name" autofocus value="{{ announcement.announcement_title }}" required />
-                </div>
-                
-                <div class="form-group row">
-                    <label for="inputLoanId" class="col-sm-4 col-form-label">Middle Initial</label>
-                    <input type="text" class="col-sm-8 form-control-plaintext" id="inputLoanId" name="member_middleinitial"
-                        placeholder="Middle Initial" autofocus value="{{ announcement.announcement_title }}" required />
                 </div>
 
                 <div class="form-group row">
-                    <label for="inputLoanId" class="col-sm-4 col-form-label">Access Rights</label>
-                    <select id="" class="col-sm-8 form-control" name="member_access" required>
+                    <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label">Middle Initial</label>
+                    <input type="text" class="col-sm-8 col-md-12 col-xl-8 form-control-plaintext" id="inputLoanId"
+                        name="member_middleinitial" placeholder="Middle Initial" autofocus
+                        value="{{ announcement.announcement_title }}" required />
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label">Access Rights</label>
+                    <select id="" class="col-sm-8 col-md-12 col-xl-8 form-control" name="member_access" required>
                         <option value=""></option>
                         {% for access in accesses %}
                         <option value="{{ access.access_rights_id}}">{{ access.access_name}} </option>
                         {% endfor%}
                     </select>
                 </div>
-        
+
                 <div class="form-group row">
-                    <label for="inputLoanId" class="col-sm-4 col-form-label">Group</label>
-                    <select id="" class="col-sm-8 form-control" name="member_group">
+                    <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label">Group</label>
+                    <select id="" class="col-sm-8 col-md-12 col-xl-8 form-control" name="member_group">
                         <option value=""></option>
                         {% for group in groups %}
                         <option value="{{ group.groups_id}}">{{ group.group_name}} </option>
                         {% endfor%}
                     </select>
                 </div>
-        
+
                 <div class="form-group row">
-                    <div class="col-sm-4"></div>
-                    <button type="submit" class="col-sm-8 btn btn-success">Add</button>
+                    <div class="col-sm-4 col-md-12 col-xl-4"></div>
+                    <button type="submit" class="col-sm-8 col-md-12 col-xl-8 btn btn-success">Add</button>
                 </div>
             </form>
 
-            
+
         </div>
     </div>
+</div>
+<div class="col-sm-12 col-md-8">
+    <style>
+        .member-records {
+            width: 100%;
+            overflow: auto;
+            white-space: nowrap;
+            overflow-x: scroll;
+            overflow-y: visible;
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Account
-                </th>
-                <th>
-                    Access Rights
-                </th>
-                <th>
-                    Groups
-                </th>
-                <th>
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for member in members %}
-            <tr>
-                <td>
-                    {{ member.name }}
-                </td>
-                <td>
-                    {{ member.email }}
-                </td>
-                <td>
-                    {{ member.access_rights }}
-                </td>
-                <td>
-                    {{ member.belonging_group }}
-                </td>
-                <td>
-                    <button type="button" onclick="window.location.href='/admin/users/members/{{ member.id }}'">Update</button>
-                </td>
-            </tr>
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: .25rem;
 
-            {% endfor %}
-        </tbody>
-    </table>
+            box-sizing: border-box;
+        }
+    </style>
+
+    <div class="member-records">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Account
+                    </th>
+                    <th>
+                        Access Rights
+                    </th>
+                    <th>
+                        Groups
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                <tr>
+                    <td>
+                        {{ member.name }}
+                    </td>
+                    <td>
+                        {{ member.email }}
+                    </td>
+                    <td>
+                        {{ member.access_rights }}
+                    </td>
+                    <td>
+                        {{ member.belonging_group }}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary"
+                            onclick="window.location.href='/admin/users/members/{{ member.id }}'">Update</button>
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 {% endblock %}

@@ -26,12 +26,13 @@
     }
 </style>
 
+
 <div class="col-sm-2">
 
 </div>
-<div class="col-sm-8 mb-4">
+<div class="col-sm-8">
 
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-body">
             <h1 class="mb-4">Welcome</h1>
 
@@ -40,90 +41,30 @@
                 {{ current_user.name }}
 
             </div>
-            <!--
-    {% if announcements %}
-
-    <div class="news">
-        {% for annoucement in announcements %}
-        <div class="card mb-5">
-            <div class="card-header">
-                <h4>{{ annoucement.title }}</h4>
-            </div>
-            <div class="card-body">
-                {{ annoucement.message }}
-            </div>
-            <div class="card-footer">
-                {{ annoucement.date }} - {{ annoucement.created_by }}
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-    {% endif %}
-
-    -->
+            {% else %}
+            <a href="/signup/new">Sign up</a> or <a href="/login">log in</a>.
+            {% endif %}
         </div>
     </div>
 
-    {% else %}
-    <a href="/signup/new">Sign up</a> or <a href="/login">log in</a>.
-    {% endif %}
-
-
-</div>
-<div class="col-sm-2">
-
-</div>
-{% if current_user %}
-{% if current_user.access_rights == 0 %}
-<div class="col-sm-2">
-
-</div>
-<div class="col-sm-8">
-
+    {% if current_user %}
+    {% if current_user.access_rights == 0 %}
     {% include 'LoanRecords.html '%}
 
-</div>
-<div class="col-sm-2">
-
-</div>
-{% elseif current_user.access_rights == 1 %}
-
-<div class="col-sm-2"></div>
-
-<div class="col-sm-8">
+    {% elseif current_user.access_rights == 1 %}
 
     {% include 'ContriRecords.html '%}
-
     {% include 'LoanRecords.html '%}
 
-</div>
-
-<div class="col-sm-2"></div>
-
-{% elseif current_user.access_rights == 2 %}
-
-<div class="col-sm-2"></div>
-<div class="col-sm-8">
+    {% elseif current_user.access_rights == 2 %}
 
     {% include 'GroupRecords.html '%}
-</div>
-<div class="col-sm-2"></div>
 
-<!--
-    {% include 'ContriRecords.html '%}
-
-    {% include 'LoanRecords.html '%}
--->
-{% elseif current_user.access_rights == 9 %}
-
-<div class="col-sm-2"></div>
-
-<div class="col-sm-8">
+    {% elseif current_user.access_rights == 9 %}
 
     <div class="card mb-4">
         <div class="card-body">
-            
+
             <div class="text-center mb-4">
                 <h4>Admin Tools</h4>
             </div>
@@ -137,8 +78,8 @@
 
                 <div class="col-sm-2"></div>
 
-                <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/admin/users/loan-form';">Loan Form</button>
+                <button class="btn btn-success col-sm-4" onclick="location.href='/admin/users/loan-form';">Loan
+                    Form</button>
 
                 <div class="col-sm-1"></div>
             </div>
@@ -147,8 +88,7 @@
 
                 <div class="col-sm-1"></div>
 
-                <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/admin/users/groups';">Groups</button>
+                <button class="btn btn-success col-sm-4" onclick="location.href='/admin/users/groups';">Groups</button>
 
                 <div class="col-sm-2"></div>
 
@@ -162,8 +102,7 @@
 
                 <div class="col-sm-1"></div>
 
-                <button class="btn btn-success col-sm-4"
-                    onclick="location.href='/admin/users/access';">Access</button>
+                <button class="btn btn-success col-sm-4" onclick="location.href='/admin/users/access';">Access</button>
 
                 <div class="col-sm-2"></div>
 
@@ -174,11 +113,17 @@
         </div>
     </div>
 
+    {% endif %}
+
+
+
+
+
+
+    {% endif %}
+
 </div>
+<div class="col-sm-2">
 
-<div class="col-sm-2"></div>
-{% endif %}
-
-
-{% endif %}
+</div>
 {% endblock %}
