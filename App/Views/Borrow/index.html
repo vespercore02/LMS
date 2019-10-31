@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrow{% endblock %}
+
+{% block body %}
+
+<style>
+    .ui-front {
+        z-index: 2000 !important;
+    }
+</style>
+
+<div class="row mb-3">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-header">
+                <h4>Borrow Info</h4>
+            </div>
+            <div class="card-body">
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addBorrowerForm">Add
+                    Borrower</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Principal</th>
+                            <th>Payment</th>
+                            <th>Remaining</th>
+                            <th>Interest Acquired</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+</div>
+
+
+<div class="modal fade" id="addBorrowerForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Add Borrower</h4>
+            </div>
+            <form action="/borrow/addBorrower" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputBorrowerName" class="col-form-label">Name :</label>
+                        <input type="text" class="form-control id" id="inputBorrowerName" name="borrow_by" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputBorrowDate" class="col-form-label">Date Borrow :</label>
+                        <input type="date" class="form-control " id="inputBorrowDate" name="borrow_date"
+                            required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrincipalAmount" class="col-form-label">Principal Amount :</label>
+                        <input type="text" class="form-control" id="inputPrincipalAmount" name="borrow_amount"
+                            required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputMonthstoPay" class="col-form-label">Months to Pay :</label>
+                        <input type="text" class="form-control" id="inputMonthstoPay" name="months_to_pay"
+                            required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputInterest" class="col-form-label">Interest :</label>
+                        <input type="text" class="form-control" id="inputInterest" name="borrow_interest"
+                            required />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success m-auto">Save</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+    $(function () {
+
+        //autocomplete
+        $(".id").autocomplete({
+            source: '/account/get-id',
+            minLength: 1
+        });
+
+        $(".loan_date").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+
+    });
+
+</script>
+{% endblock %}

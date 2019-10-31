@@ -66,7 +66,11 @@
         <div class="card-body">
 
             <div class="text-center mb-4">
+
+
                 <h4>Admin Tools</h4>
+
+
             </div>
             <div class="form-group row mb-3">
 
@@ -126,4 +130,69 @@
 <div class="col-sm-2">
 
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+    $(document).ready(function () {
+        var controller, month, group
+        $('select[name=month]').on('change', function () {
+            var optionSelected = $(this).val();
+            var valueSelected = this.value;
+
+            //alert(optionSelected+" {{current_user.belonging_group}}");
+            //selectedMonthContri(optionSelected, "{{current_user.belonging_group}}");
+            month = optionSelected;
+
+            group = $("input[name=belonging_group").val();
+
+            showTable();
+
+            getData(group, month)
+        });
+
+        function getData(group, month) {
+            $.get("home/groupmonthdetails", { month: month, group: group }).done(function (data) {
+                var i;
+                data = JSON.parse(data);
+                $('tbody.grp_mmbrs_cntr').empty();
+                for (i = 0; i < data.length; i++) {
+                    //const element = array[index];
+                    //console.log(data[i][0]);
+                    dataDetails = {
+                        name: data[i][0],
+                        contri: data[i][1],
+                        estimated_earning: data[i][2],
+                        actual_earning: data[i][3],
+                        contri_plus_earning: data[i][4]
+                    };
+                    console.log(dataDetails);
+                    $('tbody.grp_mmbrs_cntr').append(
+                        '<tr>' +
+                        '<td>' + dataDetails.name + '</td>' +
+                        '<td>' + dataDetails.contri + '</td>' +
+                        '<td>' + dataDetails.estimated_earning + '</td>' +
+                        '<td>' + dataDetails.actual_earning + '</td>' +
+                        '<td>' + dataDetails.contri_plus_earning + '</td>' +
+                        '<tr>'
+                    );
+
+                }
+
+
+
+            });
+        }
+
+        function showTable() {
+
+        }
+
+
+    });
+
+
+</script>
+
 {% endblock %}

@@ -424,6 +424,17 @@ class User extends \Core\Model
         return $stmt->fetchAll();
     }
 
+    public static function editMember()
+    {
+        $sql = 'UPDATE users
+                SET ';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+    }
+
     /**
      * Get Access Rights info
      *
@@ -477,21 +488,7 @@ class User extends \Core\Model
         $stmt->execute();
     }
 
-    /**
-     * Get Account Groups info
-     *
-     */
-    public static function getGroups()
-    {
-        $sql = 'SELECT * FROM account_groups';
-
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-
-        $stmt->execute();
-        
-        return $stmt->fetchAll();
-    }
+    
 
     /**
      * Save Account Group info
@@ -507,7 +504,9 @@ class User extends \Core\Model
 
         $stmt->bindValue(':group_name', $this->group_name, PDO::PARAM_STR);
 
-        return $stmt->execute();
+        $stmt->execute();
+
+        return $db->lastInsertId();
     }
 
     /**

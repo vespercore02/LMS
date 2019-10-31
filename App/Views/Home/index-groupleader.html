@@ -1,0 +1,493 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Group Leader{% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Hi Group Leader</h5>
+            </div>
+
+            <div class="card-body">
+                Welcome to group leader page, this page is exclusive for "Group Leader" only that can view number of
+                memebers and
+                contribution.
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+
+</div>
+
+<div class="row mb-4">
+
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-10">
+
+
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Contribution</h5>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <h5 class="contributions" data-contributions="{{ current_user.belonging_group}}">
+                            {{ group_info[0].group_contributions }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Summary</h5>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <h5 class="summary" data-summary="{{ current_user.belonging_group}}">
+                            {{ group_info[0].group_contributions }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Borrow</h5>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <h5 class="borrow" data-borrow="{{ current_user.belonging_group}}">
+                            {{ group_info[0].group_contributions }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Group Member/s</h5>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <h5 class="members" data-members="{{ current_user.belonging_group}}">
+                            {{ group_info[0].group_members }}
+                            </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-lg-1"></div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-body gl-info">
+
+            </div>
+        </div>
+
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <form action="groupleader/add-contribution" method="post">
+                        <div class="modal-header">
+                            <h5>Add Contri</h5>
+                        </div>
+                        <div class="modal-body">
+                            <label class="col-form-label">I.D</label>
+                            <input type="text" class="form-control id" name="id" disabled>
+                            <input type="hidden" class="form-control id" name="id">
+
+                            <label class="col-form-label">Name</label>
+                            <input type="text" class="form-control name" name="name" disabled>
+                            <input type="hidden" class="form-control name" name="name">
+
+                            <label class="col-form-label">Group</label>
+                            <input type="text" class="form-control group" name="group" disabled>
+                            <input type="hidden" class="form-control group" name="group">
+
+
+                            <label class="col-form-label">Choose Month</label>
+                            <select name="month" class="form-control">
+                                <option value=""> -- Choose a Month -- </option>
+                                <option value="2019-10-15"> -- Oct 15 -- </option>
+                                <option value="2019-10-31"> -- Oct 31 -- </option>
+                                <option value="2019-11-15"> -- Nov 15 -- </option>
+                                <option value="2019-11-30"> -- Nov 30 -- </option>
+                                <option value="2019-12-15"> -- Dec 15 -- </option>
+                                <option value="2019-12-31"> -- Dec 31 -- </option>
+                                <option value="2020-01-15"> -- Jan 15 -- </option>
+                                <option value="2020-01-31"> -- Jan 31 -- </option>
+                                <option value="2020-02-15"> -- Feb 15 -- </option>
+                                <option value="2020-02-28"> -- Feb 28 -- </option>
+                                <option value="2020-03-15"> -- Mar 15 -- </option>
+                                <option value="2020-03-31"> -- Mar 31 -- </option>
+                                <option value="2020-04-15"> -- Apr 15 -- </option>
+                                <option value="2020-04-30"> -- Apr 30 -- </option>
+                                <option value="2020-05-15"> -- May 15 -- </option>
+                                <option value="2020-05-31"> -- May 31 -- </option>
+                                <option value="2020-06-15"> -- Jun 15 -- </option>
+                                <option value="2020-06-30"> -- Jun 30 -- </option>
+                                <option value="2020-07-15"> -- Jul 15 -- </option>
+                                <option value="2020-07-31"> -- Jul 31 -- </option>
+                                <option value="2020-08-15"> -- Aug 15 -- </option>
+                                <option value="2020-08-31"> -- Aug 31 -- </option>
+                                <option value="2020-09-15"> -- Sep 15 -- </option>
+                                <option value="2020-09-30"> -- Sep 30 -- </option>
+                            </select>
+
+                            <label class="col-form-label">How much?</label>
+                            <input type="text" class="form-control" name="contri">
+
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+    let group, i, o;
+    let year = ["2019-10-15", "2019-10-31", "2019-11-15", "2019-11-30", "2019-12-15", "2019-12-31",
+        "2020-01-15", "2020-01-31", "2020-02-15", "2020-02-28", "2020-03-15", "2020-03-31",
+        "2020-04-15", "2020-04-30", "2020-05-15", "2020-05-31", "2020-06-15", "2020-06-30",
+        "2020-07-15", "2020-07-31", "2020-08-15", "2020-08-31", "2020-09-15", "2020-09-30"];
+
+
+    $('h5.contributions').click(function () {
+        group = $(this).data('contributions');
+
+        //console.log(year.length)
+        $('div.gl-info').empty();
+        for (o = 0; o < year.length; o++) {
+
+            contributionMonth(group, year[o]);
+
+
+            $('div.gl-info').append(
+                '<div class="card mb-3">' +
+                '<div class="card-header">' +
+                '<h5>' + year[o] + '</h5>' +
+                '</div>' +
+                '<div class="card-body ' + year[o] + '">' +
+                '</div>' +
+                '</div>');
+        }
+
+    });
+
+    $('h5.summary').click(function () {
+        group = $(this).data('summary');
+
+        $('div.gl-info').empty();
+
+        $('div.gl-info').append(
+            '<table class="table table-bordered">' +
+            '<thead> <tr>' +
+            '<th></th>' +
+            '<th>Contri W/o Int</th>' +
+            '<th>Amount Borrowed</th>' +
+            '<th>Payment Received</th>' +
+            '<th>Deficit</th>' +
+            '<th>Int. Earned</th>' +
+            '<th>Est. Int.</th>' +
+            '<th>Total</th>' +
+            '</tr> <thead>' +
+            '<tbody class="summary-body"></tbody> </table>');
+
+
+        for (o = 0; o < year.length; o++) {
+
+            summaryMonth(group, year[o]);
+
+
+
+
+        }
+
+    });
+
+    $('h5.borrow').click(function () {
+        group = $(this).data('borrow');
+
+        //console.log(year.length)
+        $('div.gl-info').empty();
+        for (o = 0; o < year.length; o++) {
+
+            borrowList(group, year[o]);
+
+
+            $('div.gl-info').append(
+                '<div class="card mb-3">' +
+                '<div class="card-header">' +
+                '<h5>' + year[o] + '</h5>' +
+                '</div>' +
+                '<div class="card-body ' + year[o] + '">' +
+                '</div>' +
+                '</div>');
+        }
+
+    });
+
+    $('h5.members').click(function () {
+        group = $(this).data('members');
+
+        //alert(group);
+        $('div.gl-info').empty();
+        members(group)
+    });
+
+    $(document).on('click', '.add-contri', function () {
+        let id = $(this).data('id');
+        let name = $(this).data('name');
+        let group = $(this).data('group');
+
+        console.log(name);
+        $('input.id').val(id);
+        $('input.name').val(name);
+        $('input.group').val(group);
+    });
+
+    function members(group) {
+        /*
+        $('div.gl-info').empty();
+        $('div.gl-info').append(
+            '<table class="table table-bordered member-info">' +
+            '<thead> <tr> <th>Name</th> </tr> </thead>' +
+            '<tbody></tbody>'
+        );
+
+        $('table.member-info tbody').append(
+            '{% for member in group_members %}' +
+            '<tr>' +
+            '<td>' + '{{ member.name }}' + '</td>' +
+            '<tr>'+
+            '{% endfor %}'
+        );
+
+        */
+
+        $.get("Groupleader/members", { group: group }).done(function (data) {
+
+            data = JSON.parse(data);
+            //console.log(data);
+
+            $('div.gl-info').append(
+                '<table class="table table-bordered member-info text-center">' +
+                '<thead> <tr> <th>Name</th> <th></th> </tr> </thead>' +
+                '<tbody></tbody>'
+            );
+            for (i = 0; i < data.length; i++) {
+                dataDetails = {
+                    id: data[i]['id'],
+                    name: data[i]['name'],
+                    group: data[i]['belonging_group']
+                };
+
+                let link = 'member/edit/13'
+                console.log(dataDetails);
+                $('table.member-info tbody').append(
+                    '<tr>' +
+                    '<td>' + dataDetails.name + '</td>' +
+                    '<td><button type="button" class="btn btn-primary add-contri" data-toggle="modal" data-target=".bd-example-modal-sm" data-id="' + dataDetails.id + '" data-name="' + dataDetails.name + '" data-group="' + dataDetails.group + '">Add Contri</button></td>' +
+                    '<tr>'
+                );
+
+            }
+        });
+
+    }
+
+    function contributions(group) {
+        $.get("Groupleader/contributions", { group: group }).done(function (data) {
+
+            data = JSON.parse(data);
+            console.log(data);
+            $('div.gl-info').append(
+                '<table class="table table-bordered member-info">' +
+                '<thead> <tr> <th>Name</th> <th>Contribution</th> <th>Date</th> </tr> </thead>' +
+                '<tbody></tbody>'
+            );
+            for (i = 0; i < data.length; i++) {
+                dataDetails = {
+                    name: data[i]['name'],
+                    contri: data[i]['contri'],
+                    date: data[i]['contri_date']
+                };
+                console.log(dataDetails);
+                $('table.member-info tbody').append(
+                    '<tr>' +
+                    '<td>' + dataDetails.name + '</td>' +
+                    '<td>' + dataDetails.contri + '</td>' +
+                    '<td>' + dataDetails.date + '</td>' +
+                    '<tr>'
+                );
+
+            }
+        });
+
+    }
+
+    function contributionMonth(group, month) {
+        $.get("Groupleader/contributionMonth", { group: group, month: month }).done(function (data) {
+
+            data = JSON.parse(data);
+            console.log(data);
+
+            if (data.length > 0) {
+                $('div.' + month).append(
+                    '<table class="table table-bordered member-info text-center">' +
+                    '<thead> <tr>' +
+                    '<th>Name</th>' +
+                    '<th>Contribution</th>' +
+                    '<th>Total Contribution w/out Interest</th> ' +
+                    '<th>This Month Interest</th> ' +
+                    '<th>Total Interest</th> ' +
+                    '<th>Total Contribution w/ Interest</th> ' +
+                    '</tr> </thead>' +
+                    '<tbody class="' + month + '"></tbody>'
+                );
+                for (i = 0; i < data.length; i++) {
+                    dataDetails = {
+                        name: data[i]['name'],
+                        date: data[i]['contri_date'],
+                        contri: data[i]['contri'],
+                        total_contri_wout_int: data[i]['total_contri_wout_int'],
+                        month_int: data[i]['month_int'],
+                        total_int: data[i]['total_int'],
+                        total_contri_w_int: data[i]['total_contri_w_int']
+                    };
+
+                    $('tbody.' + month).append(
+                        '<tr>' +
+                        '<td>' + dataDetails.name + '</td>' +
+                        '<td>' + dataDetails.contri + '</td>' +
+                        '<td>' + dataDetails.total_contri_wout_int + '</td>' +
+                        '<td>' + dataDetails.month_int + '</td>' +
+                        '<td>' + dataDetails.total_int + '</td>' +
+                        '<td>' + dataDetails.total_contri_w_int + '</td>' +
+                        '<tr>'
+                    );
+
+                }
+            } else {
+                $('div.' + month).append('<div class="text-center"> No Data </div>');
+            }
+
+        });
+
+    }
+
+    function summaryMonth(group, month) {
+        $.get("Groupleader/summaryMonth", { group: group, month: month }).done(function (data) {
+            data = JSON.parse(data);
+            console.log(data.length);
+
+            if (data.length > 0) {
+                
+
+                for (i = 0; i < data.length; i++) {
+                    dataDetails = {
+                        contri_wout_int: data[i]['contri_wout_int'],
+                        amount_borrow: data[i]['amount_borrow'],
+                        payment_rcv: data[i]['payment_rcv'],
+                        deficit: data[i]['deficit'],
+                        interest_earned: data[i]['interest_earned'],
+                        est_earned: data[i]['est_earned'],
+                        total: data[i]['total']
+                    };
+
+                    $('tbody.summary-body').append(
+                        '<tr>' +
+                        '<td>' + month + '</td>' +
+                        '<td>' + dataDetails.contri_wout_int + '</td>' +
+                        '<td>' + dataDetails.amount_borrow + '</td>' +
+                        '<td>' + dataDetails.payment_rcv + '</td>' +
+                        '<td>' + dataDetails.deficit + '</td>' +
+                        '<td>' + dataDetails.interest_earned + '</td>' +
+                        '<td>' + dataDetails.est_earned + '</td>' +
+                        '<td>' + dataDetails.total + '</td>' +
+                        '<tr>'
+                    );
+
+                }
+                
+            } else {
+
+            }
+        });
+
+    }
+
+    function borrowList(group, month) {
+        $.get("Groupleader/borrowList", { group: group, month: month }).done(function (data) {
+            data = JSON.parse(data);
+            console.log(data.length);
+
+            if (data.length > 0) {
+                $('div.' + month).append(
+                    '<table class="table table-bordered member-info text-center">' +
+                    '<thead> <tr>' +
+                    '<th>Name</th>' +
+                    '<th>Principal</th>' +
+                    '<th>Payment</th> ' +
+                    '<th>Remaining</th> ' +
+                    '<th>Int. Acquired</th> ' +
+                    '</tr> </thead>' +
+                    '<tbody class="' + month + '"></tbody>'
+                );
+                for (i = 0; i < data.length; i++) {
+                    dataDetails = {
+                        name: data[i]['name'],
+                        principal: data[i]['principal'],
+                        payment: data[i]['payment'],
+                        remaining: data[i]['remaining'],
+                        int_aqcuired: data[i]['int_acquired']
+                    };
+
+                    $('tbody.' + month).append(
+                        '<tr>' +
+                        '<td>' + dataDetails.name + '</td>' +
+                        '<td>' + dataDetails.principal + '</td>' +
+                        '<td>' + dataDetails.payment + '</td>' +
+                        '<td>' + dataDetails.remaining + '</td>' +
+                        '<td>' + dataDetails.int_aqcuired + '</td>' +
+                        '<tr>'
+                    );
+
+                }
+                
+            } else {
+
+            }
+        });
+
+    }
+
+
+</script>
+
+{% endblock %}

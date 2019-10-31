@@ -61,10 +61,9 @@
             </div>
         </div>
 
-        <div class="row">
-            {% block body %}
-            {% endblock %}
-        </div>
+        {% block body %}
+        {% endblock %}
+        
     </div>
 
     <div class="footer bg-primary">
@@ -78,52 +77,10 @@
     <script src="/js/popper.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            /*
-            var sum = 0;
+    {% block javascript %}
+    {% endblock %}
 
-            $('.aug15').each(function () {
-                var overall = $(this).attr("class");
-                var values = parseFloat($(this).html());
-                sum += isNaN(values) ? 0 : values;
-
-                $('.total' + overall).text(sum)
-            });
-
-            var className = $('td').attr('class');
-            console.log(('tr:first-child').length);
-            */
-            
-            $('tr:first-child td').each(function () {
-                var tdname = $(this).attr("class");
-                console.log(tdname);
-                var sum = 0;
-
-                $('.'+tdname).each(function () {
-                    var values = parseFloat($(this).html());
-                    sum += isNaN(values) ? 0 : values;
-
-                    $('.total' + tdname).text(sum)
-                });
-            })
-        });
-        /*
-        $(document).ready(function () {
-            var sum = 0;
-
-            $('.aug31').each(function () {
-                var values = parseFloat($(this).html());
-                    sum += isNaN(values) ? 0 : values;
-
-                var overall = $(this).attr("class")
-
-                $('.total'+overall).text(sum)
-            });
-
-        });
-        */
-    </script>
+    
 
 </body>
 

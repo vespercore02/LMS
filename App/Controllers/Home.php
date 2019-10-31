@@ -8,6 +8,7 @@ use \App\Models\Announcement;
 use \App\Models\loan;
 use \App\Models\Contribution;
 use \App\Models\User;
+use \App\Models\Group;
 
 /**
  * Home controller
@@ -26,36 +27,61 @@ class Home extends \Core\Controller
     {
         if (isset($_SESSION['user_id'])) {
             # code...
-            $contri_records         = Contribution::records($_SESSION['user_id']);
-            $loan_records           = Loan::records($_SESSION['user_id']);
-            $loan_info              = Loan::info($_SESSION['user_id']);
-            $rights                 = User::findByID($_SESSION['user_id']);
-            $group_members          = User::getGroupMembers($rights['belonging_group'], $_SESSION['user_id']);
-            $group_members_contri   = Contribution::getGroupMembersContri($rights['belonging_group']);
-            $members_count = count($group_members);
-            /*
-            echo "<pre>";
-            print_r($group_members_contri);
-            echo "</pre>";
-            */
-            $announcement = Announcement::load();
+            $user_info  = User::findByID($_SESSION['user_id']);
 
-            View::renderTemplate('Home/index.html',[
-                'announcements' => $announcement,
-                'contri_records'=> $contri_records,
-                'loan_records'  => $loan_records,
-                'loan_info'     => $loan_info,
-                'rights'        => $rights,
-                'group_members' => $group_members,
-                'group_members_contri' => $group_members_contri
-            ]);
+            switch ($user_info['access_rights']) {
+                case '0':
+                    # code...
 
-            //print_r($group_members);
-            //echo $rights['access_rights'];
-        }else {
+                    View::renderTemplate('Home/index-borrower.html');
+
+                    break;
+
+                case '1':
+                    # code...
+
+                    View::renderTemplate('Home/index-member.html');
+
+                    break;
+
+                case '2':
+                    # code...
+
+                    $group_info     = Group::getGroupInfo($user_info['belonging_group']);
+
+                    View::renderTemplate('Home/index-groupleader.html', [
+                        'group_info' => $group_info
+                    ]);
+
+                    break;
+
+                case '9':
+                    # code...
+
+                    View::renderTemplate('Home/index-admin.html');
+
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+        } else {
             # code...
-            View::renderTemplate('Home/index.html');
+            View::renderTemplate('Login/new.html');
         }
-        
+    }
+
+    public function groupmonthdetails()
+    {
+        if (isset($_GET['month']) and isset($_GET['group'])) {
+            # code...
+            
+            $contri =  Contribution::getGroupMonthlyContri($_GET['month'], $_GET['group']);
+
+            echo json_encode($contri);
+
+            //print_r($contri);
+        }
     }
 }

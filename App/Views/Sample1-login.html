@@ -1,0 +1,279 @@
+<html>
+
+<head>
+    <title>HotSpot Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <style>
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #689Eb8;
+        }
+
+        .header {
+            height: 25%;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .login {
+            background-color: #eae6df;
+            padding-bottom: 50px;
+        }
+
+
+        .login-header {
+            display: flex;
+        }
+
+        .login-title {
+            position: relative;
+            padding: 0 20px;
+            border: 3px solid lightblue;
+            border-radius: 55px;
+            margin: auto;
+            background-color: white;
+            top: -50px;
+        }
+
+        .login-body {
+            margin: 0;
+            display: flex;
+            margin-top: -30px;
+        }
+
+        .login-body form {
+            margin: auto;
+        }
+
+        .username,
+        .password {
+            width: 100%;
+            margin: 10 0;
+        }
+
+        .username input,
+        .password input {
+            font-size: 15px;
+            padding: 5px;
+            margin: 10px;
+            border: 1px solid grey;
+            border-radius: 4px;
+        }
+
+        .username input:focus,
+        .password input:focus {
+            border: 2px solid lightblue;
+            border-radius: 4px;
+        }
+
+        label {
+            text-align: right;
+        }
+
+        .btn {
+            width: 90%;
+            padding: 10px;
+            margin: 10px;
+            background-color: #ff5a60;
+            border: 1px solid #ff5a60;
+            border-radius: 4px;
+            color: #eae6df;
+        }
+
+        .btn:focus {
+            width: 90%;
+            padding: 10px;
+            margin: 10px;
+            background-color: lightblue;
+            border: 1px solid lightblue;
+            border-radius: 3px;
+        }
+
+        .btn:active {
+            width: 90%;
+            padding: 10px;
+            margin: 10px;
+            background-color: lightblue;
+            border: 1px solid lightblue;
+            border-radius: 3px;
+        }
+
+        .plan {}
+
+        .plan-header {
+            display: flex;
+        }
+
+        .plan-title {
+            position: relative;
+            padding: 0 20px;
+            border: 3px solid lightblue;
+            border-radius: 55px;
+            margin: auto;
+            background-color: white;
+            top: -35px
+        }
+
+        .plan-body {
+            padding-top: 20px;
+        }
+
+        .plan-content {
+            width: 50%;
+            margin: auto;
+            margin-bottom: 20px;
+            display: flex;
+        }
+
+        .plan-name {
+            width: 70%;
+            padding: 10px;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            background-color: #eae6df;
+            border-radius: 4px;
+        }
+
+        .plan-rate {
+            padding: 10px;
+            text-align: center;
+            font-size: 15px;
+            background-color: #ff5a60;
+            border-left: 3px dashed black;
+        }
+        .voucher{
+            display: flex;
+            width: 50%;
+            margin: auto;
+            border: 1px solid black;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .voucher-account {
+            width: 70%;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            background-color: #eae6df;
+            border-radius: 4px;
+        }
+        .voucher-username {
+            margin: 10px 0;
+        }
+        .voucher-plan {
+            width: 30%;
+            text-align: center;
+            font-size: 15px;
+            background-color: #ff5a60;
+            border-left: 3px dashed black;
+        }
+
+        .voucher-valid,
+        .voucher-time,
+        .voucher-price{
+            padding: 4px 0;;
+        }
+        .voucher-valid{
+            border-top: 2px solid black;
+            border-bottom: 2px solid black;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+
+    </div>
+    <div class="container">
+        <div class="login">
+            <div class="login-header">
+                <div class="login-title">
+                    <h1>HotSpot Login</h1>
+                </div>
+            </div>
+            <div class="login-body">
+                <form action="" method="post">
+                    <div class="username">
+                        <input type="text" name="username" placeholder="Username">
+                    </div>
+
+                    <div class="password">
+                        <input type="text" name="password" id="" placeholder="Password">
+                    </div>
+
+                    <button class="btn" type="submit">Login</button>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="plan">
+            <div class="plan-header">
+                <div class="plan-title">
+                    <h3>Our Plan</h3>
+                </div>
+            </div>
+            <div class="plan-body">
+                <div class="plan-content">
+                    <div class="plan-name">
+                        1 Hour
+                    </div>
+                    <div class="plan-rate">
+                        Php. 15.00
+                    </div>
+                </div>
+
+                <div class="plan-content">
+                    <div class="plan-name">
+                        4 Hours
+                    </div>
+                    <div class="plan-rate">
+                        Php. 50.00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="voucher">
+            <div class="voucher-account">
+                <div class="voucher-username">
+                    <label for="">Username :</label> % username% 
+                </div>
+                <div class="voucher-password">
+                    <label for="">Password :</label> % password%
+                </div>
+            </div>
+            <div class="voucher-plan">
+                <div class="voucher-time">
+                    hour
+                </div>
+                <div class="voucher-valid">
+                    days
+                </div>
+                <div class="voucher-price">
+                    Php
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="footer">
+        yeah
+    </div>
+
+</body>
+
+</html>

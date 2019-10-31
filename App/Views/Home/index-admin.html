@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-body">
+
+                <div class="text-center mb-4">
+
+
+                    <h4>Admin Tools</h4>
+
+
+                </div>
+                <div class="form-group row mb-3">
+
+                    <div class="col-sm-1"></div>
+
+                    <button class="btn btn-success col-sm-4"
+                        onclick="location.href='/admin/users/members';">Members</button>
+
+
+                    <div class="col-sm-2"></div>
+
+                    <button class="btn btn-success col-sm-4" onclick="location.href='/admin/users/loan-form';">Loan
+                        Form</button>
+
+                    <div class="col-sm-1"></div>
+                </div>
+
+                <div class="form-group row mb-3">
+
+                    <div class="col-sm-1"></div>
+
+                    <button class="btn btn-success col-sm-4"
+                        onclick="location.href='/admin/users/groups';">Groups</button>
+
+                    <div class="col-sm-2"></div>
+
+                    <button class="btn btn-success col-sm-4"
+                        onclick="location.href='/admin/users/announcement-form';">Announcement Form</button>
+
+                    <div class="col-sm-1"></div>
+                </div>
+
+                <div class="form-group row mb-3">
+
+                    <div class="col-sm-1"></div>
+
+                    <button class="btn btn-success col-sm-4"
+                        onclick="location.href='/admin/users/access';">Access</button>
+
+                    <div class="col-sm-2"></div>
+
+
+
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="text-center">
+
+
+                    <h4>View Data</h4>
+
+
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-lg text-center">
+                        <h5 class="contributions">Contribution</h5>
+                    </div>
+
+                    <div class="col-lg text-center">
+                        <h5 class="summary">Summary</h5>
+                    </div>
+
+
+                    <div class="col-lg text-center">
+                        <h5>Borrow</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-body admin-info">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    let group, i, o;
+    let year = ["2019-10-15", "2019-10-31", "2019-11-15", "2019-11-30", "2019-12-15", "2019-12-31",
+        "2020-01-15", "2020-01-31", "2020-02-15", "2020-02-28", "2020-03-15", "2020-03-31",
+        "2020-04-15", "2020-04-30", "2020-05-15", "2020-05-31", "2020-06-15", "2020-06-30",
+        "2020-07-15", "2020-07-31", "2020-08-15", "2020-08-31", "2020-09-15", "2020-09-30"];
+
+
+    $('h5.contributions').click(function () {
+
+        $('div.admin-info').empty();
+        for (o = 0; o < year.length; o++) {
+
+            contributionMonth(year[o]);
+
+
+            $('div.admin-info').append(
+                '<div class="card mb-3">' +
+                '<div class="card-header">' +
+                '<h5>' + year[o] + '</h5>' +
+                '</div>' +
+                '<div class="card-body ' + year[o] + '">' +
+                '</div>' +
+                '</div>');
+
+        }
+    });
+
+    $('h5.summary').click(function () {
+
+        $('div.admin-info').empty();
+        for (o = 0; o < year.length; o++) {
+
+            summaryMonth(year[o]);
+
+
+            $('div.admin-info').append(
+                '<div class="card mb-3">' +
+                '<div class="card-header">' +
+                '<h5>' + year[o] + '</h5>' +
+                '</div>' +
+                '<div class="card-body ' + year[o] + '">' +
+                '</div>' +
+                '</div>');
+
+        }
+    });
+
+    function contributionMonth(month) {
+        $.get("Admin/contributionMonth", { month: month }).done(function (data) {
+
+            data = JSON.parse(data);
+            //console.log(data1);
+
+            if (data.length > 0) {
+                $('div.' + month).append(
+                    '<table class="table table-bordered member-info text-center">' +
+                    '<thead> <tr>' +
+                    '<th>Name</th>' +
+                    '<th>Contribution</th>' +
+                    '<th>Total Contribution w/out Interest</th> ' +
+                    '<th>This Month Interest</th> ' +
+                    '<th>Total Interest</th> ' +
+                    '<th>Total Contribution w/ Interest</th> ' +
+                    '</tr> </thead>' +
+                    '<tbody class="' + month + '"></tbody>'
+                );
+                for (i = 0; i < data.length; i++) {
+                    dataDetails = {
+                        name: data[i]['name'],
+                        date: data[i]['contri_date'],
+                        contri: data[i]['contri'],
+                        total_contri_wout_int: data[i]['total_contri_wout_int'],
+                        month_int: data[i]['month_int'],
+                        total_int: data[i]['total_int'],
+                        total_contri_w_int: data[i]['total_contri_w_int']
+                    };
+
+                    $('tbody.' + month).append(
+                        '<tr>' +
+                        '<td>' + dataDetails.name + '</td>' +
+                        '<td class="contri">' + dataDetails.contri + '</td>' +
+                        '<td>' + dataDetails.total_contri_wout_int + '</td>' +
+                        '<td>' + dataDetails.month_int + '</td>' +
+                        '<td>' + dataDetails.total_int + '</td>' +
+                        '<td>' + dataDetails.total_contri_w_int + '</td>' +
+                        '<tr>'
+                    );
+
+
+
+                }
+
+
+                console.log('tr.total_' + month);
+                $('div.' + month + ' td.contri').each(function () {
+                    tdname = $(this).attr("class");
+                    //console.log(tdname);
+                    var sum = 0;
+                    $('.' + tdname).each(function () {
+                        values = parseFloat($(this).text());
+                        sum += isNaN(values) ? 0 : values;
+
+                        //$('.total_' + tdname).text(sum);
+
+                        //console.log(sum);
+
+
+                    });
+
+                    $('tr.total_' + month).remove();
+                    $('tbody.' + month).append(
+                        '<tr class="total_' + month + '">' +
+                        '<td>Total </td>' +
+                        '<td class="total_contri">' + sum + '</td>' +
+                        '<td>' + dataDetails.total_contri_wout_int + '</td>' +
+                        '<td>' + dataDetails.month_int + '</td>' +
+                        '<td>' + dataDetails.total_int + '</td>' +
+                        '<td>' + dataDetails.total_contri_w_int + '</td>' +
+                        '<tr>'
+                    );
+                });
+            } else {
+                $('div.' + month).append('<div class="text-center"> No Data </div>');
+            }
+
+        });
+
+    }
+
+
+    function summaryMonth(month){
+        $.get("Admin/summaryMonth", { month: month }).done(function (data) {
+
+            data = JSON.parse(data);
+            //console.log(data1);
+
+            if (data.length > 0) {
+                $('div.' + month).append(
+                    '<table class="table table-bordered member-info text-center">' +
+                    '<thead> <tr>' +
+                    '<th>Month</th>' +
+                    '<th>Contri w/out Int.</th>' +
+                    '<th>AMT BORW</th> ' +
+                    '<th>Payment RCV</th> ' +
+                    '<th>Deficit</th> ' +
+                    '<th>Int. earned</th> ' +
+                    '<th>Est. Int. </th> ' +
+                    '<th>Total</th> ' +
+                    '</tr></thead>' +
+                    '<tbody class="' + month + '"></tbody>'
+                );
+                for (i = 0; i < data.length; i++) {
+                    dataDetails = {
+                        date: data[i]['date'],
+                        contri_wout_int: data[i]['contri_wout_int'],
+                        amount_borrow: data[i]['amount_borrow'],
+                        payment_rcv: data[i]['payment_rcv'],
+                        deficit: data[i]['deficit'],
+                        interest_earned: data[i]['interest_earned'],
+                        est_earned: data[i]['est_earned'],
+                        total: data[i]['total']
+                    };
+
+                    $('tbody.' + month).append(
+                        '<tr>' +
+                        '<td>' + dataDetails.date + '</td>' +
+                        '<td class="contri">' + dataDetails.contri_wout_int + '</td>' +
+                        '<td>' + dataDetails.amount_borrow + '</td>' +
+                        '<td>' + dataDetails.payment_rcv + '</td>' +
+                        '<td>' + dataDetails.deficit + '</td>' +
+                        '<td>' + dataDetails.interest_earned + '</td>' +
+                        '<td>' + dataDetails.est_earned + '</td>' +
+                        '<td>' + dataDetails.total + '</td>' +
+                        '<tr>'
+                    );
+
+
+
+                }
+
+
+                console.log('tr.total_' + month);
+                $('div.' + month + ' td.contri').each(function () {
+                    tdname = $(this).attr("class");
+                    //console.log(tdname);
+                    var sum = 0;
+                    $('.' + tdname).each(function () {
+                        values = parseFloat($(this).text());
+                        sum += isNaN(values) ? 0 : values;
+
+                        //$('.total_' + tdname).text(sum);
+
+                        //console.log(sum);
+
+
+                    });
+
+                    
+                });
+            } else {
+                $('div.' + month).append('<div class="text-center"> No Data </div>');
+            }
+
+        });
+
+    }
+</script>
+{% endblock %}

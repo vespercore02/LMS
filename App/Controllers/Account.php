@@ -39,4 +39,21 @@ class Account extends \Core\Controller
         header('Content-Type: application/json');
         echo json_encode($return_arr);
     }
+
+    public function getId()
+    {
+        $is_valid = User::searchById($_GET['term']);
+        
+        
+        $return_arr = array();
+
+        foreach ($is_valid as $value) {
+            # code...
+            $return_arr[] = $value['id']." - ". $value['name']." - ". $value['email']." - ".$value['belonging_group'] ;
+        }
+        header('Content-Type: application/json');
+        echo json_encode($return_arr);
+    }
+
+
 }

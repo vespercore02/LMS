@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use \Core\View;
 use \App\Models\User;
+use \App\Models\Group;
 use \App\Models\Loan;
 use \App\Models\Announcement;
 use \App\Models\Contribution;
@@ -215,7 +216,7 @@ class Users extends \App\Controllers\Authenticated
         } else {
             $members = User::getMembers();
         
-            $groups = User::getGroups();
+            $groups = Group::getGroups();
 
             $accesses = User::getAccessRights();
 
@@ -253,6 +254,18 @@ class Users extends \App\Controllers\Authenticated
                 'user' => $user
             ]);
             }
+        }
+    }
+
+    public function editmemberAction()
+    {
+
+        if ($_POST) {
+            # code...
+
+            print_r($_POST);
+
+            $edit_member = new User($_POST);
         }
     }
 
@@ -303,7 +316,7 @@ class Users extends \App\Controllers\Authenticated
      */
     public function groupsAction()
     {
-        $groups = User::getGroups();
+        $groups = Group::getGroups();
 
         View::renderTemplate('Admin/groups.html', [
             'groups' => $groups
@@ -326,11 +339,13 @@ class Users extends \App\Controllers\Authenticated
             if ($groups->saveGroups()) {
                 # code...
 
-                Flash::addMessage('Access Rights successful added');
+                Group::groupAddInfo($groups->saveGroups());
+
+                Flash::addMessage('Group successful added');
 
                 $this->redirect('/admin/users/groups');
             } else {
-                Flash::addMessage('Access Rights Failed added', WARNING);
+                Flash::addMessage('Group Failed added', WARNING);
 
                 $this->redirect('/admin/users/groups');
             }

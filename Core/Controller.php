@@ -102,7 +102,7 @@ abstract class Controller
 
             Auth::rememberRequestedPage();
 
-            $this->redirect('/loan/public/login');
+            $this->redirect('/login');
         }
     }
 }
