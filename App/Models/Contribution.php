@@ -56,6 +56,37 @@ class Contribution extends \Core\Model
         }
     }
 
+    public function update()
+    {
+        $sql = 'UPDATE contribution_records
+                SET month_int = :month_int,
+                total_contri_w_int = :total_contri_w_int
+                WHERE contribution_id = :contribution_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':month_int', $this->month_int, PDO::PARAM_STR);
+        $stmt->bindValue(':total_contri_w_int', $this->total_contri_w_int, PDO::PARAM_STR);
+        $stmt->bindValue(':contribution_id', $this->contribution_id, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    public static function view($date)
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE contri_date = :contri_date';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':contri_date', $date);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /**
      *
      * Update saved records of member on term_records database

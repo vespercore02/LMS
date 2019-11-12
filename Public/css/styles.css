@@ -12,3 +12,17 @@
 .alert-warning {
     background-color: #fcf8e3;
 }
+
+
+body {
+    background-color: #D3D3D3;
+}
+
+.footer {
+    padding: 20px;
+    max-height: 70px;
+}
+
+.greener {
+    background-color: #4CC936;
+}

@@ -31,14 +31,56 @@ class Payment extends \Core\Model
         };
     }
 
-    public function paymentList()
+    public function paymentUpdate()
     {
+        $sql = 'UPDATE payment_records 
+        set amount_paid = :amount_paid,
+        amount_to_be_paid = :amount_to_be_paid 
+        where borrow_id = :borrow_id 
+        and date_of_payment = :date_of_payment';
 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':amount_paid', $this->amount);
+        $stmt->bindValue(':amount_to_be_paid', $this->amount_to_be_paid);
+        $stmt->bindValue(':borrow_id', $this->borrow_id);
+        $stmt->bindValue(':date_of_payment', $this->date_to_pay);
+
+        $stmt->execute();
+    }
+
+    public function paymentToUpdateList()
+    {
+        $sql = 'SELECT * FROM payment_records WHERE borrow_id = :borrow_id and id > :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':borrow_id', $this->borrow_id);
+        $stmt->bindValue(':id', $this->id);
+
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function paymentList($id)
+    {
+        $sql = 'SELECT * FROM payment_records WHERE borrow_id = :borrow_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':borrow_id', $id);
+
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function constructPaymentList()
     {
-        
         $date = explode('-', $this->cut_off); // explode to get array of YY-MM-DD
 
         // when trigger a button to change the day value.
@@ -135,14 +177,11 @@ class Payment extends \Core\Model
                 echo $month_last_day." ".$monthly_payment."<br>";
                 $y++;
             }
-
-            
         }
     }
 
     public function addPaymentlist($date, $int)
     {
-        
         $sql = 'INSERT INTO payment_records (borrow_id, date_of_payment, amount_to_be_paid)
                     VALUES (:borrow_id, :date_of_payment, :amount_to_be_paid)';
 
@@ -154,7 +193,5 @@ class Payment extends \Core\Model
         $stmt->bindValue(':amount_to_be_paid', $int);
 
         $stmt->execute();
-        
     }
-    
 }

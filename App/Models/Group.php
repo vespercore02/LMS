@@ -383,5 +383,30 @@ class Group extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function groupBorrowMonth($group_id, $month)
+    {
+        $sql = 'SELECT users.name, 
+        borrow_records.principal, 
+        borrow_records.date_borrow,
+        borrow_records.payment, 
+        borrow_records.remaining, 
+        borrow_records.int_acquired
+        FROM users 
+        LEFT JOIN borrow_records ON users.id = borrow_records.user_id
+        WHERE borrow_records.belonging_group = :group_id 
+        AND borrow_records.date = :month
+        ORDER BY borrow_records.date ASC';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':group_id', $group_id, PDO::PARAM_INT);
+        $stmt->bindValue(':month', $month);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     
 }

@@ -37,4 +37,16 @@ class Admin extends \App\Controllers\Authenticated
             echo json_encode($summary);
         }
     }
+
+    public function borrowMonth()
+    {
+        if (isset($_GET['month'])) {
+            # code...
+
+            $borrow          = Borrow::getMonthBorrowRecords($_GET['month']);
+
+            echo json_encode($borrow);
+            
+        }
+    }
 }

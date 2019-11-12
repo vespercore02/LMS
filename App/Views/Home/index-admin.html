@@ -92,7 +92,7 @@
 
 
                     <div class="col-lg text-center">
-                        <h5>Borrow</h5>
+                        <h5 class="borrow">Borrow</h5>
                     </div>
                 </div>
             </div>
@@ -103,12 +103,8 @@
 
 <div class="row">
     <div class="col-lg-1"></div>
-    <div class="col-lg-10">
-        <div class="card">
-            <div class="card-body admin-info">
-
-            </div>
-        </div>
+    <div class="col-lg-10 admin-info">
+        
     </div>
     <div class="col-lg-1"></div>
 </div>
@@ -163,8 +159,28 @@
         }
     });
 
+    $('h5.borrow').click(function () {
+
+        $('div.admin-info').empty();
+        for (o = 0; o < year.length; o++) {
+
+            borrowMonth(year[o]);
+
+
+            $('div.admin-info').append(
+                '<div class="card mb-3">' +
+                '<div class="card-header">' +
+                '<h5>' + year[o] + '</h5>' +
+                '</div>' +
+                '<div class="card-body ' + year[o] + '">' +
+                '</div>' +
+                '</div>');
+
+        }
+    });
+
     function contributionMonth(month) {
-        $.get("Admin/contributionMonth", { month: month }).done(function (data) {
+        $.get("/Admin/contributionMonth", { month: month }).done(function (data) {
 
             data = JSON.parse(data);
             //console.log(data1);
@@ -246,8 +262,8 @@
     }
 
 
-    function summaryMonth(month){
-        $.get("Admin/summaryMonth", { month: month }).done(function (data) {
+    function summaryMonth(month) {
+        $.get("/Admin/summaryMonth", { month: month }).done(function (data) {
 
             data = JSON.parse(data);
             //console.log(data1);
@@ -313,8 +329,93 @@
 
                     });
 
-                    
+
                 });
+            } else {
+                $('div.' + month).append('<div class="text-center"> No Data </div>');
+            }
+
+        });
+
+    }
+
+    function borrowMonth(month) {
+        $.get("/Admin/borrowMonth", { month: month }).done(function (data) {
+            data = JSON.parse(data);
+            //console.log(data1);
+
+            if (data.length > 0) {
+                $('div.' + month).append(
+                    '<table class="table table-bordered member-info text-center">' +
+                    '<thead> <tr>' +
+                    '<th>Name</th>' +
+                    '<th>Date</th>' +
+                    '<th>Principal</th> ' +
+                    '<th>Payment</th> ' +
+                    '<th>Remaining</th> ' +
+                    '<th>Interest Acquired</th> ' +
+                    '</tr> </thead>' +
+                    '<tbody class="' + month + '"></tbody>'
+                );
+                for (i = 0; i < data.length; i++) {
+                    dataDetails = {
+                        id: data[i]['id'],
+                        name: data[i]['name'],
+                        date_borrow: data[i]['date_borrow'],
+                        principal: data[i]['principal'],
+                        payment: data[i]['payment'],
+                        remaining: data[i]['remaining'],
+                        int_acquired: data[i]['int_acquired']
+                    };
+
+                    $('tbody.' + month).append(
+                        '<tr>' +
+                        '<td> <a href="/payment/view/' + dataDetails.id + '">' + dataDetails.name + '</a></td>' +
+                        '<td>' + dataDetails.date_borrow + '</td>' +
+                        '<td class="principal">' + dataDetails.principal + '</td>' +
+                        '<td class="payment">' + dataDetails.payment + '</td>' +
+                        '<td class="remaining">' + dataDetails.remaining + '</td>' +
+                        '<td class="int_acquired">' + dataDetails.int_acquired + '</td>' +
+                        '<tr>'
+                    );
+
+
+
+                }
+
+                $('tr.total_' + month).remove();
+                $('tbody.' + month).append(
+                    '<tr class="total_' + month + '">' +
+                    '<td colspan="2">Total </td>' +
+                    '<td class="total_principal"></td>' +
+                    '<td class="total_payment"></td>' +
+                    '<td class="total_remaining"></td>' +
+                    '<td class="total_int_acquired"></td>' +
+                    '<tr>'
+                );
+
+                console.log('tr.total_' + month);
+
+                let tabs = ['principal', 'payment', 'remaining', 'int_acquired'];
+
+                for (t = 0; t < tabs.length; t++) {
+                    $('div.' + month + ' td.' + tabs[t]).each(function () {
+                        tdname = $(this).attr("class");
+                        //console.log(tdname);
+                        let sum = 0;
+                        $('.' + tdname).each(function () {
+                            values = parseFloat($(this).text());
+                            sum += isNaN(values) ? 0 : values;
+
+                            $('.total_' + tdname).text(sum);
+
+                        });
+                    });
+
+                }
+
+
+
             } else {
                 $('div.' + month).append('<div class="text-center"> No Data </div>');
             }

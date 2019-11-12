@@ -92,14 +92,15 @@ class Groupleader extends \App\Controllers\Authenticated
         }
     }
 
-    public function borrowList()
+    public function borrowMonth()
     {
         if (isset($_GET['group']) and isset($_GET['month'])) {
             # code...
 
-            $group_contributions          = Borrow::borrowList($_GET['group'], $_GET['month']);
+            $group_borrow         = Group::groupBorrowMonth($_GET['group'], $_GET['month']);
 
-            echo json_encode($group_contributions);
+            echo json_encode($group_borrow);
+
         }
     }
 }

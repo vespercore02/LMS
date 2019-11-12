@@ -18,6 +18,18 @@ class Borrow extends Authenticated
         View::renderTemplate('borrow/index.html');
     }
 
+    public function borrowMonth()
+    {
+        if (isset($_GET['month'])) {
+            # code...
+
+            $borrow          = Mborrow::getMonthBorrowRecords($_GET['month']);
+
+            echo json_encode($borrow);
+
+        }
+    }
+
     public function addBorrower()
     {
         $BorrowerInfo = explode(" - ", $_POST['borrow_by']);
