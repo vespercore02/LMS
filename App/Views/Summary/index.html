@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Summary{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-12 col-lg-12 col-xl-12">
+        <div class="card mb-3">
+
+            <div class="card-body">
+                <h5>Summary</h5>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                {% for term in terms %}
+                <button type="button" class="btn btn-success col-4 col-lg-4 col-xl-3 mb-1" data-term="{{ term.term }}">
+                    {{ term.term }} </button>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12 col-lg-12 mb-5">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="">Term </h5>
+                <h4 class="term"> </h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-center table-flush">
+                    <thead class="font-weight-bold">
+                        <tr>
+                            <td>Month</td>
+                            <td>Contri w/o Int </td>
+                            <td>Amt Borrow</td>
+                            <td>Payment Rcv</td>
+                            <td>Deficit </td>
+                            <td>Int Earned</td>
+                            <td>Est Int</td>
+                            <td>Total</td>
+                        </tr>
+                    </thead>
+                    <tbody class="term-months">
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+    let term, month;
+    let tabs = ['contri', 'borrow', 'payment', 'deficit', 'earned', 'estimate', 'con_int'];
+
+    $('button').click(function () {
+        term = $(this).data('term');
+
+        $('.term').empty();
+        $('.term').append(term);
+        //alert(term);
+        months(term);
+    });
+
+    function months(year) {
+        $.get("/summarys/termSummary", { term: year }).done(function (data) {
+
+            data = JSON.parse(data);
+
+            showSummary(year, data);
+
+        });
+    }
+
+    function showSummary(date, data) {
+        
+    let contri = 0, borrow = 0, payment = 0, deficit = 0, earned = 0, estimate = 0, con_int = 0
+
+        $('tbody.term-months').empty();
+
+        for (let index = 0; index < data.length; index++) {
+
+            dataDetails = {
+                date :data[index]['date'],
+                contri_wout_int: data[index]['contri_wout_int'],
+                amount_borrow: data[index]['amount_borrow'],
+                payment_rcv: data[index]['payment_rcv'],
+                deficit: data[index]['deficit'],
+                interest_earned: data[index]['interest_earned'],
+                est_earned: data[index]['est_earned']
+            };
+
+            $('tbody.term-months').append(
+                '<tr><td> ' + dataDetails.date +
+                '</td> <td class="contri"> ' + dataDetails.contri_wout_int +
+                '</td> <td class="borrow"> ' + dataDetails.amount_borrow +
+                '</td> <td class="payment"> ' + dataDetails.payment_rcv +
+                '</td> <td class="deficit"> ' + dataDetails.deficit +
+                '</td> <td class="earned"> ' + dataDetails.interest_earned +
+                '</td> <td class="estimate"> ' + dataDetails.est_earned +
+                '</td> <td class="con_int"> ' + dataDetails.contri_wout_int + dataDetails.interest_earned +
+                '</td> </tr>'
+            );
+            
+            contri += dataDetails.contri_wout_int << 0;
+            borrow += dataDetails.amount_borrow << 0;
+            payment += dataDetails.payment_rcv << 0;
+            deficit += dataDetails.deficit << 0;
+            earned += dataDetails.interest_earned << 0;
+            estimate += dataDetails.est_earned << 0;
+            con_int += dataDetails.contri_wout_int + dataDetails.interest_earned << 0;
+
+        }
+
+        $('tbody.term-months').append(
+            '<tr><td> TOTAL ' +
+            '</td> <td class="total_contri"> ' + contri +
+            '</td> <td class="total_borrow"> ' + borrow +
+            '</td> <td class="total_payment"> ' + payment +
+            '</td> <td class="total_deficit"> ' + deficit +
+            '</td> <td class="total_earned"> ' + earned +
+            '</td> <td class="total_estimate"> ' + estimate +
+            '</td> <td class="total_con_int"> ' + con_int +
+            '</td> </tr>'
+        );
+    }
+
+
+</script>
+
+{% endblock %}

@@ -60,21 +60,19 @@ class Groupleader extends \App\Controllers\Authenticated
         if ($add_contri->groupAddContribution()) {
             # code...
 
-            $add_contri->summaryUpdateContri();
-
             $update_summary->updateSummaryContri();
 
             $add_contri->groupUpdateInfo();
 
             Flash::addMessage('Contribution is successful added');
 
-            $this->redirect('/');
+            $this->redirect('/members/view/'.$_POST['id']);
 
         }else {
             # code...
             Flash::addMessage('Contribution for this date '.$_POST['month'].' and this person '.$_POST['name'].' is already set', "warning");
 
-            $this->redirect('/');
+            $this->redirect('/members/view/'.$_POST['id']);
         }
         
 

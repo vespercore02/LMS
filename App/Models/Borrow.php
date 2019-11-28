@@ -79,6 +79,11 @@ class Borrow extends \Core\Model
         $stmt->execute();
     }
 
+    public static function viewMember($id)
+    {
+        
+    }
+
 
     public function updateSummaryBorrow()
     {

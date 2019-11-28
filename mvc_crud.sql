@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2019 at 01:17 AM
+-- Generation Time: Nov 28, 2019 at 01:29 AM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -109,17 +109,6 @@ CREATE TABLE `borrow_records` (
   `months_to_pay` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `borrow_records`
---
-
-INSERT INTO `borrow_records` (`id`, `user_id`, `belonging_group`, `date`, `date_borrow`, `principal`, `payment`, `remaining`, `int_acquired`, `interest_rate`, `months_to_pay`) VALUES
-(27, 13, '3', '2019-10-31', '2019-11-02', '10000', '', '10408', '', '.34', '12'),
-(28, 13, '3', '2019-10-31', '2019-11-02', '10000', '', '10408', '', '.34', '12'),
-(29, 3, '0', '2019-10-31', '2019-10-31', '15000', '', '15288', '', '.16', '12'),
-(30, 12, '3', '2019-10-31', '2019-10-31', '20000', '', '20384', '', '.16', '12'),
-(31, 12, '3', '2019-10-31', '2019-10-31', '20000', '', '20384', '', '.16', '12');
-
 -- --------------------------------------------------------
 
 --
@@ -144,57 +133,10 @@ CREATE TABLE `contribution_records` (
 --
 
 INSERT INTO `contribution_records` (`contribution_id`, `user_id`, `belonging_group`, `term_id`, `contri_date`, `contri`, `total_contri_wout_int`, `month_int`, `total_int`, `total_contri_w_int`) VALUES
-(1, 11, 3, 0, '2019-10-15', '15000', '', '', '', ''),
-(2, 13, 3, 0, '2019-10-15', '25000', '', '', '', ''),
-(4, 14, 3, 0, '2019-10-15', '10000', '', '', '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contribution_term_records`
---
-
-CREATE TABLE `contribution_term_records` (
-  `contribution_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `belonging_group` int(11) NOT NULL,
-  `term_id` int(11) NOT NULL,
-  `jan15` int(11) DEFAULT NULL,
-  `jan31` int(11) DEFAULT NULL,
-  `feb15` int(11) DEFAULT NULL,
-  `feb28` int(11) DEFAULT NULL,
-  `mar15` int(11) DEFAULT NULL,
-  `mar31` int(11) DEFAULT NULL,
-  `apr15` int(11) DEFAULT NULL,
-  `apr30` int(11) DEFAULT NULL,
-  `may15` int(11) DEFAULT NULL,
-  `may31` int(11) DEFAULT NULL,
-  `jun15` int(11) DEFAULT NULL,
-  `jun30` int(11) DEFAULT NULL,
-  `jul15` int(11) DEFAULT NULL,
-  `jul31` int(11) DEFAULT NULL,
-  `aug15` int(11) DEFAULT NULL,
-  `aug31` int(11) DEFAULT NULL,
-  `sep15` int(11) DEFAULT NULL,
-  `sep30` int(11) DEFAULT NULL,
-  `oct15` int(11) DEFAULT NULL,
-  `oct31` int(11) DEFAULT NULL,
-  `nov15` int(11) DEFAULT NULL,
-  `nov30` int(11) DEFAULT NULL,
-  `dec15` int(11) DEFAULT NULL,
-  `dec31` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `contribution_term_records`
---
-
-INSERT INTO `contribution_term_records` (`contribution_id`, `name`, `user_id`, `belonging_group`, `term_id`, `jan15`, `jan31`, `feb15`, `feb28`, `mar15`, `mar31`, `apr15`, `apr30`, `may15`, `may31`, `jun15`, `jun30`, `jul15`, `jul31`, `aug15`, `aug31`, `sep15`, `sep30`, `oct15`, `oct31`, `nov15`, `nov30`, `dec15`, `dec31`) VALUES
-(8, 'Ice Frozen', 12, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10000, 20000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, 'Sand Castle', 13, 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20000, 20000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 'Power Ranger', 14, 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10000, 20000, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 'Amber Fire', 11, 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(11, 11, 3, 2019, '2019-10-15', '10000', '', '', '', ''),
+(12, 12, 3, 2019, '2019-10-15', '20000', '', '', '', ''),
+(16, 10, 0, 2019, '2019-10-15', '10000', '', '', '', ''),
+(17, 10, 0, 2018, '2018-10-15', '10000', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -214,10 +156,10 @@ CREATE TABLE `group_info` (
 --
 
 INSERT INTO `group_info` (`group_id`, `group_name`, `group_members`, `group_contributions`) VALUES
-(0, 'Admin', 0, 0),
+(0, 'Admin', 0, 20000),
 (1, 'Borrowers', 0, 0),
 (2, 'Members', 0, 0),
-(3, 'Groupie', 4, 50000);
+(3, 'Groupie', 4, 30000);
 
 -- --------------------------------------------------------
 
@@ -301,108 +243,6 @@ CREATE TABLE `payment_records` (
   `total_paid` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `payment_records`
---
-
-INSERT INTO `payment_records` (`id`, `borrow_id`, `date_of_payment`, `amount_paid`, `amount_to_be_paid`, `gained`, `payment_status`, `total_paid`) VALUES
-(217, 27, '2019-11-15', '', '34', '', '', ''),
-(218, 27, '2019-11-30', '', '34', '', '', ''),
-(219, 27, '2019-12-15', '', '68', '', '', ''),
-(220, 27, '2019-12-31', '', '68', '', '', ''),
-(221, 27, '2020-01-15', '', '102', '', '', ''),
-(222, 27, '2020-01-31', '', '102', '', '', ''),
-(223, 27, '2020-02-15', '', '136', '', '', ''),
-(224, 27, '2020-02-29', '', '136', '', '', ''),
-(225, 27, '2020-03-15', '', '170', '', '', ''),
-(226, 27, '2020-03-31', '', '170', '', '', ''),
-(227, 27, '2020-04-15', '', '204', '', '', ''),
-(228, 27, '2020-04-30', '', '204', '', '', ''),
-(229, 27, '2020-05-15', '', '238', '', '', ''),
-(230, 27, '2020-05-31', '', '238', '', '', ''),
-(231, 27, '2020-06-15', '', '272', '', '', ''),
-(232, 27, '2020-06-30', '', '272', '', '', ''),
-(233, 27, '2020-07-15', '', '306', '', '', ''),
-(234, 27, '2020-07-31', '', '306', '', '', ''),
-(235, 27, '2020-08-15', '', '340', '', '', ''),
-(236, 27, '2020-08-31', '', '340', '', '', ''),
-(237, 27, '2020-09-15', '', '374', '', '', ''),
-(238, 27, '2020-09-30', '', '374', '', '', ''),
-(239, 27, '2020-10-15', '', '408', '', '', ''),
-(240, 27, '2020-10-31', '', '408', '', '', ''),
-(241, 28, '2019-11-15', '', '34', '', '', ''),
-(242, 28, '2019-11-30', '', '34', '', '', ''),
-(243, 28, '2019-12-15', '', '68', '', '', ''),
-(244, 28, '2019-12-31', '', '68', '', '', ''),
-(245, 28, '2020-01-15', '', '102', '', '', ''),
-(246, 28, '2020-01-31', '', '102', '', '', ''),
-(247, 28, '2020-02-15', '', '136', '', '', ''),
-(248, 28, '2020-02-29', '', '136', '', '', ''),
-(249, 28, '2020-03-15', '', '170', '', '', ''),
-(250, 28, '2020-03-31', '', '170', '', '', ''),
-(251, 28, '2020-04-15', '', '204', '', '', ''),
-(252, 28, '2020-04-30', '', '204', '', '', ''),
-(253, 28, '2020-05-15', '', '238', '', '', ''),
-(254, 28, '2020-05-31', '', '238', '', '', ''),
-(255, 28, '2020-06-15', '', '272', '', '', ''),
-(256, 28, '2020-06-30', '', '272', '', '', ''),
-(257, 28, '2020-07-15', '', '306', '', '', ''),
-(258, 28, '2020-07-31', '', '306', '', '', ''),
-(259, 28, '2020-08-15', '', '340', '', '', ''),
-(260, 28, '2020-08-31', '', '340', '', '', ''),
-(261, 28, '2020-09-15', '', '374', '', '', ''),
-(262, 28, '2020-09-30', '', '374', '', '', ''),
-(263, 28, '2020-10-15', '', '408', '', '', ''),
-(264, 28, '2020-10-31', '', '408', '', '', ''),
-(265, 29, '2019-11-15', '', '24', '', '', ''),
-(266, 29, '2019-11-30', '', '24', '', '', ''),
-(267, 29, '2019-12-15', '', '48', '', '', ''),
-(268, 29, '2019-12-31', '', '48', '', '', ''),
-(269, 29, '2020-01-15', '', '72', '', '', ''),
-(270, 29, '2020-01-31', '', '72', '', '', ''),
-(271, 29, '2020-02-15', '', '96', '', '', ''),
-(272, 29, '2020-02-29', '', '96', '', '', ''),
-(273, 29, '2020-03-15', '', '120', '', '', ''),
-(274, 29, '2020-03-31', '', '120', '', '', ''),
-(275, 29, '2020-04-15', '', '144', '', '', ''),
-(276, 29, '2020-04-30', '', '144', '', '', ''),
-(277, 29, '2020-05-15', '', '168', '', '', ''),
-(278, 29, '2020-05-31', '', '168', '', '', ''),
-(279, 29, '2020-06-15', '', '192', '', '', ''),
-(280, 29, '2020-06-30', '', '192', '', '', ''),
-(281, 29, '2020-07-15', '', '216', '', '', ''),
-(282, 29, '2020-07-31', '', '216', '', '', ''),
-(283, 29, '2020-08-15', '', '240', '', '', ''),
-(284, 29, '2020-08-31', '', '240', '', '', ''),
-(285, 29, '2020-09-15', '', '264', '', '', ''),
-(286, 29, '2020-09-30', '', '264', '', '', ''),
-(287, 29, '2020-10-15', '', '288', '', '', ''),
-(288, 29, '2020-10-31', '', '288', '', '', ''),
-(289, 31, '2019-11-15', '', '20032', '', '', ''),
-(290, 31, '2019-11-30', '', '20032', '', '', ''),
-(291, 31, '2019-12-15', '', '20064', '', '', ''),
-(292, 31, '2019-12-31', '', '20064', '', '', ''),
-(293, 31, '2020-01-15', '', '20096', '', '', ''),
-(294, 31, '2020-01-31', '', '20096', '', '', ''),
-(295, 31, '2020-02-15', '', '20128', '', '', ''),
-(296, 31, '2020-02-29', '', '20128', '', '', ''),
-(297, 31, '2020-03-15', '', '20160', '', '', ''),
-(298, 31, '2020-03-31', '', '20160', '', '', ''),
-(299, 31, '2020-04-15', '', '20192', '', '', ''),
-(300, 31, '2020-04-30', '', '20192', '', '', ''),
-(301, 31, '2020-05-15', '', '20224', '', '', ''),
-(302, 31, '2020-05-31', '', '20224', '', '', ''),
-(303, 31, '2020-06-15', '', '20256', '', '', ''),
-(304, 31, '2020-06-30', '', '20256', '', '', ''),
-(305, 31, '2020-07-15', '', '20288', '', '', ''),
-(306, 31, '2020-07-31', '', '20288', '', '', ''),
-(307, 31, '2020-08-15', '', '20320', '', '', ''),
-(308, 31, '2020-08-31', '', '20320', '', '', ''),
-(309, 31, '2020-09-15', '', '20352', '', '', ''),
-(310, 31, '2020-09-30', '', '20352', '', '', ''),
-(311, 31, '2020-10-15', '', '20384', '', '', ''),
-(312, 31, '2020-10-31', '', '20384', '', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -428,9 +268,73 @@ CREATE TABLE `summary_records` (
 --
 
 INSERT INTO `summary_records` (`id`, `belonging_group`, `term_id`, `date`, `contri_wout_int`, `amount_borrow`, `payment_rcv`, `deficit`, `interest_earned`, `est_earned`, `total`) VALUES
-(6, '3', '', '2019-10-31', '', '60000', '', '61584', '', '', ''),
-(8, '3', '', '2019-10-15', '50000', '', '', '', '', '', ''),
-(9, '0', '', '2019-10-31', '', '15000', '', '15288', '', '', '');
+(19, '', '2019', '2019-10-15', '40000', '', '', '', '', '', ''),
+(22, '', '2018', '2018-10-15', '10000', '', '', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `terms`
+--
+
+CREATE TABLE `terms` (
+  `term` int(11) NOT NULL,
+  `month_start` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `terms`
+--
+
+INSERT INTO `terms` (`term`, `month_start`) VALUES
+(2018, '2018-10-15'),
+(2018, '2018-10-31'),
+(2018, '2018-11-15'),
+(2018, '2018-11-30'),
+(2018, '2018-12-15'),
+(2018, '2018-12-31'),
+(2018, '2019-01-15'),
+(2018, '2019-01-31'),
+(2018, '2019-02-15'),
+(2018, '2019-02-28'),
+(2018, '2019-03-15'),
+(2018, '2019-03-31'),
+(2018, '2019-04-15'),
+(2018, '2019-04-30'),
+(2018, '2019-05-15'),
+(2018, '2019-05-31'),
+(2018, '2019-06-15'),
+(2018, '2019-06-30'),
+(2018, '2019-07-15'),
+(2018, '2019-07-31'),
+(2018, '2019-08-15'),
+(2018, '2019-08-31'),
+(2018, '2019-09-15'),
+(2018, '2019-09-30'),
+(2019, '2019-09-15'),
+(2019, '2019-09-30'),
+(2019, '2019-10-15'),
+(2019, '2019-10-31'),
+(2019, '2019-11-15'),
+(2019, '2019-11-30'),
+(2019, '2019-12-15'),
+(2019, '2019-12-31'),
+(2019, '2020-01-15'),
+(2019, '2020-01-31'),
+(2019, '2020-02-15'),
+(2019, '2020-02-29'),
+(2019, '2020-03-15'),
+(2019, '2020-03-31'),
+(2019, '2020-04-15'),
+(2019, '2020-04-30'),
+(2019, '2020-05-15'),
+(2019, '2020-05-31'),
+(2019, '2020-06-15'),
+(2019, '2020-06-30'),
+(2019, '2020-07-15'),
+(2019, '2020-07-31'),
+(2019, '2020-08-15'),
+(2019, '2020-08-31');
 
 -- --------------------------------------------------------
 
@@ -496,12 +400,6 @@ ALTER TABLE `contribution_records`
   ADD PRIMARY KEY (`contribution_id`);
 
 --
--- Indexes for table `contribution_term_records`
---
-ALTER TABLE `contribution_term_records`
-  ADD PRIMARY KEY (`contribution_id`);
-
---
 -- Indexes for table `group_info`
 --
 ALTER TABLE `group_info`
@@ -560,19 +458,13 @@ ALTER TABLE `annoucements`
 -- AUTO_INCREMENT for table `borrow_records`
 --
 ALTER TABLE `borrow_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contribution_records`
 --
 ALTER TABLE `contribution_records`
-  MODIFY `contribution_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `contribution_term_records`
---
-ALTER TABLE `contribution_term_records`
-  MODIFY `contribution_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `contribution_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `group_info`
@@ -596,13 +488,13 @@ ALTER TABLE `loan_records`
 -- AUTO_INCREMENT for table `payment_records`
 --
 ALTER TABLE `payment_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `summary_records`
 --
 ALTER TABLE `summary_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`

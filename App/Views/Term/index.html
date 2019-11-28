@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>Term Form</h5>
+                <form action="/terms/save" method="post">
+
+                    <div class="form-group">
+                        <label for="">Month Start</label>
+                        <select name="month_start" class="form-control">
+                            <option value=""> -- Months -- </option>
+                            <option value="01-15">January</option>
+                            <option value="02-15">February</option>
+                            <option value="03-15">March</option>
+                            <option value="04-15">April</option>
+                            <option value="05-15">May</option>
+                            <option value="06-15">June</option>
+                            <option value="07-15">July</option>
+                            <option value="08-15">August</option>
+                            <option value="09-15">September</option>
+                            <option value="10-15">October</option>
+                            <option value="11-15">November</option>
+                            <option value="12-15">December</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Year</label>
+                        <select name="month_year" class="form-control">
+                            <option value="">-- Year -- </option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Save Term</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>Term No</th>
+                            <th>Start Month </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for terms_details in terms %}
+                        <tr>
+                            <td> {{ terms_details.term }} </td>
+                            <td> {{ terms_details.month_start }} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

@@ -87,6 +87,34 @@ class Contribution extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function viewMember($user_id)
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':user_id', $user_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function viewTerm($term)
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE term_id = :term ORDER BY contri_date ASC';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':term', $term);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /**
      *
      * Update saved records of member on term_records database
@@ -207,7 +235,7 @@ class Contribution extends \Core\Model
 
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

@@ -61,4 +61,17 @@ class Summary extends \Core\Model
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function viewTerm($term)
+    {
+        $sql = 'SELECT * FROM summary_records WHERE term_id = :term ORDER BY date ASC';
+        
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':term', $term, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

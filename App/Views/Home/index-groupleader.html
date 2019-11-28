@@ -4,165 +4,86 @@
 
 {% block body %}
 
+<div class="row">
+
+    <div class="col-12 col-lg-6 col-xl-4 mb-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-right">{{ group_info[0].group_contributions }}</h4>
+                <h5>Total Contributions</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-4 mb-5">
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Interest</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-4 mb-5">
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Contribution w/ Interest</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row mb-4">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8">
+    <div class="col-12 col-lg-12 mb-5">
         <div class="card">
             <div class="card-header">
-                <h5>Hi Group Leader</h5>
+                <h5>Members</h5>
             </div>
-
-            <div class="card-body">
-                Welcome to group leader page, this page is exclusive for "Group Leader" only that can view number of
-                memebers and
-                contribution.
-
+            <div class="table-responsive">
+                <table class="table text-center table-flush">
+                    <thead class="font-weight-bold">
+                        <tr>
+                            <td>Members</td>
+                            <td>Total Contributions</td>
+                            <td>Total Interest</td>
+                            <td>Total Contributions w/ Interest</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in members_info %}
+                        <tr>
+                            <td>
+                                <a href="/members/view/{{member.id}}">{{member.name}}</a>
+                            </td>
+                            <td>
+                                {{member.total_contri}}
+                            </td>
+                            <td>
+                                {{member.total_month_int}}
+                            </td>
+                            <td>
+                                {{member.total_contri_w_int}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <div class="col-lg-2"></div>
-
 </div>
 
-<div class="row mb-4">
 
-    <div class="col-lg-1"></div>
-
-    <div class="col-lg-10">
-
-
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Contribution</h5>
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="contributions" data-contributions="{{ current_user.belonging_group}}">
-                            {{ group_info[0].group_contributions }}</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Summary</h5>
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="summary" data-summary="{{ current_user.belonging_group}}">
-                            {{ group_info[0].group_contributions }}</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Borrow</h5>
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="borrow" data-borrow="{{ current_user.belonging_group}}">
-                            {{ group_info[0].group_contributions }}</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Group Member/s</h5>
-                    </div>
-
-                    <div class="card-body text-center">
-                        <h5 class="members" data-members="{{ current_user.belonging_group}}">
-                            {{ group_info[0].group_members }}
-                            </h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-
-    <div class="col-lg-1"></div>
-</div>
 
 <div class="row mb-4">
     <div class="col-lg-1"></div>
     <div class="col-lg-10 gl-info">
-        
-        
+
+
 
 
     </div>
     <div class="col-lg-1"></div>
 </div>
 
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <form action="groupleader/add-contribution" method="post">
-                <div class="modal-header">
-                    <h5>Add Contri</h5>
-                </div>
-                <div class="modal-body">
-                    <label class="col-form-label">I.D</label>
-                    <input type="text" class="form-control id" name="id" disabled>
-                    <input type="hidden" class="form-control id" name="id">
 
-                    <label class="col-form-label">Name</label>
-                    <input type="text" class="form-control name" name="name" disabled>
-                    <input type="hidden" class="form-control name" name="name">
-
-                    <label class="col-form-label">Group</label>
-                    <input type="text" class="form-control group" name="group" disabled>
-                    <input type="hidden" class="form-control group" name="group">
-
-
-                    <label class="col-form-label">Choose Month</label>
-                    <select name="month" class="form-control">
-                        <option value=""> -- Choose a Month -- </option>
-                        <option value="2019-10-15"> -- Oct 15 -- </option>
-                        <option value="2019-10-31"> -- Oct 31 -- </option>
-                        <option value="2019-11-15"> -- Nov 15 -- </option>
-                        <option value="2019-11-30"> -- Nov 30 -- </option>
-                        <option value="2019-12-15"> -- Dec 15 -- </option>
-                        <option value="2019-12-31"> -- Dec 31 -- </option>
-                        <option value="2020-01-15"> -- Jan 15 -- </option>
-                        <option value="2020-01-31"> -- Jan 31 -- </option>
-                        <option value="2020-02-15"> -- Feb 15 -- </option>
-                        <option value="2020-02-28"> -- Feb 28 -- </option>
-                        <option value="2020-03-15"> -- Mar 15 -- </option>
-                        <option value="2020-03-31"> -- Mar 31 -- </option>
-                        <option value="2020-04-15"> -- Apr 15 -- </option>
-                        <option value="2020-04-30"> -- Apr 30 -- </option>
-                        <option value="2020-05-15"> -- May 15 -- </option>
-                        <option value="2020-05-31"> -- May 31 -- </option>
-                        <option value="2020-06-15"> -- Jun 15 -- </option>
-                        <option value="2020-06-30"> -- Jun 30 -- </option>
-                        <option value="2020-07-15"> -- Jul 15 -- </option>
-                        <option value="2020-07-31"> -- Jul 31 -- </option>
-                        <option value="2020-08-15"> -- Aug 15 -- </option>
-                        <option value="2020-08-31"> -- Aug 31 -- </option>
-                        <option value="2020-09-15"> -- Sep 15 -- </option>
-                        <option value="2020-09-30"> -- Sep 30 -- </option>
-                    </select>
-
-                    <label class="col-form-label">How much?</label>
-                    <input type="text" class="form-control" name="contri">
-
-                    <button type="submit" class="btn btn-success">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 
