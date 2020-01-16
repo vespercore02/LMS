@@ -15,6 +15,29 @@ use \App\Flash;
 
 class Members extends Authenticated
 {
+
+    public function indexAction()
+    {
+
+        if (isset($this->route_params['id'])) {
+            # code...
+            $id = $this->route_params['id'];
+        }else {
+            # code...
+            $id = 1;
+        }
+
+        //$member_list  = User::getMembers();
+        $member_list  = User::getMembersRange($id);
+        $member_count  = User::getMemberCount();
+
+        View::renderTemplate('/Member/index.html',[
+            'id' => $id,
+            'member_list' => $member_list,
+            'member_count' => $member_count
+        ]);
+    }
+
     public function viewAction()
     {
         if (isset($this->route_params['id']))
@@ -26,7 +49,7 @@ class Members extends Authenticated
             $borrow_list       = Borrow::viewMember($this->route_params['id']);
             /*
             echo "<pre>";
-            print_r($terms);
+            print_r($borrow_list);
             echo "</pre>";
             */
             View::renderTemplate('/Member/view.html',[

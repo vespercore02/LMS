@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrows - {{month}} {% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Borrow - Month - {{month}}
+                </h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Date</th>
+                            <th>Principal</th>
+                            <th>Payment</th>
+                            <th>Remaining</th>
+                            <th>Int. Acquired</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        {% for member in month_borrow %}
+                        <tr>
+                            <td>
+                                <a href="/members/view/{{member.id}}">{{member.name}}</a>
+                            </td>
+                            <td>
+                                {{member.date_borrow}}
+                            </td>
+                            <td>
+                                {{member.principal}}
+                            </td>
+                            <td>
+                                {{member.payment}}
+                            </td>
+                            <td>
+                                {{member.remaining}}
+                            </td>
+                            <td>
+                                {{member.int_acquired}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

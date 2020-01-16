@@ -1,74 +1,169 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\User;
-use \App\Models\Group;
 use \App\Models\Borrow;
-use \App\Models\Loan;
-use \App\Models\Announcement;
-use \App\Models\Contribution;
-use \App\Models\Summary;
+use \App\Models\Payment;
 use \App\Models\Term;
-use \App\Auth;
-use \App\Flash;
 
-class Summarys extends Authenticated
+class Borrows extends Authenticated
 {
-
+    /**
+     * Items index
+     *
+     * @return void
+     */
     public function indexAction()
     {
-
         $terms = new Term();
 
         $terms_list = $terms->view();
-        // get today date
-        $today = date('Y-m-d');
-        // get nearest cutoff of today's date
-        $nearest_cutoff = self::getCuffOff($today);
-        //echo $nearest_cutoff;
-        // get term of cutoff
-        //$cutoffs_term = Term::term($nearest_cutoff);
-        // get term months
-        //$term_months = Term::months($cutoffs_term);
-        // get term months records
-
-        View::renderTemplate('/summary/index.html',[
+        
+        View::renderTemplate('/borrow/index.html', [
             'terms' => $terms_list
+        ]);
+    }
+
+    /**
+     * Items index
+     *
+     * @return void
+     */
+    public function viewAction()
+    {
+        if (isset($this->route_params['id'])) {
+            $borrow_info = Borrow::borrowInfo($this->route_params['id']);
+            $paymentlist = Payment::paymentlist($this->route_params['id']);
+            $userInfo   = User::searchById($borrow_info[0]['user_id']);
+
+            View::renderTemplate('/borrow/view.html', [
+                'userInfo' => $userInfo,
+                'borrow_info' => $borrow_info,
+                'payment_list' => $paymentlist
+            ]);
+        }
+        /*
+        echo "<pre>";
+        print_r($paymentlist);
+        echo "</pre>";
+
+        */
+    }
+
+    public function monthAction()
+    {
+        $month = $this->route_params['id'];
+        $month_borrow   = Borrow::getMonthBorrowRecords($this->route_params['id']);
+        
+        echo "<pre>";
+        print_r($month_borrow);
+        echo "</pre>";
+        
+        View::renderTemplate('/borrow/month.html', [
+            'month' => $month,
+            'month_borrow' => $month_borrow
         ]);
     }
 
     public function termAction()
     {
-        $term                      = $this->route_params['id'];
-        $term_month_summary        = Summary::viewTerm($term);
+        $term = $this->route_params['id'];
+        $borrow   = Borrow::viewTerm($this->route_params['id']);
+        $term_months    = Term::months($this->route_params['id']);
+        
+        $borrow_months = array();
 
-        View::renderTemplate('/summary/term.html',[
+        foreach ($term_months as $month) {
+            $borrow_months[]  = Borrow::getMonthBorrowRecords($month['month_start']);
+        }
+
+        View::renderTemplate('/borrow/term.html', [
             'term' => $term,
-            'term_month_summary' => $term_month_summary
+            'term_months' => $term_months,
+            'borrow_months' => $borrow_months
         ]);
-
     }
-    public function termSummary()
+
+    public function termMonths()
     {
         if (isset($_GET['term'])) {
             # code...
 
-            $term_summary          = Summary::viewTerm($_GET['term']);
+            $term_months          = Term::months($_GET['term']);
 
-            echo json_encode($term_summary);
+            echo json_encode($term_months);
         }
     }
 
-    public function getCuffOff($date)
+    public function borrowMonth()
     {
+        if (isset($_GET['month'])) {
+            # code...
+
+            $borrow          = Borrow::getMonthBorrowRecords($_GET['month']);
+
+            echo json_encode($borrow);
+        }
+    }
+
+    public function addBorrower()
+    {
+        $BorrowerInfo = explode(" - ", $_POST['borrow_by']);
+
+        $_POST['user_id'] = $BorrowerInfo[0];
+        $_POST['group'] = $BorrowerInfo[3];
+
+        $_POST['cut_off'] = self::getContriDate($_POST['borrow_date']);
+        $_POST['interest'] = self::getInterest($_POST['borrow_interest'], $_POST['borrow_amount']);
+        $_POST['remaining'] = self::getRemaining($_POST['borrow_interest'], $_POST['borrow_amount']);
+
+
+        $borrow = new Borrow($_POST);
+        $result = $borrow->save();
         
-        $month = explode("-", $date);
+        if ($result > 0) {
+            //$this->redirect('/signup/success');
+
+            $borrow->updateSummaryBorrow();
+
+            $_POST['borrow_id'] = $result;
+
+            $payment_list = new Payment($_POST);
+            
+            echo $payment_list->constructPaymentList();
+        } else {
+            View::renderTemplate('Admin/form.html', [
+                'loan' => $loan
+            ]);
+        }
+    }
+
+    
+    public function getRemaining($borrow_interest, $borrow_amount)
+    {
+        $int = $borrow_amount  *  ($borrow_interest/100);
+        $int_monthly = $int * 12;
+        $int_acquired = $borrow_amount + $int_monthly;
+
+        return $int_acquired;
+    }
+
+    public function getInterest($borrow_interest, $borrow_amount)
+    {
+        $int = $borrow_amount  *  ($borrow_interest/100);
+
+        return $int;
+    }
+
+    public function getContriDate($borrow_date)
+    {
+        $month = explode("-", $borrow_date);
 
         $set_month = $month[1]."-".$month[2];
 
-        //print_r($month);
+        print_r($month);
         
         if ($set_month > '10-15' and $set_month < '10-31' or $set_month == '10-15') {
             # code...
@@ -189,11 +284,5 @@ class Summarys extends Authenticated
             # code...
             return $month[0]."-09-30";
         }
-        
     }
-    
 }
-
-
-
-?>

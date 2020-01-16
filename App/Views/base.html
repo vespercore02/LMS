@@ -24,7 +24,6 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p>Dummy Heading</p>
                 <li>
                     <a class="nav-link" href="/">Home</a>
                 </li>
@@ -37,9 +36,13 @@
                 <li>
                     <a href="/borrows/index">Borrow</a>
                 </li>
+
+                {% if current_user.access_rights == 9%}
                 <li>
                     <a href="#">Contact</a>
                 </li>
+                {% endif %}
+
                 <li>
                     <a class="nav-link" href="/logout">Log Out</a>
                 </li>
@@ -48,8 +51,8 @@
 
         {% endif %}
         <!-- Page Content -->
-        <div class="container-fluid ">
-            <div class="row mb-3">
+        <div class="container-fluid mb-3">
+            <div class="row header">
                 <div class="col-lg-2"></div>
                 <div class="col">
 

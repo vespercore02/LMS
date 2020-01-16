@@ -30,6 +30,36 @@ class Summary extends \Core\Model
         };
     }
 
+    public function addContri()
+    {
+        $sql = 'INSERT INTO summary_records (term_id, date, contri_wout_int)
+        VALUES(:term_id, :date, :contri_wout_int)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_wout_int', $this->contri, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    public function updateContri()
+    {
+        $sql = 'UPDATE summary_records 
+                SET contri_wout_int = :contri_wout_int
+                WHERE date = :date';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_wout_int', $this->contri, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
     public function update()
     {
         $sql = 'UPDATE summary_records
@@ -44,7 +74,6 @@ class Summary extends \Core\Model
         $stmt->bindValue(':interest_earned', $this->interest_earned, PDO::PARAM_STR);
         
         $stmt->execute();
-
     }
 
     public static function getMonthSummaryRecords($contri_date)

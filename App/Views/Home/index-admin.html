@@ -5,8 +5,67 @@
 {% block body %}
 
 <div class="row mb-4">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8">
+
+    <div class="col-12">
+
+        <div class="card">
+
+            <div class="card-body">
+                <h3>
+                    Hi! Admin,
+                </h3>
+
+                <p>Welcome to Administrator portal, Where you can manages Members, Access and Groups</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mb-4">
+
+    <div class="col-12 col-lg-4 col-xl-4">
+
+        <div class="card">
+            <div class="card-body d-flex">
+                <h4>
+                    Members
+                </h4>
+                <h3 class="ml-auto">
+                    <a href="/members">
+                        <span class="badge badge-primary badge-pill">
+                            {{ members_count}}
+                        </span>
+                    </a>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Access Rights
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Groups
+                </h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mb-4">
+    <div class="col-12 col-lg-12 col-xl-12">
         <div class="card mb-4">
             <div class="card-body">
 
@@ -64,128 +123,9 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2"></div>
+
 </div>
 
-<div class="row mb-4">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <div class="text-center">
-
-
-                    <h4>View Data</h4>
-
-
-                </div>
-            </div>
-            <div class="card-body ">
-                <div class="row">
-                    <div class="col-lg text-center">
-                        <h5 class="contributions">Contribution</h5>
-                    </div>
-
-                    <div class="col-lg text-center">
-                        <h5 class="summary">Summary</h5>
-                    </div>
-
-
-                    <div class="col-lg text-center">
-                        <h5 class="borrow">Borrow</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2"></div>
-</div>
-
-<div class="row mb-4">
-    <div class="col-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>Contributions</h5>
-            </div>
-            <div class="table-responsive">
-                <table class="table text-center table-flush">
-                    <thead>
-                        <tr>
-                            <td>Total Contribution</td>
-                            <td>Total Interest</td>
-                            <td>Total Contribution w/ Interest</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mb-4">
-    <div class="col-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>Summary</h5>
-            </div>
-            <div class="table-responsive">
-                <table class="table text-center table-flush">
-                    <thead>
-                        <tr>
-                            <td>Contributions</td>
-                            <td>Borrowed Amount</td>
-                            <td>Payment Recieved</td>
-                            <td>Deficit</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mb-4">
-    <div class="col-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>Borrow</h5>
-            </div>
-            <div class="table-responsive">
-                <table class="table text-center table-flush">
-                    <thead>
-                        <tr>
-                            <td>Principal</td>
-                            <td>Payment</td>
-                            <td>Remaining</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <div class="row">

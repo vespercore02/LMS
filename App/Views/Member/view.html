@@ -25,16 +25,7 @@
 
     </div>
 
-    <div class="col-12 col-lg-6 col-xl-6 mb-5">
-
-        <div class="card">
-            <div class="card-body">
-                <button class="btn btn-success" data-toggle="modal" data-target=".add-contribution">Add
-                    Contribution</button>
-                <button class="btn btn-success">Add Borrow</button>
-            </div>
-        </div>
-    </div>
+    
 
 </div>
 
@@ -42,8 +33,10 @@
 
     <div class="col-12 col-lg-12 col-xl-12 mb-5">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex">
                 <h5>Contribution</h5>
+                <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-contribution">Add
+                    Contribution</button>
             </div>
             <div class="table-responsive">
                 <table class="table text-center table-flush">
@@ -104,8 +97,16 @@
 
     <div class="col-12 col-lg-12 col-xl-12 mb-5">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex">
                 <h5>Borrow</h5>
+                {% if borrow_list %}
+
+                <button class="btn btn-success ml-auto">Pay Borrow</button>
+
+                {% else %}
+                <button class="btn btn-success ml-auto">Add Borrow</button>
+
+                {% endif %}
             </div>
             <div class="table-responsive">
                 <table class="table text-center table-flush">
@@ -129,7 +130,7 @@
                         {% for borrow in borrow_list %}
                         <tr>
                             <td>
-                                {{ borrow.borrow_date}}
+                                {{ borrow.date_borrow}}
                             </td>
                             <td class="principal">
                                 {{ borrow.principal}}
@@ -172,23 +173,23 @@
     aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <form action="/groupleader/add-contribution" method="post">
+            <form action="/contributions/add" method="post">
                 <div class="modal-header">
                     <h5>Add Contri</h5>
                 </div>
                 <div class="modal-body">
                     <label class="col-form-label">I.D</label>
-                    <input type="text" class="form-control id" name="id" value="{{ user_info.id }}" disabled>
-                    <input type="hidden" class="form-control id" name="id" value="{{ user_info.id }}">
+                    <input type="text" class="form-control id" name="user_id" value="{{ user_info.id }}" disabled>
+                    <input type="hidden" class="form-control id" name="user_id" value="{{ user_info.id }}">
 
                     <label class="col-form-label">Name</label>
                     <input type="text" class="form-control name" name="name" value="{{ user_info.name }}" disabled>
                     <input type="hidden" class="form-control name" name="name" value="{{ user_info.name }}">
 
                     <label class="col-form-label">Group</label>
-                    <input type="text" class="form-control group" name="group" value="{{ user_info.belonging_group }}"
+                    <input type="text" class="form-control group" name="belonging_group" value="{{ user_info.belonging_group }}"
                         disabled>
-                    <input type="hidden" class="form-control group" name="group"
+                    <input type="hidden" class="form-control group" name="belonging_group"
                         value="{{ user_info.belonging_group }}">
 
                     <label class="col-form-label">Choose Term</label>
@@ -247,7 +248,7 @@
 
         let term = $(this).val();
 
-        console.log(months(term));;
+        console.log(months(term));
     });
 
     function months(year) {
@@ -273,6 +274,9 @@
 
     function monthList(months) {
 
+        $('select[name=month]').empty();
+        $('select[name=month]').append('<option value=""> -- Choose a Month -- </option>')
+        
         for (let index = 0; index < months.length; index++) {
 
             $('select[name=month]').append(

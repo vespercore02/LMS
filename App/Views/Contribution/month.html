@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Contributions - {{month}} {% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Contributions - Month - {{month}}
+                </h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Total Contribution</th>
+                            <th>Total Interest</th>
+                            <th>Total Contribution w/ Interest</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        {% for member in month_contri %}
+                        <tr>
+                            <td>
+                                <a href="/members/view/{{member.id}}">{{member.name}}</a>
+                            </td>
+                            <td>
+                                {{member.contri}}
+                            </td>
+                            <td>
+                                {{member.total_int}}
+                            </td>
+                            <td>
+                                {{member.total_contri_w_int}}
+                            </td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

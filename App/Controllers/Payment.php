@@ -211,23 +211,23 @@ class Payment extends Authenticated
                     $add_month_int = $percent * $_POST['interest_earned'];
                     $_POST['month_int'] =  $toUpdateContribution[$a]['month_int'] + $add_month_int;
 
-                    $_POST['total_in'] = $toUpdateContribution[$a]['total_in'] + $_POST['month_int'];
+                    $_POST['total_int'] = $toUpdateContribution[$a]['total_int'] + $_POST['month_int'];
 
                     $add_total_contri_w_int = $contri[$a]['contri'] + $_POST['month_int'];
                     $_POST['total_contri_w_int'] = $toUpdateContribution[$a]['total_contri_w_int'] + $add_total_contri_w_int;
 
                 }else {
                     # code...
-
+                    $_POST['contribution_id'] = $toUpdateContribution[$a]['contribution_id'];
                     $_POST['month_int'] = $percent * $_POST['interest_earned'];
-                    $_POST['total_in'] = $_POST['month_int'];
+                    $_POST['total_int'] = $_POST['month_int'];
                     $_POST['total_contri_w_int'] = $toUpdateContribution[$a]['contri'] + $_POST['month_int'];
                 }
 
 
                 $update_contribution = new Contribution($_POST);
 
-                $update_contribution->update();
+                $update_contribution->update_month_int();
             }
         }
 

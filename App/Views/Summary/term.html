@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Summary - {{term}} {% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Summary - Term - {{term}}
+                </h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12 col-lg-12 mb-5">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-striped text-center table-flush">
+                    <thead class="font-weight-bold">
+                        <tr>
+                            <td>Month</td>
+                            <td>Contri w/o Int </td>
+                            <td>Amt Borrow</td>
+                            <td>Payment Rcv</td>
+                            <td>Deficit </td>
+                            <td>Int Earned</td>
+                            <td>Est Int</td>
+                            <td>Total</td>
+                        </tr>
+                    </thead>
+                    <tbody class="term-months">
+                        {% for month in term_month_summary %}
+
+                        <tr>
+                            <td>{{month.date }}</td>
+                            <td>{{month.contri_wout_int }}</td>
+                            <td>{{month.amount_borrow }}</td>
+                            <td>{{month.payment_rcv }}</td>
+                            <td>{{month.deficit }}</td>
+                            <td>{{month.interest_earned }}</td>
+                            <td>{{month.est_earned }}</td>
+                            <td>{{month.total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

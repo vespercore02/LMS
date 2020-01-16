@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %} Member List {% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Members
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Group</th>
+                            <th>Access</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        {% for member in member_list %}
+                        <tr>
+                            <td>
+                                <a href="/members/view/{{member.id}}">{{member.name}}</a>
+                            </td>
+                            <td>
+                                {{member.email}}
+                            </td>
+                            <td>
+                                {{member.belonging_group}}
+                            </td>
+                            <td>
+                                {{member.access_rights}}
+                            </td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+                <div class="text-center">
+                    {% set k = member_count // 5 %}
+                    {% for i in range(1, k) %}
+                    {% if i == id%}
+                    <b>{{ i }}</b>
+                    {% else %}
+                    <a href="/members/index/{{ i }}">
+                        {{ i }}
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+{% endblock %}

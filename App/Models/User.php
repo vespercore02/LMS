@@ -135,7 +135,7 @@ class User extends \Core\Model
      */
     public static function findByEmail($email)
     {
-        $sql = 'SELECT * FROM users WHERE email = :email';
+        $sql = 'SELECT id, email, is_active, password_hash FROM users WHERE email = :email';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -200,7 +200,7 @@ class User extends \Core\Model
      */
     public static function findByID($id)
     {
-        $sql = 'SELECT * FROM users WHERE id = :id';
+        $sql = 'SELECT id, name, email, access_rights, belonging_group FROM users WHERE id = :id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -414,7 +414,7 @@ class User extends \Core\Model
      */
     public static function getMembers()
     {
-        $sql = 'SELECT * FROM users';
+        $sql = 'SELECT id, name, email, access_rights, belonging_group FROM users';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -422,6 +422,46 @@ class User extends \Core\Model
         $stmt->execute();
 
         return $stmt->fetchAll();
+    }
+    /**
+     * Get Members info
+     *
+     */
+    public static function getMembersRange($page)
+    {
+        $per_page = 5;
+
+        $start    = ($page - 1) * $per_page;
+
+        $sql = 'SELECT id, name, email, access_rights, belonging_group 
+                FROM users
+                LIMIT :start, :per_page';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':start', $start, PDO::PARAM_INT);
+        $stmt->bindValue(':per_page', $per_page, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Get Members Count
+     *
+     */
+    public static function getMemberCount()
+    {
+        $sql = 'SELECT id FROM users';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->rowCount();
     }
 
     public static function editMember()

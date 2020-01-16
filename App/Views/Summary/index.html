@@ -4,57 +4,37 @@
 
 {% block body %}
 
-<div class="row">
-    <div class="col-12 col-lg-12 col-xl-12">
-        <div class="card mb-3">
+<div class="row mb-4">
 
+    <div class="col-12">
+        <div class="card">
             <div class="card-body">
-                <h5>Summary</h5>
+                <h4>
+                    Summary
+                </h4>
             </div>
         </div>
 
-        <div class="card mb-3">
-            <div class="card-body">
-                {% for term in terms %}
-                <button type="button" class="btn btn-success col-4 col-lg-4 col-xl-3 mb-1" data-term="{{ term.term }}">
-                    {{ term.term }} </button>
-                {% endfor %}
-
-
-            </div>
-        </div>
     </div>
 </div>
 
 <div class="row mb-4">
-    <div class="col-12 col-lg-12 mb-5">
+    
+    {% for term in terms %}
+    <div class="col-12 col-lg-4 col-xl-4">
+
         <div class="card">
-            <div class="card-header">
-                <h5 class="">Term </h5>
-                <h4 class="term"> </h4>
-            </div>
-            <div class="table-responsive">
-                <table class="table text-center table-flush">
-                    <thead class="font-weight-bold">
-                        <tr>
-                            <td>Month</td>
-                            <td>Contri w/o Int </td>
-                            <td>Amt Borrow</td>
-                            <td>Payment Rcv</td>
-                            <td>Deficit </td>
-                            <td>Int Earned</td>
-                            <td>Est Int</td>
-                            <td>Total</td>
-                        </tr>
-                    </thead>
-                    <tbody class="term-months">
+            <div class="card-body text-center">
+                <a href="/summarys/term/{{ term.term }}">
+                    <h4 class="">
+                        {{ term.term }}
+                    </h4>
+                </a>
 
-
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
+    {% endfor %}
 </div>
 
 

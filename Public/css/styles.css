@@ -1,28 +1,146 @@
+html {
+  overflow-x: hidden;
 
-.alert {
-    border: 1px solid #ccc;
-    padding: 6px;
-}
-.alert-info {
-    background-color: #d9edf7;
-}
-.alert-success {
-    background-color: #dff0d8;
-}
-.alert-warning {
-    background-color: #fcf8e3;
-}
+  position: relative;
 
+  min-height: 100%;
+
+  font-size: 11pt;
+
+  font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD",
+    Georgia, serif;
+}
 
 body {
-    background-color: #D3D3D3;
+  background-color: #dbe2ef;
+
+}
+.alert {
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+.alert-info {
+  background-color: #d9edf7;
+}
+.alert-success {
+  background-color: #dff0d8;
+}
+.alert-warning {
+  background-color: #fcf8e3;
+}
+
+
+.header {
+  padding: 20px;
+  height: 90px;
 }
 
 .footer {
-    padding: 20px;
-    max-height: 70px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  color: #dbe2ef;
+  right: 0;
+  left: 0;
 }
 
 .greener {
-    background-color: #4CC936;
+  background-color: #4cc936;
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+      margin-left: -250px;
+  }
+  #sidebar.active {
+      margin-left: 0;
+  }
+}
+
+
+p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #999;
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+#sidebar {
+  /* don't forget to add all the previously mentioned styles here too */
+  
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+  background: #3f72af;
+  color: #f9f7f7;
+  transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+  padding: 20px;
+  background: #3f72af;
+}
+
+#sidebar ul.components {
+  padding: 20px 0;
+  border-bottom: 1px solid #3f72af;
+}
+
+#sidebar ul p {
+  color: #112d4e;
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+}
+#sidebar ul li a:hover {
+  color: #dbe2ef;
+  background: #112d4e;
+  font-weight: bold;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+  color: #fff;
+  background: #6d7fcc;
+}
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #6d7fcc;
 }

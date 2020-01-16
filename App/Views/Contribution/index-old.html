@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}Contributions{% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Contributions
+                </h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                {% for term in terms %}
+                <button type="button" class="btn btn-success col-4 col-lg-4 col-xl-3 mb-1" data-term="{{ term.term }}">
+                    {{ term.term }} </button>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mb-4">
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header d-flex">
+                <h5>Term </h5>
+                <h5 class="term"> </h4>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row term-months">
+
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+    let term, month;
+
+    $('button').click(function () {
+        term = $(this).data('term');
+
+        console.log(term)
+
+        $('.term').empty();
+        $('.term').append(term);
+        $('div.months').empty();
+        $('div.term-months').empty();
+        //alert(term);
+        months(term);
+    });
+
+    function months(year) {
+
+        $.get("/contributions/termMonths", { term: year }).done(function (data) {
+            data = JSON.parse(data);
+
+            for (let a = 0; a < data.length; a++) {
+                //console.log(data[a]['month_start']);
+                monthContribution(data[a]['month_start'])
+            }
+        });
+    }
+
+    function monthContribution(date) {
+        $.get("/contributions/month", { date: date }).done(function (data) {
+            data = JSON.parse(data);
+
+            if (data.length > 0) {
+                console.log(data);
+                showContri(date, data)
+            }
+        });
+    }
+
+    function showContri(date, data) {
+
+
+        $('div.term-months').append(
+            '<div class="col-12 col-lg-12 col-xl-12 mt-3">' +
+            '<div class="card">' +
+            '<div class="card-header">' +
+            '<h5>' + date + '</h5>' +
+            '</div>' +
+            '<div class="table-responsive ' + date + '">' +
+            '</div>' +
+            '</div>');
+
+        $('div.' + date).append(
+            '<table class="table text-center table-flush ">' +
+            '<thead> <tr>' +
+            '<th>Member</th>' +
+            '<th>Total Contribution</th>' +
+            '<th>Total Interest</th>' +
+            '<th>Total Contribution w/ Interest</th>' +
+            '</tr> <thead>' +
+            '<tbody class="' + date + '"></tbody> </table>');
+
+        //console.log(date);
+
+        let total_contri = 0, total_month_int = 0, total_int = 0, total_contri_w_int = 0
+
+        for (let b = 0; b < data.length; b++) {
+            dataDetails = {
+                name: data[b]['name'],
+                contri: data[b]['contri'],
+                total_int: data[b]['total_int'],
+                total_contri_w_int: data[b]['total_contri_w_int']
+            };
+
+            $('tbody.' + date).append(
+                '<tr>' +
+                '<td>' + dataDetails.name + '</td>' +
+                '<td class="' + date + '-contri">' + dataDetails.contri + '</td>' +
+                '<td class="' + date + '-total_int">' + dataDetails.total_int + '</td>' +
+                '<td class="' + date + '-total_contri">' + dataDetails.total_contri_w_int + '</td>' +
+                '<tr>'
+            );
+
+            total_contri += dataDetails.contri << 0;
+            total_month_int += dataDetails.month_int << 0;
+            total_int += dataDetails.total_int << 0;
+            total_contri_w_int += dataDetails.total_contri_w_int << 0;
+
+        }
+
+
+        $('tbody.' + date).append(
+            '<tr>' +
+            '<td> Total </td>' +
+            '<td class="' + date + '-contri">' + total_contri + '</td>' +
+            '<td class="' + date + '-total_int">' + total_int + '</td>' +
+            '<td class="' + date + '-total_contri">' + total_contri_w_int + '</td>' +
+            '<tr>'
+        );
+
+
+    }
+
+    $(document).on('click', '.mnth', function () {
+        month = $(this).data('month');
+        //alert(term);
+        console.log(month);
+        //months(term);
+        //window.location.href = '/contributions/view/'+ month;
+        contribution(month)
+    });
+
+    function contribution(month) {
+        $.get("/contributions/month", { date: month }).done(function (data) {
+
+            data = JSON.parse(data);
+            console.log(data);
+
+
+        });
+    }
+
+
+
+</script>
+
+{% endblock %}

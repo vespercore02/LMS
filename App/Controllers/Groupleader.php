@@ -9,6 +9,7 @@ use \App\Models\Borrow;
 use \App\Models\Loan;
 use \App\Models\Announcement;
 use \App\Models\Contribution;
+use \App\Models\Term;
 use \App\Auth;
 use \App\Flash;
 
@@ -56,19 +57,45 @@ class Groupleader extends \App\Controllers\Authenticated
     {
         $add_contri     = new Group($_POST);
         $update_summary = new Contribution($_POST);
+        /*
+        echo $_POST['term'];
+        
+        echo "<pre>";
+        print_r($months);
+        echo "</pre>";
+        */
 
         if ($add_contri->groupAddContribution()) {
             # code...
 
-            $update_summary->updateSummaryContri();
+            $month = $_POST['month'];
+
+            $months = Term::months($_POST['term']);
+
+            $months_count = count($months);
+
+            for ($i=0; $i < $months_count; $i++) {
+                # code...
+
+                if ($months[$i]['month_start'] >= $month) {
+                    # code...
+                    echo $months[$i]['month_start']."<br>";
+
+                    $_POST['month'] = $months[$i]['month_start'];
+
+                    $update_summary = new Contribution($_POST);
+
+                    $update_summary->updateSummaryContri();
+                }
+            }
+
 
             $add_contri->groupUpdateInfo();
 
             Flash::addMessage('Contribution is successful added');
 
             $this->redirect('/members/view/'.$_POST['id']);
-
-        }else {
+        } else {
             # code...
             Flash::addMessage('Contribution for this date '.$_POST['month'].' and this person '.$_POST['name'].' is already set', "warning");
 
@@ -76,7 +103,6 @@ class Groupleader extends \App\Controllers\Authenticated
         }
         
 
-        
     }
 
     public function summaryMonth()
@@ -98,7 +124,6 @@ class Groupleader extends \App\Controllers\Authenticated
             $group_borrow         = Group::groupBorrowMonth($_GET['group'], $_GET['month']);
 
             echo json_encode($group_borrow);
-
         }
     }
 }

@@ -79,9 +79,18 @@ class Borrow extends \Core\Model
         $stmt->execute();
     }
 
-    public static function viewMember($id)
+    public static function viewMember($user_id)
     {
+        $sql = 'SELECT * FROM borrow_records WHERE user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
         
+        $stmt->bindValue(':user_id', $user_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -139,14 +148,12 @@ class Borrow extends \Core\Model
     {
         $sql = 'SELECT amount_borrow 
                 FROM summary_records
-                WHERE date = :date
-                AND belonging_group = :belonging_group';
+                WHERE date = :date';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue(':date', $this->cut_off);
-        $stmt->bindValue(':belonging_group', $this->group);
 
         $stmt->execute();
 
@@ -249,7 +256,7 @@ class Borrow extends \Core\Model
         $sql = 'SELECT users.id, 
         users.name, 
         users.belonging_group,  
-        borrow_records.id, 
+        borrow_records.id as borrow_records_id, 
         borrow_records.date_borrow, 
         borrow_records.principal, 
         borrow_records.payment, 
@@ -279,6 +286,20 @@ class Borrow extends \Core\Model
 
         $stmt->execute();
         
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function viewTerm($term)
+    {
+        $sql = 'SELECT * FROM borrow_records WHERE term_id = :term ORDER BY date_borrow ASC';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':term', $term);
+
+        $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

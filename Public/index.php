@@ -32,15 +32,25 @@ session_start();
 $router = new Core\Router();
 
 // Add the routes
+$router->add('{controller}/{id:(\d+)\-(\d+)\-(\d+)}/{action}');
+$router->add('{controller}/{action}/{id:(\d+)\-(\d+)\-(\d+)}');
+$router->add('{controller}/{action}/{id:\d+}');
+
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
+$router->add('members', ['controller' => 'Members', 'action' => 'index']);
 $router->add('terms', ['controller' => 'Terms', 'action' => 'index']);
 $router->add('login', ['controller' => 'Login', 'action' => 'new']);
 $router->add('logout', ['controller' => 'Login', 'action' => 'destroy']);
 $router->add('password/reset/{token:[\da-f]+}', ['controller' => 'Password', 'action' => 'reset']);
 $router->add('signup/activate/{token:[\da-f]+}', ['controller' => 'Signup', 'action' => 'activate']);
+
 $router->add('{controller}/{action}');
 $router->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
 $router->add('admin/{controller}/{action}/{id:\d+}', ['namespace' => 'Admin']);
-$router->add('{controller}/{action}/{id:\d+}');
-
 $router->dispatch($_SERVER['QUERY_STRING']);
+
+/*
+echo "<pre>";
+print_r($router);
+echo "</pre>";
+*/

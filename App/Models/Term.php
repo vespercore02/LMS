@@ -59,7 +59,7 @@ class Term extends \Core\Model
 
     public static function months($term)
     {
-        $sql = 'SELECT month_start FROM terms WHERE term=:term';
+        $sql = 'SELECT month_start FROM terms WHERE term=:term ORDER BY month_start ASC';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);

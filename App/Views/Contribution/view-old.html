@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Contributions - {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-12 col-lg-12 col-xl-12">
+
+        {% for month in term_months %}
+
+            {{month.month_start }}
+
+        {% endfor %}
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

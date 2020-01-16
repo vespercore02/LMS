@@ -56,21 +56,101 @@ class Contribution extends \Core\Model
         }
     }
 
+    public function add()
+    {
+        $sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri, total_contri_wout_int)
+        VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri, :total_contri_wout_int)';
+
+        //$sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri)
+        //VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':belonging_group', $this->belonging_group, PDO::PARAM_STR);
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':contri', $this->contri, PDO::PARAM_STR);
+        $stmt->bindValue(':total_contri_wout_int', $this->total_contri_wout_int, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    
     public function update()
     {
         $sql = 'UPDATE contribution_records
+                SET contri = :contri,
+                total_contri_wout_int = :total_contri_wout_int
+                WHERE contri_date = :contri_date
+                AND user_id = :user_id
+                AND term_id = :term_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':contri', $this->contri, PDO::PARAM_STR);
+        $stmt->bindValue(':total_contri_wout_int', $this->total_contri_wout_int, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    public function update_month_int()
+    {
+        $sql = 'UPDATE contribution_records
                 SET month_int = :month_int,
+                total_int = :total_int,
                 total_contri_w_int = :total_contri_w_int
                 WHERE contribution_id = :contribution_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':month_int', $this->month_int, PDO::PARAM_STR);
-        $stmt->bindValue(':total_contri_w_int', $this->total_contri_w_int, PDO::PARAM_STR);
         $stmt->bindValue(':contribution_id', $this->contribution_id, PDO::PARAM_STR);
+        $stmt->bindValue(':month_int', $this->month_int, PDO::PARAM_STR);
+        $stmt->bindValue(':total_int', $this->total_int, PDO::PARAM_STR);
+        $stmt->bindValue(':total_contri_w_int', $this->total_contri_w_int, PDO::PARAM_STR);
 
         $stmt->execute();
+    }
+
+    public function update_total()
+    {
+        $sql = 'UPDATE contribution_records
+                SET total_contri_wout_int = :total_contri_wout_int
+                WHERE contri_date = :contri_date
+                AND user_id = :user_id
+                AND term_id = :term_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':total_contri_wout_int', $this->total_contri_wout_int, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+    
+
+    public function checkContri()
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE user_id = :user_id and term_id = :term_id and contri_date = :contri_date';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function view($date)
@@ -95,6 +175,42 @@ class Contribution extends \Core\Model
         $stmt = $db->prepare($sql);
         
         $stmt->bindValue(':user_id', $user_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function viewMemberTotalContri($user_id)
+    {
+        $sql = 'SELECT SUM(contri) as total_contri, 
+        SUM(month_int) as total_month_int, 
+        SUM(total_contri_w_int) as total_contri_w_int 
+        FROM contribution_records 
+        WHERE user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':user_id', $user_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function viewGroupTotalContri($belonging_group)
+    {
+        $sql = 'SELECT SUM(contri) as total_contri, 
+        SUM(month_int) as total_month_int, 
+        SUM(total_contri_w_int) as total_contri_w_int 
+        FROM contribution_records 
+        WHERE belonging_group = :belonging_group';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':belonging_group', $belonging_group);
 
         $stmt->execute();
 
@@ -332,26 +448,28 @@ class Contribution extends \Core\Model
             # code...
             $sql = 'UPDATE summary_records 
             SET 	contri_wout_int = :contri_wout_int
-            WHERE date = :date';
+            WHERE date = :date and term_id = :term_id';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':contri_wout_int', $total_Contri, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->month);
+            $stmt->bindValue(':term_id', $this->term);
 
             $stmt->execute();
         } else {
             # code...
             $sql = 'INSERT INTO summary_records 
-            (contri_wout_int, date) 
-            VALUES(:contri_wout_int, :date)';
+            (contri_wout_int, date, term_id) 
+            VALUES(:contri_wout_int, :date, :term_id)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':contri_wout_int', $total_Contri, PDO::PARAM_STR);
+            $stmt->bindValue(':contri_wout_int', $this->contri, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->month, PDO::PARAM_STR);
+            $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
 
             $stmt->execute();
         }
@@ -361,12 +479,13 @@ class Contribution extends \Core\Model
     {
         $sql = 'SELECT contri_wout_int 
                 FROM summary_records
-                WHERE date = :date';
+                WHERE date = :date and term_id = :term';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue(':date', $this->month);
+        $stmt->bindValue(':term', $this->term);
 
         $stmt->execute();
 
@@ -380,13 +499,14 @@ class Contribution extends \Core\Model
 
     public function getTotalContri()
     {
-        $sql = 'SELECT 	contri FROM contribution_records 
-        WHERE contri_date = :contri_date';
+        $sql = 'SELECT contri FROM contribution_records 
+        WHERE contri_date = :contri_date and term_id = :term';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         
         $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':term', $this->term);
 
         $stmt->execute();
 

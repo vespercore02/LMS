@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Contributions{% endblock %}
+{% block title %}Contributions - {{term}} {% endblock %}
 
 {% block body %}
 
@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>
-                    Contributions
+                    Contributions - Term - {{term}}
                 </h4>
             </div>
         </div>
@@ -18,16 +18,17 @@
     </div>
 </div>
 
-<div class="row mb-4">
+<div class="row">
     
-    {% for term in terms %}
-    <div class="col-12 col-lg-4 col-xl-4">
+
+    {% for month in term_months %}
+    <div class="col-12 col-lg-3 col-xl-3">
 
         <div class="card">
             <div class="card-body text-center">
-                <a href="/contributions/term/{{ term.term }}">
-                    <h4 class="">
-                        {{ term.term }}
+                <a href="/contributions/month/{{month.month_start }}">
+                    <h5 class="">
+                        {{month.month_start }}
                     </h4>
                 </a>
 
@@ -38,14 +39,8 @@
 </div>
 
 
-<div class="row term-months">
-
-</div>
-
-
 {% endblock %}
 
 {% block javascript %}
-
 
 {% endblock %}
