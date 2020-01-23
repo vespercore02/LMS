@@ -145,104 +145,113 @@ class Contributions extends Authenticated
 
         $months_count = count($months);
 
-        $contri_info = $contribution->checkContri();
+        $contri_info = $contribution->checkContriDate();
 
-        if ($contri_info) {
+        if ($contri_info == 1) {
             # code...
             
-            $_POST['total_contri_wout_int'] = $contri_info[0]['total_contri_wout_int'] + $_POST['contri'];
+            echo "<pre>";
+            print_r($contri_info);
+            echo "</pre>";
 
-            if ($contri_info[0]['contri'] != 0) {
+            $contributed_dates = $contribution->getContributedDate();
+
+            $date_position = self::Search($_POST['month'], $contributed_dates);
+
+            $date_count = count($contributed_dates);
+
+            echo "<pre>";
+            print_r($contributed_dates);
+            echo "</pre>";
+
+            echo $date_position."<br>";
+
+            for ($i=$date_position; $i < $date_count; $i++) {
                 # code...
-                Flash::addMessage('Contribution for this date '.$_POST['month'].' and this person '.$_POST['name'].' is already set', "warning");
 
-                $this->redirect('/members/view/'.$_POST['user_id']);
-
-                end;
-            }
-
-            for ($i=0; $i < $months_count; $i++) {
-                # code...
-
-                if ($months[$i]['month_start'] == $month) {
+                if ($i >= $date_position) {
                     # code...
+                    $_POST['month'] = $contributed_dates[$i];
+                    $contribution = new Contribution($_POST);
 
-                    $_POST['month'] = $months[$i]['month_start'];
+                    $contri_info = $contribution->getContriDate();
 
-                    $update = new Contribution($_POST);
+                    echo "<pre>";
+                    print_r($contri_info);
+                    echo "</pre>";
 
-                    $update->update();
+                    if ($i == $date_position) {
+                        # code...
+                        $_POST['total_contri_wout_int'] = $contri_info['total_contri_wout_int'] + $given_contri;
 
-                } elseif ($months[$i]['month_start'] >= $month) {
-                    # code...
-                    $_POST['month'] = $months[$i]['month_start'];
+                        $_POST['contri'] = $contri_info['contri'] + $_POST['contri'];
 
-                    $update = new Contribution($_POST);
+                        $_POST['total_contri_w_int'] = $_POST['total_contri_wout_int'] + $contri_info['total_int'];
 
-                    $update->update_total();
+                        $update = new Contribution($_POST);
+
+                        $update->update();
+                    } else {
+                        # code...
+                        $_POST['total_contri_wout_int'] = $contri_info['total_contri_wout_int'] + $given_contri;
+                        
+                        $_POST['total_contri_w_int'] = $_POST['total_contri_wout_int'] + $contri_info['total_int'];
+                        
+                        $update = new Contribution($_POST);
+
+                        $update->update_total();
+                    }
                 }
             }
+
 
             /*
             Flash::addMessage('Contribution is successful added and  updated');
 
             $this->redirect('/members/view/'.$_POST['user_id']);
             */
-            
         } else {
             # code...
 
-            $_POST['total_contri_wout_int'] = $_POST['contri'];
+            $last_contri_info = $contribution->getLastContri();
 
-
-            for ($i=0; $i < $months_count; $i++) {
+            if ($last_contri_info) {
                 # code...
-
-                if ($months[$i]['month_start'] == $month) {
-                    # code...
-
-                    $_POST['month'] = $months[$i]['month_start'];
-                } elseif ($months[$i]['month_start'] >= $month) {
-                    # code...
-
-                    $_POST['month'] = $months[$i]['month_start'];
-
-                    $_POST['contri'] = 0;
-                }
-
-                $add = new Contribution($_POST);
-
-                $add->add();
+                echo "<pre>";
+                print_r($last_contri_info);
+                echo "</pre>";
+                $_POST['total_contri_wout_int'] = $_POST['contri'] + $last_contri_info['total_contri_wout_int'];
+            } else {
+                # code...
+                $_POST['total_contri_wout_int'] = $_POST['contri'];
             }
 
+            $add = new Contribution($_POST);
+
+            $add->add();
+            
             //Flash::addMessage('Contribution is successful added.');
 
             //$this->redirect('/members/view/'.$_POST['user_id']);
         }
 
-        //echo "<pre>";
-        //print_r($_POST);
-        //echo "</pre>";
+        echo "<pre>";
+        print_r(Contribution::getMonthContriRecords($selected_month));
+        echo "</pre>";
 
         $summary_info = Summary::getMonthSummaryRecords($selected_month);
 
-        #Summary Check Add or Update
-        #If summary info = 1 update if 0 add
-        print_r($summary_info);
-
-        
         if (!empty($summary_info)) {
             # code...
             $_POST['month']     = $selected_month;
-            $_POST['contri'] = $summary_info[0]['contri_wout_int'] + $given_contri;
+            $_POST['contri'] = $summary_info['contri_wout_int'] + $given_contri;
 
             $summary = new Summary($_POST);
 
             $summary->updateContri();
 
             //echo "update";
-
-        }else {
+        } else {
             # code...
             $_POST['month']     = $selected_month;
             $_POST['contri']    = $given_contri;
@@ -255,8 +264,38 @@ class Contributions extends Authenticated
 
             //echo "Add";
         }
+
+        //self::Update_month_int($selected_month);
+    }
+
+    /**
+     * Functions
+     */
+
+    public static function Search($value, $array)
+    {
+        return(array_search($value, $array));
+    }
+
+    public static function Update_month_int($date)
+    {
+
+        $summary_info = Summary::getMonthSummaryRecords($date);
+
+        $summary_info['contri_wout_int'];
+
+        $contributor_info = Contribution::getMonthContriRecords($date);
         
+        $contributor_count = count($contributor_info);
+        
+        for ($i=0; $i < $contributor_count; $i++) { 
+            # code...
+            $_POST['month_int'] = ($contributor_info[$i]['contri'] / $summary_info['contri_wout_int']) * 100;
+            $_POST['contribution_id'] = $contributor_info[$i]['contribution_id'];
+            $contribution = new Contribution($_POST);
+
+            $contribution->update_month_int();
+        }
 
     }
-    
 }

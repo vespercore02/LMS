@@ -96,8 +96,8 @@ class Borrow extends \Core\Model
 
     public function updateSummaryBorrow()
     {
-        $total_Amount_Borrow = self::getTotalAmountBorrow();
-        $total_Amount_Remainig = self::getTotalAmountRemaining();
+        echo $total_Amount_Borrow = self::getTotalAmountBorrow();
+        echo $total_Amount_Remainig = self::getTotalAmountRemaining();
 
         if (self::checkSummaryBorrow()) {
             # code...
@@ -119,7 +119,7 @@ class Borrow extends \Core\Model
             //$stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->cut_off);
 
-            $stmt->execute();
+            //$stmt->execute();
         } else {
             # code...
             # if belonging group are needed NA! or kung kailangan na
@@ -140,7 +140,7 @@ class Borrow extends \Core\Model
             //$stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->cut_off, PDO::PARAM_STR);
 
-            $stmt->execute();
+            //$stmt->execute();
         }
     }
 
@@ -168,13 +168,11 @@ class Borrow extends \Core\Model
     public function getTotalAmountBorrow()
     {
         $sql = 'SELECT principal FROM borrow_records 
-        WHERE belonging_group = :belonging_group 
-        and date = :date';
+        WHERE date = :date';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         
-        $stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
         $stmt->bindValue(':date', $this->cut_off, PDO::PARAM_STR);
 
         $stmt->execute();
@@ -198,13 +196,11 @@ class Borrow extends \Core\Model
     public function getTotalAmountRemaining()
     {
         $sql = 'SELECT remaining FROM borrow_records 
-        WHERE belonging_group = :belonging_group 
-        and date = :date';
+        WHERE date = :date';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         
-        $stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
         $stmt->bindValue(':date', $this->cut_off, PDO::PARAM_STR);
 
         $stmt->execute();

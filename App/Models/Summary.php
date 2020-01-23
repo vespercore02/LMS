@@ -78,7 +78,7 @@ class Summary extends \Core\Model
 
     public static function getMonthSummaryRecords($contri_date)
     {
-        $sql = 'SELECT date, contri_wout_int, amount_borrow, payment_rcv, deficit, interest_earned, est_earned, total
+        $sql = 'SELECT term_id, date, contri_wout_int, amount_borrow, payment_rcv, deficit, interest_earned, est_earned, total
         FROM summary_records
         WHERE date = :contri_date';
 
@@ -88,7 +88,7 @@ class Summary extends \Core\Model
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public static function viewTerm($term)
