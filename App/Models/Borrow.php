@@ -40,8 +40,8 @@ class Borrow extends \Core\Model
 
     public function save()
     {
-        $sql = 'INSERT INTO borrow_records (user_id, belonging_group, date, date_borrow, principal, remaining, interest_rate, months_to_pay)
-                VALUES(:user_id, :belonging_group, :date, :date_borrow, :principal, :remaining, :interest_rate, :months_to_pay)';
+        $sql = 'INSERT INTO borrow_records (user_id, belonging_group, date, date_borrow, principal, remaining, interest_rate, months_to_pay, term_id)
+                VALUES(:user_id, :belonging_group, :date, :date_borrow, :principal, :remaining, :interest_rate, :months_to_pay, :term_id)';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -54,6 +54,7 @@ class Borrow extends \Core\Model
         $stmt->bindValue(':remaining', $this->remaining);
         $stmt->bindValue(':interest_rate', $this->borrow_interest);
         $stmt->bindValue(':months_to_pay', $this->months_to_pay);
+        $stmt->bindValue(':term_id', $this->term);
 
         $stmt->execute();
 

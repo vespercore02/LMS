@@ -58,8 +58,8 @@ class Contribution extends \Core\Model
 
     public function add()
     {
-        $sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri, total_contri_wout_int)
-        VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri, :total_contri_wout_int)';
+        $sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri, total_contri_wout_int, total_int, total_contri_w_int)
+        VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri, :total_contri_wout_int, :total_int, :total_contri_w_int)';
 
         //$sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri)
         //VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri)';
@@ -73,6 +73,8 @@ class Contribution extends \Core\Model
         $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
         $stmt->bindValue(':contri', $this->contri, PDO::PARAM_STR);
         $stmt->bindValue(':total_contri_wout_int', $this->total_contri_wout_int, PDO::PARAM_STR);
+        $stmt->bindValue(':total_int', $this->total_int, PDO::PARAM_STR);
+        $stmt->bindValue(':total_contri_w_int', $this->total_contri_w_int, PDO::PARAM_STR);
 
         return $stmt->execute();
     }

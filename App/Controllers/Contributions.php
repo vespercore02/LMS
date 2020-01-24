@@ -205,11 +205,11 @@ class Contributions extends Authenticated
             }
 
 
-            /*
+        
             Flash::addMessage('Contribution is successful added and  updated');
 
-            $this->redirect('/members/view/'.$_POST['user_id']);
-            */
+            //$this->redirect('/members/view/'.$_POST['user_id']);
+           
         } else {
             # code...
 
@@ -221,16 +221,24 @@ class Contributions extends Authenticated
                 print_r($last_contri_info);
                 echo "</pre>";
                 $_POST['total_contri_wout_int'] = $_POST['contri'] + $last_contri_info['total_contri_wout_int'];
+
+                $_POST['total_int'] = $last_contri_info['total_int'];
+                
+                $_POST['total_contri_w_int'] = $last_contri_info['total_int'] + $_POST['total_contri_wout_int'];
             } else {
                 # code...
                 $_POST['total_contri_wout_int'] = $_POST['contri'];
+
+                $_POST['total_int'] = 0;
+                
+                $_POST['total_contri_w_int'] = $_POST['total_contri_wout_int'];
             }
 
             $add = new Contribution($_POST);
 
             $add->add();
             
-            //Flash::addMessage('Contribution is successful added.');
+            Flash::addMessage('Contribution is successful added.');
 
             //$this->redirect('/members/view/'.$_POST['user_id']);
         }
@@ -244,7 +252,7 @@ class Contributions extends Authenticated
         if (!empty($summary_info)) {
             # code...
             $_POST['month']     = $selected_month;
-            $_POST['contri'] = $summary_info['contri_wout_int'] + $given_contri;
+            $_POST['contri']    = $summary_info['contri_wout_int'] + $given_contri;
 
             $summary = new Summary($_POST);
 
@@ -266,6 +274,8 @@ class Contributions extends Authenticated
         }
 
         //self::Update_month_int($selected_month);
+
+        $this->redirect('/members/view/'.$_POST['user_id']);
     }
 
     /**

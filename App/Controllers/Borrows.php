@@ -118,8 +118,10 @@ class Borrows extends Authenticated
         $_POST['cut_off'] = self::getContriDate($_POST['borrow_date']);
         $_POST['interest'] = self::getInterest($_POST['borrow_interest'], $_POST['borrow_amount']);
         $_POST['remaining'] = self::getRemaining($_POST['borrow_interest'], $_POST['borrow_amount']);
+        $term      = Term::term($_POST['cut_off']);
+        $_POST['term'] = $term['term'];
 
-
+        
         $borrow = new Borrow($_POST);
         $result = $borrow->save();
         
@@ -133,6 +135,10 @@ class Borrows extends Authenticated
             $payment_list = new Payment($_POST);
             
             echo $payment_list->constructPaymentList();
+
+            Flash::addMessage('Borrow '.$_POST['borrow_amount'].' successful.');
+
+
         } else {
             View::renderTemplate('Admin/form.html', [
                 'loan' => $loan

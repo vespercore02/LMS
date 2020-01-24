@@ -192,9 +192,6 @@ class Payment extends Authenticated
 
         $update_summary->update();
 
-        #
-        
-
         //echo $_POST['interest_earned'];
         if (!empty($_POST['interest_earned'])) {
             # code...
@@ -231,49 +228,8 @@ class Payment extends Authenticated
 
                 $update_month_int = $percent * $_POST['int_acquired'];
 
-                /* wrong move kasi nagcalculate na iadd pa maluluge business sobra distribution ng kita
-
-                if (!empty($toUpdateContribution[$a]['month_int'])) {
-                    # code...
-                    $add_month_int = $percent * $_POST['interest_earned'];
-
-                    echo $_POST['interest_earned']."<br>";
-
-                    $updated_month_int = $toUpdateContribution[$a]['month_int'] + $add_month_int;
-
-                    echo $toUpdateContribution[$a]['month_int']."<br>";
-
-                    $_POST['month_int'] =  number_format($updated_month_int, 2, '.', '');
-
-                    echo $_POST['month_int'] ;
-
-                    # need to check if this $toUpdateContribution[$a]['total_int'] is whole number or with decimal
-                    if (preg_match('/\.\d{2,}/', $toUpdateContribution[$a]['total_int'])) {
-                        # Successful match
-                        $total_int = sprintf("%0.2f", $toUpdateContribution[$a]['total_int']);
-                    } else {
-                        $total_int = $toUpdateContribution[$a]['total_int'];
-                    }
-
-                    $_POST['total_int'] = $total_int + $_POST['month_int'];
-
-                    $add_total_contri_w_int = $toUpdateContribution[$a]['contri'] + $_POST['month_int'];
-
-                    $_POST['total_contri_w_int'] = $toUpdateContribution[$a]['total_contri_w_int'] + $add_total_contri_w_int;
-
-                } else {
-                    # code...
-                    $_POST['contribution_id'] = $toUpdateContribution[$a]['contribution_id'];
-                    $updated_month_int = $percent * $_POST['interest_earned'];
-                    $_POST['month_int'] =  number_format($updated_month_int, 2, '.', '');
-                    $_POST['total_contri_w_int'] = $toUpdateContribution[$a]['contri'] + $_POST['month_int'];
-                }
-                */
-
-
                 echo $update_month_int. "<br>";
                 
-
                 if (!empty($toUpdateContribution[$a]['month_int'])) {
                     # code...
 
@@ -295,39 +251,9 @@ class Payment extends Authenticated
                 $update_contribution = new Contribution($_POST);
 
                 $update_contribution->update_month_int();
+                
+                self::update_contributed_dates($toUpdateContribution[$a]['user_id'], $borrowInfo[0]['date'], $term, $update_month_int );
 
-                # NEXT 1/22/2020
-                #1/21/2020
-                #update all contributor's total_int and total_contri_w_int
-
-                echo $updated_total_int = self::update_contributed_dates($toUpdateContribution[$a]['user_id'], $borrowInfo[0]['date'], $term, $_POST['month_int'] );
-
-
-
-                // get contribution info per month
-                /*
-                $get_contributions = Contribution::viewMember($toUpdateContribution[$a]['user_id']);
-
-                //echo "<pre>";
-                //print_r($get_contributions);
-                //echo "</pre>";
-
-                $contribution_info_num = count($get_contributions);
-
-                for ($b=0; $b < $contribution_info_num; $b++) {
-                    # code...
-                    if ($get_contributions[$b]['contri_date'] >=  $toUpdateContribution[$a]['contri_date']) {
-                        # code...
-                        echo "Contri here ".$get_contributions[$b]['contri_date']."<br>";
-
-                        $_POST['contribution_id'] = $get_contributions[$b]['contribution_id'];
-
-                        $update_contribution = new Contribution($_POST);
-
-                        $update_contribution->update_month_int();
-                    }
-                }
-                */
             }
         }
 
@@ -337,7 +263,7 @@ class Payment extends Authenticated
     }
 
 
-    function update_contributed_dates($id, $date, $term, $month_int)
+    public static function update_contributed_dates($id, $date, $term, $month_int)
     {
         $_POST['user_id'] = $id;
         $_POST['term'] = $term;
@@ -348,14 +274,20 @@ class Payment extends Authenticated
 
         $num_dates = count($contributed_dates);
 
+        $_POST['total_int'] = "";
+        $_POST['total_contri_w_int'] = "";
         for ($cd=0; $cd < $num_dates; $cd++) { 
             # code...
-            
-            if ($contributed_dates[$cd] >= $date) {
+            echo $contributed_dates[$cd]['contri_date']."<br>";
+            echo $contributed_dates[$cd]['total_int']."<br>";
+            echo $month_int."<br>";
+            if ($contributed_dates[$cd]['contri_date'] >= $date) {
                 # code...
                 if (!empty($contributed_dates[$cd]['total_int'])) {
                     # code...
                     echo "Meron <br>";
+
+                    echo $contributed_dates[$cd]['total_int']."<br>";
 
                     $_POST['total_int'] = $contributed_dates[$cd]['total_int'] + $month_int;
                 } else {
@@ -365,10 +297,10 @@ class Payment extends Authenticated
                     $_POST['total_int'] = $month_int;
                 }
 
-                $_POST['total_contri_w_int'] = $_POST['total_int'] + $contributed_dates[$cd]['contri'];
+                $_POST['total_contri_w_int'] = $_POST['total_int'] + $contributed_dates[$cd]['total_contri_wout_int'];
 
-                echo $_POST['total_int']."<br>";
-                echo $_POST['total_contri_w_int']."<br>";
+                echo $_POST['total_int']." ".$contributed_dates[$cd]['contri_date']."<br>";
+                echo $_POST['total_contri_w_int']." ".$contributed_dates[$cd]['contri_date']."<br>";
 
                 $_POST['contribution_id'] = $contributed_dates[$cd]['contribution_id'];
 
