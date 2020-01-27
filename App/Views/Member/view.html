@@ -25,7 +25,7 @@
 
     </div>
 
-    
+
 
 </div>
 
@@ -101,10 +101,11 @@
                 <h5>Borrow</h5>
                 {% if borrow_list %}
 
-                <button class="btn btn-success ml-auto">Pay Borrow</button>
+                <button class="btn btn-success ml-auto" data-toggle="modal" data-target="#addPayment">Pay Borrow</button>
 
                 {% else %}
-                <button class="btn btn-success ml-auto">Add Borrow</button>
+                <button class="btn btn-success ml-auto">Add
+                    Borrow</button>
 
                 {% endif %}
             </div>
@@ -112,6 +113,10 @@
                 <table class="table text-center table-flush">
                     <thead>
                         <tr>
+                            <th>
+                                Borrow ID #
+                            </th>
+
                             <th>
                                 Date
                             </th>
@@ -130,6 +135,10 @@
                         {% for borrow in borrow_list %}
                         <tr>
                             <td>
+                                <a href="/payment/view/{{ borrow.id}}">{{ borrow.id}}</a>
+                                
+                            </td>
+                            <td>
                                 {{ borrow.date_borrow}}
                             </td>
                             <td class="principal">
@@ -145,8 +154,12 @@
                         {% endfor %}
 
                         <tr>
+                            
                             <td class="font-weight-bold">
                                 Total
+                            </td>
+                            <td>
+                                
                             </td>
                             <td class="total-principal">
 
@@ -169,6 +182,7 @@
 </div>
 
 
+
 <div class="modal fade bd-example-modal-sm add-contribution" tabindex="-1" role="dialog"
     aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -187,8 +201,8 @@
                     <input type="hidden" class="form-control name" name="name" value="{{ user_info.name }}">
 
                     <label class="col-form-label">Group</label>
-                    <input type="text" class="form-control group" name="belonging_group" value="{{ user_info.belonging_group }}"
-                        disabled>
+                    <input type="text" class="form-control group" name="belonging_group"
+                        value="{{ user_info.belonging_group }}" disabled>
                     <input type="hidden" class="form-control group" name="belonging_group"
                         value="{{ user_info.belonging_group }}">
 
@@ -203,10 +217,10 @@
 
                     <label class="col-form-label">Choose Month</label>
                     <select name="month" class="form-control">
-                            <option value=""> -- Choose a Month -- </option>
+                        <option value=""> -- Choose a Month -- </option>
                     </select>
 
-                    
+
 
                     <label class="col-form-label">How much?</label>
                     <input type="text" class="form-control" name="contri">
@@ -217,6 +231,8 @@
         </div>
     </div>
 </div>
+
+
 
 {% endblock %}
 
@@ -276,7 +292,7 @@
 
         $('select[name=month]').empty();
         $('select[name=month]').append('<option value=""> -- Choose a Month -- </option>')
-        
+
         for (let index = 0; index < months.length; index++) {
 
             $('select[name=month]').append(

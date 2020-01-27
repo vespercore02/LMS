@@ -4,56 +4,28 @@
 
 {% block body %}
 
-<div class="row mb-4">
-    <div class="col-sm-12 text-center">
-        <h1 class="">Manage Group</h1>
-    </div>
-    <div class="col-sm-4">
-
-        <div class="card mb-4">
-            <div class="card-header">
-                <h4>Add Group</h4>
-            </div>
-            <div class="card-body">
-                <form action="/admin/users/add-groups" method="post">
 
 
-                    <div class="form-group row">
-                        <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label">Group Name</label>
-                        <input type="text" class="col-sm-8 col-md-12 col-xl-8 form-control-plaintext" id="inputLoanId"
-                            name="group_name" placeholder="Name" autofocus value="{{ group.group_name }}" required />
-                    </div>
+<div class="col-12 mb-5">
+    <div class="card">
+        <div class="card-body d-flex">
+            <h3 class="">Manage Group</h3>
 
-                    <div class="form-group row">
-                        <div class="col-sm-4 col-md-12 col-xl-4"></div>
-                        <button type="submit" class="col-sm-8 col-md-12 col-xl-8 btn btn-success">Add</button>
-                    </div>
-                </form>
-
-
-            </div>
         </div>
     </div>
-    <div class="col-sm-8">
-        <style>
-            .member-records {
-                width: 100%;
-                overflow: auto;
-                white-space: nowrap;
-                overflow-x: scroll;
-                overflow-y: visible;
+</div>
 
-                background-color: #fff;
-                background-clip: border-box;
-                border: 1px solid rgba(0, 0, 0, .125);
-                border-radius: .25rem;
-                box-sizing: border-box;
-            }
-        </style>
+<div class="col-12 col-lg-12 mb-5">
+    <div class="card">
+        <div class="card-header d-flex">
+            <h4>Groups</h4>
 
-        <div class="member-records">
-            <table class="table table-bordered">
-                <thead>
+            <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-access">Add
+                Group</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-center table-flush">
+                <thead class="font-weight-bold">
                     <tr>
                         <th>
                             Number
@@ -80,5 +52,36 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade bd-example-modal-sm add-group" tabindex="-1" role="dialog"
+    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="card-header">
+                <h4>Add Group</h4>
+            </div>
+            <div class="card-body">
+                <form action="/admin/users/add-groups" method="post">
+
+
+                    <div class="form-group row">
+                        <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label">Group Name</label>
+                        <input type="text" class="col-sm-8 col-md-12 col-xl-8 form-control-plaintext" id="inputLoanId"
+                            name="group_name" placeholder="Name" autofocus value="{{ group.group_name }}" required />
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-md-12 col-xl-4"></div>
+                        <button type="submit" class="col-sm-8 col-md-12 col-xl-8 btn btn-success">Add</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}

@@ -120,7 +120,7 @@ class Borrow extends \Core\Model
             //$stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->cut_off);
 
-            //$stmt->execute();
+            $stmt->execute();
         } else {
             # code...
             # if belonging group are needed NA! or kung kailangan na
@@ -141,7 +141,7 @@ class Borrow extends \Core\Model
             //$stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->cut_off, PDO::PARAM_STR);
 
-            //$stmt->execute();
+            $stmt->execute();
         }
     }
 

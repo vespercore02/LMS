@@ -7,6 +7,7 @@ use \App\Models\User;
 use \App\Models\Borrow;
 use \App\Models\Payment;
 use \App\Models\Term;
+use \App\Flash;
 
 class Borrows extends Authenticated
 {
@@ -57,9 +58,9 @@ class Borrows extends Authenticated
         $month = $this->route_params['id'];
         $month_borrow   = Borrow::getMonthBorrowRecords($this->route_params['id']);
         
-        echo "<pre>";
-        print_r($month_borrow);
-        echo "</pre>";
+        //echo "<pre>";
+        //print_r($month_borrow);
+        //echo "</pre>";
         
         View::renderTemplate('/borrow/month.html', [
             'month' => $month,
@@ -126,7 +127,6 @@ class Borrows extends Authenticated
         $result = $borrow->save();
         
         if ($result > 0) {
-            //$this->redirect('/signup/success');
 
             $borrow->updateSummaryBorrow();
 
@@ -137,6 +137,8 @@ class Borrows extends Authenticated
             echo $payment_list->constructPaymentList();
 
             Flash::addMessage('Borrow '.$_POST['borrow_amount'].' successful.');
+
+            $this->redirect('/borrows/index');
 
 
         } else {

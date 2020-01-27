@@ -223,15 +223,22 @@ class Contributions extends Authenticated
                 $_POST['total_contri_wout_int'] = $_POST['contri'] + $last_contri_info['total_contri_wout_int'];
 
                 $_POST['total_int'] = $last_contri_info['total_int'];
+
+                if (empty($last_contri_info['total_int'])) {
+                    # code...
+                    $_POST['total_contri_w_int'] = 0;
+                }else {
+                    # code...
+                    $_POST['total_contri_w_int'] = $last_contri_info['total_int'] + $_POST['total_contri_wout_int'];
+                }
                 
-                $_POST['total_contri_w_int'] = $last_contri_info['total_int'] + $_POST['total_contri_wout_int'];
             } else {
                 # code...
                 $_POST['total_contri_wout_int'] = $_POST['contri'];
 
                 $_POST['total_int'] = 0;
                 
-                $_POST['total_contri_w_int'] = $_POST['total_contri_wout_int'];
+                $_POST['total_contri_w_int'] = 0;
             }
 
             $add = new Contribution($_POST);
