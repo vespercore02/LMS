@@ -241,7 +241,7 @@
 
 <script>
 
-    let tabs = ['contri', 'month_int', 'total_contri_w_int'];
+    let tabs = ['contri', 'month_int'];
 
     for (t = 0; t < tabs.length; t++) {
         $(' td.' + tabs[t]).each(function () {
@@ -258,6 +258,8 @@
         });
 
     }
+
+    $('.total-total_contri_w_int').text(sum);
 
     $('select[name=term]').on('change', function () {
         console.log($(this).val());

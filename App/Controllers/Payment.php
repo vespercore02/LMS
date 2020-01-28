@@ -201,9 +201,9 @@ class Payment extends Authenticated
             $toUpdateContribution = Contribution::view($borrowInfo[0]['date']);
             //echo $borrowInfo[0]['date'];
             //echo $toUpdateContribution;
-            echo "<pre>";
-            print_r($toUpdateContribution);
-            echo "</pre>";
+            //echo "<pre>";
+            //print_r($toUpdateContribution);
+            //echo "</pre>";
 
             # NOTE to be done 11/11/19
             //
@@ -220,7 +220,7 @@ class Payment extends Authenticated
                 #re-calculating percentage of contribution for month_int of latest interest_earned
                 $percent = $toUpdateContribution[$a]['contri'] / $toUpdateSummary['contri_wout_int'];
 
-                echo $percent." pursyento <br>";
+                //echo $percent." pursyento <br>";
 
                 $_POST['total_contri_wout_int'] = $toUpdateContribution[$a]['contri'];
                 
@@ -228,7 +228,7 @@ class Payment extends Authenticated
 
                 $update_month_int = $percent * $_POST['int_acquired'];
 
-                echo $update_month_int. "<br>";
+                //echo $update_month_int. "<br>";
                 
                 if (!empty($toUpdateContribution[$a]['month_int'])) {
                     # code...
@@ -257,9 +257,9 @@ class Payment extends Authenticated
             }
         }
 
-        //Flash::addMessage('Update payment successful '.array_sum($total_paid));
+        Flash::addMessage('Update payment successful '.array_sum($total_paid));
 
-        //$this->redirect('/payment/view/'.$_POST['borrow_id']);
+        $this->redirect('/payment/view/'.$_POST['borrow_id']);
     }
 
 
