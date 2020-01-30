@@ -64,6 +64,7 @@ class Summary extends \Core\Model
     {
         $sql = 'UPDATE summary_records
                 SET payment_rcv = :payment_rcv,
+                deficit = :deficit,
                 interest_earned = :interest_earned
                 WHERE date = :date';
 
@@ -72,6 +73,7 @@ class Summary extends \Core\Model
         $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);
         $stmt->bindValue(':payment_rcv', $this->payment_rcv, PDO::PARAM_STR);
         $stmt->bindValue(':interest_earned', $this->interest_earned, PDO::PARAM_STR);
+        $stmt->bindValue(':deficit', $this->deficit, PDO::PARAM_STR);
         
         $stmt->execute();
     }

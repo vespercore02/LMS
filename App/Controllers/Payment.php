@@ -76,11 +76,13 @@ class Payment extends Authenticated
         $update->paymentUpdate();
 
         $toUpdateList = Mpayment::paymentList($_POST['borrow_id']);
-        /*
-        echo "<pre>";
-        print_r($toUpdateList);
-        echo "</pre>";
-        */
+        
+        //echo "<pre>";
+        //print_r($toUpdateList);
+        //echo "</pre>";
+        
+
+        $overall_amount_to_paid = $toUpdateList[count($toUpdateList) - 1]['amount_to_be_paid'];
         $total_paid = array();
         foreach ($toUpdateList as $key => $value) {
             # code...
@@ -155,6 +157,25 @@ class Payment extends Authenticated
             $_POST['payment_rcv']   =  $paid_amount;
         }
 
+        if ($toUpdateSummary['deficit']) {
+            # code...
+
+            if ($_POST['amount_to_be_paid'] == "Paid") {
+
+                $_POST['deficit'] = $toUpdateSummary['deficit'] - $overall_amount_to_paid;
+
+            }else {
+                # code...
+                $_POST['deficit'] = $toUpdateSummary['deficit'] - $paid_amount;
+            }
+
+
+        }else {
+            # code...
+
+            //$_POST['deficit'] = 
+        }
+
         echo $_POST['int_acquired']."<br>";
 
         if (!empty($_POST['int_acquired'])) {
@@ -192,8 +213,8 @@ class Payment extends Authenticated
 
         $update_summary->update();
 
-        //echo $_POST['interest_earned'];
-        if (!empty($_POST['interest_earned'])) {
+        echo $_POST['interest_earned'];
+        if ($_POST['interest_earned'] > $toUpdateSummary['interest_earned']) {
             # code...
             echo "Distribution ng Kita <br>";
             // Update Contribution Month interest

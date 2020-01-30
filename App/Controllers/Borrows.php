@@ -122,6 +122,7 @@ class Borrows extends Authenticated
         $term      = Term::term($_POST['cut_off']);
         $_POST['term'] = $term['term'];
 
+        //echo $_POST['cut_off'];
         
         $borrow = new Borrow($_POST);
         $result = $borrow->save();
