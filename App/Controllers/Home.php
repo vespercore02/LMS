@@ -9,6 +9,7 @@ use \App\Models\loan;
 use \App\Models\Contribution;
 use \App\Models\User;
 use \App\Models\Group;
+use \App\Models\Borrow;
 
 /**
  * Home controller
@@ -40,7 +41,15 @@ class Home extends \Core\Controller
                 case '1':
                     # code...
 
-                    View::renderTemplate('Home/index-member.html');
+                    $member_info       = User::findByID($user_info['id']);
+                    $contribution_list = Contribution::viewMember($user_info['id']);
+                    $borrow_list       = Borrow::viewMember($user_info['id']);
+
+                    View::renderTemplate('Home/index-member.html',[
+                        'user_info'         => $user_info,
+                        'contribution_list' => $contribution_list,
+                        'borrow_list'       => $borrow_list
+                    ]);
 
                     break;
 
@@ -64,7 +73,7 @@ class Home extends \Core\Controller
                         
                         $total_contri = $contri_info[0]['total_contri'];
                         $total_month_int = $contri_info[0]['total_month_int'];
-                        $total_contri_w_int = $contri_info[0]['total_contri_w_int'];
+                        $total_contri_w_int = $contri_info[0]['total_contri'] + $contri_info[0]['total_month_int'];
 
 
                         $members_info[] = ['id' => $id,

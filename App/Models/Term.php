@@ -82,6 +82,13 @@ class Term extends \Core\Model
         
         $stmt->execute();
 
+        if ($stmt->rowCount() > 0) {
+            # code...
+            
         return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return false;
+
     }
 }

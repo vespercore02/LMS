@@ -288,9 +288,10 @@ class Contribution extends \Core\Model
     {
         $sql = 'SELECT SUM(contri) as total_contri, 
         SUM(month_int) as total_month_int, 
-        SUM(total_contri_w_int) as total_contri_w_int 
+        total_contri_w_int 
         FROM contribution_records 
-        WHERE user_id = :user_id';
+        WHERE user_id = :user_id
+        ORDER BY contribution_id ASC';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -305,8 +306,7 @@ class Contribution extends \Core\Model
     public static function viewGroupTotalContri($belonging_group)
     {
         $sql = 'SELECT SUM(contri) as total_contri, 
-        SUM(month_int) as total_month_int, 
-        SUM(total_contri_w_int) as total_contri_w_int 
+        SUM(month_int) as total_month_int
         FROM contribution_records 
         WHERE belonging_group = :belonging_group';
 

@@ -120,32 +120,41 @@ class Borrows extends Authenticated
         $_POST['interest'] = self::getInterest($_POST['borrow_interest'], $_POST['borrow_amount']);
         $_POST['remaining'] = self::getRemaining($_POST['borrow_interest'], $_POST['borrow_amount']);
         $term      = Term::term($_POST['cut_off']);
-        $_POST['term'] = $term['term'];
 
-        //echo $_POST['cut_off'];
-        
-        $borrow = new Borrow($_POST);
-        $result = $borrow->save();
-        
-        if ($result > 0) {
+        //echo $term;
 
-            $borrow->updateSummaryBorrow();
+        if (empty($term)) {
+            # code...
+            Flash::addMessage('Term for date '.$_POST['cut_off'].' is not yet set, please contact your administrator.', "warning");
 
-            $_POST['borrow_id'] = $result;
-
-            $payment_list = new Payment($_POST);
-            
-            echo $payment_list->constructPaymentList();
-
-            Flash::addMessage('Borrow '.$_POST['borrow_amount'].' successful.');
-
-            $this->redirect('/borrows/index');
-
-
+            View::renderTemplate('/borrow/index.html');
         } else {
-            View::renderTemplate('Admin/form.html', [
-                'loan' => $loan
-            ]);
+            # code...
+
+            $_POST['term'] = $term['term'];
+
+            //echo $_POST['cut_off'];
+        
+            $borrow = new Borrow($_POST);
+            $result = $borrow->save();
+        
+            if ($result > 0) {
+                $borrow->updateSummaryBorrow();
+
+                $_POST['borrow_id'] = $result;
+
+                $payment_list = new Payment($_POST);
+            
+                echo $payment_list->constructPaymentList();
+
+                Flash::addMessage('Borrow '.$_POST['borrow_amount'].' successful.');
+
+                $this->redirect('/borrows/index');
+            } else {
+                Flash::addMessage('Term for date '.$_POST['cut_off'].' is not yet set, please contact your administrator.');
+
+                View::renderTemplate('/borrows/index.html');
+            }
         }
     }
 
@@ -172,7 +181,7 @@ class Borrows extends Authenticated
 
         $set_month = $month[1]."-".$month[2];
 
-        print_r($month);
+        //print_r($month);
         
         if ($set_month > '10-15' and $set_month < '10-31' or $set_month == '10-15') {
             # code...

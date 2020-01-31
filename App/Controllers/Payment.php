@@ -318,7 +318,9 @@ class Payment extends Authenticated
                     $_POST['total_int'] = $month_int;
                 }
 
-                $_POST['total_contri_w_int'] = $_POST['total_int'] + $contributed_dates[$cd]['total_contri_wout_int'];
+                $updated_total_contri_w_int = $_POST['total_int'] + $contributed_dates[$cd]['total_contri_wout_int'];
+
+                $_POST['total_contri_w_int'] =  number_format($updated_total_contri_w_int, 2, '.', '');
 
                 echo $_POST['total_int']." ".$contributed_dates[$cd]['contri_date']."<br>";
                 echo $_POST['total_contri_w_int']." ".$contributed_dates[$cd]['contri_date']."<br>";
