@@ -246,7 +246,9 @@ class Users extends \App\Controllers\Authenticated
             $member = new User($_POST);
 
             if ($member->save()) {
-                Flash::addMessage('Member successful added');
+
+                $link = $member->returnActivationLink();
+                Flash::addMessage('Member successful added please access this link '.$link);
 
                 $this->redirect('/admin/users/members');
             } else {

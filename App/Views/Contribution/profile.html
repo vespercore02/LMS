@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Contributions{% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    My Contributions
+                </h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12 col-lg-12 col-xl-12 mb-5">
+        <div class="card">
+            <div class="card-header d-flex">
+                <h5>Contribution</h5>
+                
+            </div>
+            <div class="table-responsive">
+                <table class="table text-center table-flush">
+                    <thead>
+                        <tr>
+                            <th>
+                                Month
+                            </th>
+                            <th>
+                                Contribution
+                            </th>
+                            <th>
+                                Interest
+                            </th>
+                            <th>
+                                Contribution + Interest
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contribution in contribution_list %}
+                        <tr>
+                            <td>
+                                {{ contribution.contri_date}}
+                            </td>
+                            <td class="contri">
+                                {{ contribution.contri}}
+                            </td>
+                            <td class="month_int">
+                                {{ contribution.month_int}}
+                            </td>
+                            <td class="total_contri_w_int">
+                                {{ contribution.total_contri_w_int}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <td class="font-weight-bold">
+                                Total
+                            </td>
+                            <td class="total-contri">
+
+                            </td>
+                            <td class="total-month_int">
+
+                            </td>
+                            <td class="total-total_contri_w_int">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+{% endblock %}

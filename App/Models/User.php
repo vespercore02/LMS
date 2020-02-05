@@ -386,6 +386,18 @@ class User extends \Core\Model
     }
 
     /**
+     * Return activation link
+     *
+     * @return void
+     */
+    public function returnActivationLink()
+    {
+        $url = 'http://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
+
+        return $url;
+    }
+
+    /**
      *
      *
      *
@@ -405,7 +417,7 @@ class User extends \Core\Model
 
         $stmt->bindValue(':hashed_token', $hashed_token, PDO::PARAM_STR);
 
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     /**

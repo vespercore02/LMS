@@ -36,7 +36,7 @@ class Signup extends \Core\Controller
 
             $user->sendActivationEmail();
 
-            $this->redirect('/loan/public/signup/success');
+            $this->redirect('/signup/success');
 
         } else {
 
@@ -64,9 +64,10 @@ class Signup extends \Core\Controller
      */
     public function activateAction()
     {
-        User::activate($this->route_params['token']);
+       
 
-        $this->redirect('/loan/public/signup/activated');
+        print_r( User::activate($this->route_params['token']));
+        //$this->redirect('/signup/activated');
         
     }
 
