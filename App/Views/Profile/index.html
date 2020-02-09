@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ user_info.name }} {% endblock %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-12 col-lg-6 col-xl-6 mb-5">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>Profile</h3>
+            </div>
+
+            <div class="card-body">
+
+                <h4>{{ user_info.name }}</h4>
+
+                <p class="pt-4">
+                    Welcome t, your savings are monitored here better than you expect.
+                </p>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-6 mb-5">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>Password Update</h3>
+            </div>
+
+            <div class="card-body">
+
+                <form action="/account/updatepass" method="post" class="form-group">
+
+                    <div class="form-group row">
+
+                        <label for="old_password" class="col-form-label col-12 col-lg-6 col-xl-6 text-right">Old
+                            Password:</label>
+                        <input type="password" name="old_password" id="old_password"
+                            class="form-control col-12 col-lg-6 col-xl-6">
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="new_password" class="col-form-label col-12 col-lg-6 col-xl-6 text-right">New
+                            Password:</label>
+                        <input type="password" name="new_password" id="new_password"
+                            class="form-control col-12 col-lg-6 col-xl-6">
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="confirm_new_password"
+                            class="col-form-label col-12 col-lg-6 col-xl-6 text-right">Confirm New
+                            Password:</label>
+                        <input type="password" name="confirm_new_password" id="confirm_new_password"
+                            class="form-control col-12 col-lg-6 col-xl-6">
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12 col-lg-6 col-xl-6">
+
+                        </div>
+                        <button type="submit" class="btn btn-success col-12 col-lg-6 col-xl-6">
+                            Update
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}

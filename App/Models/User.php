@@ -71,6 +71,27 @@ class User extends \Core\Model
         return false;
     }
 
+    public function updatePass()
+    {
+        $password_hash = password_hash($this->new_password, PASSWORD_DEFAULT);
+
+        $token = new Token();
+        $hashed_token = $token->getHash();
+        $this->activation_token = $token->getValue();
+
+        $sql = 'UPDATE users
+                    SET password_hash = :password_hash
+                    WHERE id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $this->user_id);
+        $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
     /**
      * Validate current property values, adding valiation error messages to the errors array property
      *
@@ -581,7 +602,7 @@ class User extends \Core\Model
 
     /**
      * GET Group Members
-     * 
+     *
      * @return mixed list of member or none
      */
     public static function getGroupMembers($groupId, $id)
@@ -598,6 +619,4 @@ class User extends \Core\Model
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    
 }
