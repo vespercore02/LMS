@@ -316,16 +316,5 @@ class Contributions extends Authenticated
 
     }
 
-    public function profileAction()
-    {
-        $member = $this->route_params['id'];
-
-        $member_Contribution = Contribution::viewMember($member);
-        
-
-        View::renderTemplate('/contribution/profile.html', [
-            
-            'contribution_list' => $member_Contribution
-        ]);
-    }
+ 
 }

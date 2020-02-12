@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Contributions{% endblock %}
+{% block title %}Borrow{% endblock %}
 
 {% block body %}
 
@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>
-                    My Contributions
+                    My Borrow
                 </h4>
             </div>
         </div>
@@ -23,16 +23,6 @@
         <div class="card">
             <div class="card-header d-flex">
                 <h5>Borrow</h5>
-                {% if borrow_list %}
-
-                <button class="btn btn-success ml-auto" data-toggle="modal" data-target="#addPayment">Pay
-                    Borrow</button>
-
-                {% else %}
-                <button class="btn btn-success ml-auto">Add
-                    Borrow</button>
-
-                {% endif %}
             </div>
             <div class="table-responsive">
                 <table class="table text-center table-flush">

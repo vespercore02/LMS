@@ -53,18 +53,6 @@ class Borrows extends Authenticated
         */
     }
 
-    public function profileAction()
-    {
-        $member = $this->route_params['id'];
-
-        $member_Borrow = Borrow::viewMember($member);
-        
-
-        View::renderTemplate('/contribution/profile.html', [
-            
-            'borrow_list' => $member_Borrow
-        ]);
-    }
 
     public function monthAction()
     {
