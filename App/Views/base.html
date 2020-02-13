@@ -27,6 +27,7 @@
                 <li>
                     <a class="nav-link" href="/">Home</a>
                 </li>
+                {% if current_user.access_rights == 2%}
                 <li>
                     <a href="/contributions/index">Contribution</a>
                 </li>
@@ -36,7 +37,7 @@
                 <li>
                     <a href="/borrows/index">Borrow</a>
                 </li>
-
+                {% endif %}
                 {% if current_user.access_rights == 9%}
                 <li>
                     <a href="#">Contact</a>
