@@ -18,7 +18,7 @@ use \App\Flash;
  *
  * PHP version 5.4
  */
-class Groupleader extends \App\Controllers\Authenticated
+class Groupleader extends Authenticated
 {
     public function members()
     {

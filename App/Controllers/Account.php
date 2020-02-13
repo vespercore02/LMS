@@ -12,7 +12,7 @@ use \App\Flash;
  *
  * PHP version 7.0
  */
-class Account extends \Core\Controller
+class Account extends Authenticated
 {
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Auth;
 use \App\Models\User;
 use \App\Models\Borrow;
 use \App\Models\Payment;
@@ -38,8 +39,10 @@ class Borrows extends Authenticated
             $borrow_info = Borrow::borrowInfo($this->route_params['id']);
             $paymentlist = Payment::paymentlist($this->route_params['id']);
             $userInfo   = User::searchById($borrow_info[0]['user_id']);
+            $viewer     = $_SESSION['user_id'];
 
             View::renderTemplate('/borrow/view.html', [
+                'viewer'    => $viewer,
                 'userInfo' => $userInfo,
                 'borrow_info' => $borrow_info,
                 'payment_list' => $paymentlist
@@ -51,6 +54,47 @@ class Borrows extends Authenticated
         echo "</pre>";
 
         */
+    }
+
+    public function myAction()
+    {
+        if (isset($this->route_params['id'])) {
+            $session_info = User::findByID($_SESSION['user_id']);
+            //print_r($session_info);
+            $borrowInfo = Borrow::borrowInfo($this->route_params['id']);
+            $paymentlist = Payment::paymentlist($this->route_params['id']);
+            $userInfo   = User::searchById($borrowInfo[0]['user_id']);
+
+            //print_r($userInfo);
+
+            if ($borrowInfo[0]['user_id'] == $_SESSION['user_id']) {
+                # code...
+                $viewer = "";
+            }  elseif ($session_info['belonging_group'] == $session_info['belonging_group'] and $session_info['access_rights'] == 2) {
+                # code...
+                $viewer = 1;
+            }else {
+                # code...
+                Flash::addMessage('Unauthorized to access', Flash::WARNING);
+
+                $this->redirect(Auth::getReturnToPage());
+            }
+
+            View::renderTemplate('payment/index.html', [
+                'viewer'    => $viewer,
+                'userInfo' => $userInfo,
+                'borrowInfo' => $borrowInfo,
+                'paymentlist' => $paymentlist
+            ]);
+        /*
+        echo "<pre>";
+        print_r($paymentlist);
+        echo "</pre>";
+            */
+        } else {
+            # code...
+            $this->redirect(Auth::getReturnToPage());
+        }
     }
 
 

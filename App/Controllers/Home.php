@@ -35,7 +35,7 @@ class Home extends Authenticated
         $contribution_list = Contribution::viewMember($user_info['id']);
         $borrow_list       = Borrow::viewMember($user_info['id']);
 
-        //print_r($user_info);
+        //print_r($borrow_list);
 
         View::renderTemplate('Home/index.html', [
                         'user_info'         => $user_info,

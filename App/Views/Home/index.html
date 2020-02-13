@@ -30,24 +30,53 @@
 <div class="row">
 
     <div class="col-12 col-lg-6 col-xl-6 mb-5">
-        <div class="card bg-primary">
-            <div class="card-body p-5">
-                <h5>Check your Contributions <a href="/home/mycontribution">here</a></h5>
+        <div class="card">
+            <div class="card-body p-4">
+                <div>
+                    <h4 class="text-success"><a href="/home/mycontribution">My Contributions</a></h4>
+                </div>
+                <h3> P 
+
+                {% for contribution in contribution_list %}
+                {% if loop.last %}
+                    {{contribution.total_contri_wout_int}}
+                {% endif %}
+                {% endfor %}
+
+            </h5>
+            <p class="pt-4">Estimated total contribution with out interest</p>
+            <h6 class="text-info"><a href="/home/mycontribution">Contribution history </a></h5>
             </div>
         </div>
     </div>
+
+    {% if borrow_list %}
 
     <div class="col-12 col-lg-6 col-xl-6 mb-5">
-        <div class="card bg-primary">
-            <div class="card-body p-5">
-                <h5>Check your Borrowed <a href="/home/myborrow">here</a> </h5>
-            </div>
+        <div class="card">
+            <div class="card-body p-4">
+                
 
+                {% for borrow in borrow_list %}
+                {% if loop.last %}
+
+                <div>
+                    <h4 class="text-success"><a href="/borrows/my/{{borrow.id}}">My Borrowed</a></h4>
+                </div>
+                <h3> P 
+                    {{borrow.principal}}
+                {% endif %}
+                {% endfor %}
+
+            </h3>
+            <p class="pt-4">Remaining borrowed</p>
+            <h6 class="text-info"><a href="/home/myborrow">Borrow history </a></h5>
+            </div>
         </div>
     </div>
-
-
+    {% endif %}
 </div>
+
 
 
 {% if user_info.access_rights == 2 %}
