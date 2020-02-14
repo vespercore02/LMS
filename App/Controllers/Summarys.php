@@ -23,16 +23,10 @@ class Summarys extends Authenticated
         $terms = new Term();
 
         $terms_list = $terms->view();
-        // get today date
+        
         $today = date('Y-m-d');
-        // get nearest cutoff of today's date
+        
         $nearest_cutoff = self::getCuffOff($today);
-        //echo $nearest_cutoff;
-        // get term of cutoff
-        //$cutoffs_term = Term::term($nearest_cutoff);
-        // get term months
-        //$term_months = Term::months($cutoffs_term);
-        // get term months records
 
         View::renderTemplate('/summary/index.html',[
             'terms' => $terms_list

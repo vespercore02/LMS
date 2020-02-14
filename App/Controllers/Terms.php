@@ -33,7 +33,6 @@ class Terms extends Authenticated
 
             $term = $_POST['month_year'];
             $month_start = $_POST['month_year']."-".$_POST['month_start'];
-            //echo $month_start;
 
             while ($month <= 12) {
                 # code...
@@ -42,20 +41,12 @@ class Terms extends Authenticated
                     # code...
 
                     $month_start = date("Y-m-d", strtotime($month_start." +1month"));
-
-                    //echo $month_start;
                 
                 } 
-
-                //echo "<br>";
 
                 Term::save($term, $month_start);
 
                 $month_end =  date("Y-m-t", strtotime($month_start));
-                //echo $month_end;
-
-                //echo "<br>";
-                
                 
                 Term::save($term, $month_end);
 

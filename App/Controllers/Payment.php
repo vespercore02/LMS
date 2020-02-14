@@ -22,21 +22,36 @@ class Payment extends Authenticated
     public function viewAction()
     {
         if (isset($this->route_params['id'])) {
+            $session_info = User::findByID($_SESSION['user_id']);
+            //print_r($session_info);
             $borrowInfo = Borrow::borrowInfo($this->route_params['id']);
             $paymentlist = Mpayment::paymentlist($this->route_params['id']);
             $userInfo   = User::searchById($borrowInfo[0]['user_id']);
 
+            //print_r($userInfo);
+
+            if ($borrowInfo[0]['user_id'] == $_SESSION['user_id']) {
+                # code...
+                $viewer = "";
+            }  elseif ($session_info['belonging_group'] == $session_info['belonging_group'] and $session_info['access_rights'] == 2) {
+                # code...
+                $viewer = 1;
+            }else {
+                # code...
+                Flash::addMessage('Unauthorized to access', Flash::WARNING);
+
+                $this->redirect(Auth::getReturnToPage());
+            }
+
             View::renderTemplate('payment/index.html', [
+                'viewer'    => $viewer,
                 'userInfo' => $userInfo,
                 'borrowInfo' => $borrowInfo,
                 'paymentlist' => $paymentlist
             ]);
-        /*
-        echo "<pre>";
-        print_r($paymentlist);
-        echo "</pre>";
-            */
+       
         } else {
+            # code...
             $this->redirect(Auth::getReturnToPage());
         }
     }
@@ -66,33 +81,18 @@ class Payment extends Authenticated
             # code...
             $_POST['amount_to_be_paid'] = "Paid";
         }
-        /*
-        echo "<pre>";
-        print_r($_POST);
-        echo "</pre>";
-        */
         $update = new Mpayment($_POST);
 
         $update->paymentUpdate();
 
         $toUpdateList = Mpayment::paymentList($_POST['borrow_id']);
-        
-        //echo "<pre>";
-        //print_r($toUpdateList);
-        //echo "</pre>";
-        
+                
 
         $overall_amount_to_paid = $toUpdateList[count($toUpdateList) - 1]['amount_to_be_paid'];
         $total_paid = array();
         foreach ($toUpdateList as $key => $value) {
             # code...
-            /*
-            echo $value['id']."<br>";
-            echo $value['amount_to_be_paid'] - $_POST['amount']."<br>";
-            echo $value['amount_to_be_paid']."<br>";
-            echo $value['date_of_payment']."<br>";
-            echo $value['borrow_id']."<br>";
-            */
+            
             $total_paid[] = $value['amount_paid'];
             if ($value['id'] > $date_to_pay[1]) {
                 # code...
@@ -109,7 +109,6 @@ class Payment extends Authenticated
 
                 $update->paymentUpdate();
 
-                //echo $_POST['id'] ." ". $_POST['amount_to_be_paid'] ." ". $_POST['date_to_pay'] ." ". $_POST['amount']. "<br>";
             }
         }
 
@@ -136,14 +135,8 @@ class Payment extends Authenticated
         $update_borrow->update();
 
         $borrowInfo = Borrow::borrowInfo($_POST['borrow_id']);
-        /*
-        echo "<pre>";
-        print_r($borrowInfo);
-        echo "</pre>";
-        */
+        
         $toUpdateSummary = Summary::getMonthSummaryRecords($borrowInfo[0]['date']);
-
-        //echo $toUpdateSummary[0]['payment_rcv']."<br>";
         
         echo "<pre>";
         print_r($toUpdateSummary);
@@ -170,10 +163,6 @@ class Payment extends Authenticated
             }
 
 
-        }else {
-            # code...
-
-            //$_POST['deficit'] = 
         }
 
         echo $_POST['int_acquired']."<br>";
@@ -202,10 +191,10 @@ class Payment extends Authenticated
                 $_POST['interest_earned'] = "";
             }
 
-            //echo "wala walang";
+            
         }
 
-        //echo "wah";
+        
         
         $_POST['date']          =   $borrowInfo[0]['date'];
 
@@ -217,39 +206,22 @@ class Payment extends Authenticated
         if ($_POST['interest_earned'] > $toUpdateSummary['interest_earned']) {
             # code...
             echo "Distribution ng Kita <br>";
-            // Update Contribution Month interest
 
             $toUpdateContribution = Contribution::view($borrowInfo[0]['date']);
-            //echo $borrowInfo[0]['date'];
-            //echo $toUpdateContribution;
-            //echo "<pre>";
-            //print_r($toUpdateContribution);
-            //echo "</pre>";
-
-            # NOTE to be done 11/11/19
-            //
-            // yung total cont w/out int pag 10-15 no check prev pag 10-30 need check prev
-            // same goes sa total_int at total_contri_w_int
-
+            
             $contributor_num = count($toUpdateContribution);
 
-            // for or foreach
             
             for ($a=0; $a < $contributor_num; $a++) {
                 # code...
-                
-                #re-calculating percentage of contribution for month_int of latest interest_earned
-                $percent = $toUpdateContribution[$a]['contri'] / $toUpdateSummary['contri_wout_int'];
 
-                //echo $percent." pursyento <br>";
+                $percent = $toUpdateContribution[$a]['contri'] / $toUpdateSummary['contri_wout_int'];
 
                 $_POST['total_contri_wout_int'] = $toUpdateContribution[$a]['contri'];
                 
                 $_POST['contribution_id'] = $toUpdateContribution[$a]['contribution_id'];
 
                 $update_month_int = $percent * $_POST['int_acquired'];
-
-                //echo $update_month_int. "<br>";
                 
                 if (!empty($toUpdateContribution[$a]['month_int'])) {
                     # code...

@@ -57,13 +57,7 @@ class Groupleader extends Authenticated
     {
         $add_contri     = new Group($_POST);
         $update_summary = new Contribution($_POST);
-        /*
-        echo $_POST['term'];
         
-        echo "<pre>";
-        print_r($months);
-        echo "</pre>";
-        */
 
         if ($add_contri->groupAddContribution()) {
             # code...

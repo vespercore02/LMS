@@ -16,11 +16,7 @@ class Contributions extends Authenticated
         $terms = new Term();
 
         $terms_list = $terms->view();
-        /*
-        echo "<pre>";
-        print_r($terms_list);
-        echo "</pre>";
-        */
+        
         View::renderTemplate('/contribution/index.html', [
             'terms' => $terms_list
         ]);
@@ -36,16 +32,10 @@ class Contributions extends Authenticated
 
         foreach ($term_months as $month) {
             # code...
-            //echo $month['month_start']."<br>";
 
             $contri_months[]  = Contribution::getMonthContriRecords($month['month_start']);
         }
 
-        /*
-        echo "<pre>";
-        print_r($contri_months);
-        echo "</pre>";
-        */
         View::renderTemplate('/contribution/term.html', [
             'term' => $term,
             'term_months' => $term_months,
@@ -57,30 +47,14 @@ class Contributions extends Authenticated
     {
         $month = $this->route_params['id'];
         $month_contri   = Contribution::getMonthContriRecords($this->route_params['id']);
-        /*
-        echo "<pre>";
-        print_r($month_contri);
-        echo "</pre>";
-*/
+        
         View::renderTemplate('/contribution/month.html', [
             'month' => $month,
             'month_contri' => $month_contri
         ]);
     }
 
-    /*
-    public function month()
-    {
-        if (isset($_GET['date'])) {
-            # code...
-
-            $month          = Contribution::getMonthContriRecords($_GET['date']);
-
-            echo json_encode($month);
-        }
-    }
-    */
-
+    
     public function termMonths()
     {
         if (isset($_GET['term'])) {
@@ -101,39 +75,9 @@ class Contributions extends Authenticated
             echo json_encode($term_contri);
         }
     }
-    /*
+    
     public function addAction()
     {
-        $contribution = new Contribution($_POST);
-
-        echo "<pre>";
-        print_r($contribution->checkContri());
-        echo "</pre>";
-
-        if (count($contribution->checkContri()) == 0) {
-            # code...
-            $contribution->add();
-
-            Flash::addMessage('Contribution is successful added.');
-
-            $this->redirect('/members/view/'.$_POST['user_id']);
-        } else {
-            # code...
-            Flash::addMessage('Contribution for this date '.$_POST['month'].' and this person '.$_POST['name'].' is already set', "warning");
-
-            $this->redirect('/members/view/'.$_POST['user_id']);
-        }
-    }
-
-    */
-    public function addAction()
-    {
-
-        # BACK TO BASIC CRUD --- ADD CONTRIBUTION FIRST
-        ### NOTE 12-12-19
-        # CREATE FUNCTION FOR ADD / UPDATE TOTAL CONTRIBUTION WITH OUT INTEREST
-        # PROBLEM if first date is added or update contribution of all is not updateing
-
         $contribution = new Contribution($_POST);
 
         $selected_month = $_POST['month'];
@@ -207,8 +151,6 @@ class Contributions extends Authenticated
 
         
             Flash::addMessage('Contribution is successful added and  updated');
-
-            //$this->redirect('/members/view/'.$_POST['user_id']);
            
         } else {
             # code...
@@ -246,8 +188,6 @@ class Contributions extends Authenticated
             $add->add();
             
             Flash::addMessage('Contribution is successful added.');
-
-            //$this->redirect('/members/view/'.$_POST['user_id']);
         }
 
         echo "<pre>";
@@ -275,12 +215,7 @@ class Contributions extends Authenticated
 
             $summary->addContri();
 
-            //print_r($summary);
-
-            //echo "Add";
         }
-
-        //self::Update_month_int($selected_month);
 
         $this->redirect('/members/view/'.$_POST['user_id']);
     }

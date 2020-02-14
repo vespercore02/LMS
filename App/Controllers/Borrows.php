@@ -86,11 +86,7 @@ class Borrows extends Authenticated
                 'borrowInfo' => $borrowInfo,
                 'paymentlist' => $paymentlist
             ]);
-        /*
-        echo "<pre>";
-        print_r($paymentlist);
-        echo "</pre>";
-            */
+       
         } else {
             # code...
             $this->redirect(Auth::getReturnToPage());
@@ -102,11 +98,7 @@ class Borrows extends Authenticated
     {
         $month = $this->route_params['id'];
         $month_borrow   = Borrow::getMonthBorrowRecords($this->route_params['id']);
-        
-        //echo "<pre>";
-        //print_r($month_borrow);
-        //echo "</pre>";
-        
+                
         View::renderTemplate('/borrow/month.html', [
             'month' => $month,
             'month_borrow' => $month_borrow
