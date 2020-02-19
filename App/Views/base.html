@@ -29,6 +29,9 @@
                 </li>
                 {% if current_user.access_rights == 2%}
                 <li>
+                    <a href="/home/mygroup">My Group</a>
+                </li>
+                <li>
                     <a href="/contributions/index">Contribution</a>
                 </li>
                 <li>
@@ -38,9 +41,10 @@
                     <a href="/borrows/index">Borrow</a>
                 </li>
                 {% endif %}
+
                 {% if current_user.access_rights == 9%}
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="/ControlPanel">Control Panel</a>
                 </li>
                 {% endif %}
 

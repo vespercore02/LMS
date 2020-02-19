@@ -4,6 +4,12 @@
 
 {% block body %}
 
+{% if current_user.access_rights == 9%}
+
+{% include '/Home/index-admin.html' %}
+
+{% else %}
+
 <div class="row">
 
     <div class="col-12 col-lg-12 col-xl-12 mb-5">
@@ -29,6 +35,8 @@
 
 <div class="row">
 
+    {% if contribution_list %}
+
     <div class="col-12 col-lg-6 col-xl-6 mb-5">
         <div class="card">
             <div class="card-body p-4">
@@ -49,6 +57,8 @@
             </div>
         </div>
     </div>
+
+    {% endif %}
 
     {% if borrow_list %}
 
@@ -79,17 +89,6 @@
 
 
 
-{% if user_info.access_rights == 2 %}
-<div class="row">
-
-    <div class="col-12 col-lg-6 col-xl-6">
-        <div class="card bg-info">
-            <div class="card-body p-5">
-                <h5>Check your Group Data <a href="/home/mygroup">here</a></h5>
-            </div>
-        </div>
-    </div>
-</div>
 {% endif %}
 <!--  To be manage 2/10/2020
     
