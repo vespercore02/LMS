@@ -148,10 +148,7 @@ class Borrows extends Authenticated
 
     public function addBorrower()
     {
-        $BorrowerInfo = explode(" - ", $_POST['borrow_by']);
-
-        $_POST['user_id'] = $BorrowerInfo[0];
-        $_POST['group'] = $BorrowerInfo[3];
+        //$BorrowerInfo = explode(" - ", $_POST['borrow_by']);
 
         $_POST['cut_off'] = self::getContriDate($_POST['borrow_date']);
         $_POST['interest'] = self::getInterest($_POST['borrow_interest'], $_POST['borrow_amount']);

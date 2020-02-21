@@ -15,13 +15,29 @@ use \App\Flash;
 
 class ControlPanel extends Authenticated
 {
+
+    protected $user_info;
+    
+    protected function before()
+    {
+
+        $this->user_info  = User::findByID($_SESSION['user_id']);
+
+        if ($this->user_info['access_rights'] != 9) {
+            Flash::addMessage('Unauthorized to access', Flash::WARNING);
+
+                $this->redirect(Auth::getReturnToPage());
+        }
+    }
+
+
+
     public function indexAction()
     {
         # code...
-        $user_info  = User::findByID($_SESSION['user_id']);
     
         View::renderTemplate('ControlPanel/index.html', [
-                            'user_info'         => $user_info
+                            'user_info'         => $this->user_info
                         ]);
     }
 

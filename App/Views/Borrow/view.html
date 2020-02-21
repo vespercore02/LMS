@@ -59,7 +59,7 @@
 
                         {% set k = payment_list|length - 1%}
 
-                        <label for="">{{ paymentlist[k].amount_to_be_paid }}</label>
+                        <label for="">{{ payment_list[k].amount_to_be_paid }}</label>
                     </div>
                 </div>
 
@@ -120,9 +120,14 @@
 
                     <div class="col-4 col-lg-4 col-xl-4 text-center">
 
+                        
+                        {% if payment_list[k].amount_to_be_paid != "Paid" %}
+
                         <button class="btn btn-success" data-toggle="modal" data-target="#addPayment">
                             Add Payment
                         </button>
+
+                        {% endif %}
 
                     </div>
                 </div>

@@ -101,10 +101,11 @@
                 <h5>Borrow</h5>
                 {% if borrow_list %}
 
-                <button class="btn btn-success ml-auto" data-toggle="modal" data-target="#addPayment">Pay Borrow</button>
+                <button class="btn btn-success ml-auto" data-toggle="modal" data-target="#addPayment">Pay
+                    Borrow</button>
 
                 {% else %}
-                <button class="btn btn-success ml-auto">Add
+                <button class="btn btn-success ml-auto" data-toggle="modal" data-target="#addBorrowerForm">Add
                     Borrow</button>
 
                 {% endif %}
@@ -135,8 +136,8 @@
                         {% for borrow in borrow_list %}
                         <tr>
                             <td>
-                                <a href="/payment/view/{{ borrow.id}}">{{ borrow.id}}</a>
-                                
+                                <a href="/borrows/view/{{ borrow.id}}">{{ borrow.id}}</a>
+
                             </td>
                             <td>
                                 {{ borrow.date_borrow}}
@@ -154,12 +155,12 @@
                         {% endfor %}
 
                         <tr>
-                            
+
                             <td class="font-weight-bold">
                                 Total
                             </td>
                             <td>
-                                
+
                             </td>
                             <td class="total-principal">
 
@@ -233,6 +234,68 @@
 </div>
 
 
+
+<div class="modal fade" id="addBorrowerForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Add Borrower</h4>
+            </div>
+            <form action="/borrows/addBorrower" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label">I.D</label>
+                        <input type="text" class="form-control id" name="user_id" value="{{ user_info.id }}" disabled>
+                        <input type="hidden" class="form-control id" name="user_id" value="{{ user_info.id }}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label">Name</label>
+                        <input type="text" class="form-control name" name="name" value="{{ user_info.name }}" disabled>
+                        <input type="hidden" class="form-control name" name="name" value="{{ user_info.name }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label">Group</label>
+                        <input type="text" class="form-control group" name="group"
+                            value="{{ user_info.belonging_group }}" disabled>
+                        <input type="hidden" class="form-control group" name="group"
+                            value="{{ user_info.belonging_group }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inputBorrowDate" class="col-form-label">Date Borrow :</label>
+                        <input type="date" class="form-control " id="inputBorrowDate" name="borrow_date" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrincipalAmount" class="col-form-label">Principal Amount :</label>
+                        <input type="text" class="form-control" id="inputPrincipalAmount" name="borrow_amount"
+                            required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputMonthstoPay" class="col-form-label">Months to Pay :</label>
+                        <input type="text" class="form-control" id="inputMonthstoPay" name="months_to_pay" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputInterest" class="col-form-label">Interest :</label>
+                        <input type="text" class="form-control" id="inputInterest" name="borrow_interest" required />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success m-auto">Save</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 

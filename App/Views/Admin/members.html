@@ -5,74 +5,79 @@
 {% block body %}
 
 
-<div class="col-12 mb-5">
-    <div class="card">
-        <div class="card-body d-flex">
-            <h3 class="">Manage Member</h3>
+<div class="row">
+    <div class="col-12 mb-5">
+        <div class="card">
+            <div class="card-body d-flex">
+                <h3 class="">Manage Member</h3>
 
+            </div>
         </div>
     </div>
 </div>
 
-<div class="col-12 col-lg-12 mb-5">
-    <div class="card">
-        <div class="card-header d-flex">
-            <h4>Groups</h4>
+<div class="row">
 
-            <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-member">Add
-                member</button>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-center table-flush">
-                <thead class="font-weight-bold">
-                    <tr>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Account
-                        </th>
-                        <th>
-                            Access Rights
-                        </th>
-                        <th>
-                            Groups
-                        </th>
-                        <th>
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for member in members %}
-                    <tr>
-                        <td>
-                            {{ member.name }}
-                        </td>
-                        <td>
-                            {{ member.email }}
-                        </td>
-                        <td>
-                            {{ member.access_rights }}
-                        </td>
-                        <td>
-                            {{ member.belonging_group }}
-                        </td>
-                        <td>
-                            <!--
+    <div class="col-12 col-lg-12 mb-5">
+        <div class="card">
+            <div class="card-header d-flex">
+                <h4>Groups</h4>
+
+                <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-member">Add
+                    member</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-center table-flush">
+                    <thead class="font-weight-bold">
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Account
+                            </th>
+                            <th>
+                                Access Rights
+                            </th>
+                            <th>
+                                Groups
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in members %}
+                        <tr>
+                            <td>
+                                {{ member.name }}
+                            </td>
+                            <td>
+                                {{ member.email }}
+                            </td>
+                            <td>
+                                {{ member.access_rights }}
+                            </td>
+                            <td>
+                                {{ member.belonging_group }}
+                            </td>
+                            <td>
+                                <!--
                                 <button type="button" class="btn btn-primary"
                                 onclick="window.location.href='/admin/users/members/{{ member.id }}'">Update</button>
                             -->
-                            <button type="button" class="btn btn-warning user-edit" data-toggle="modal"
-                                data-target=".user-edit-form" data-id="{{ member.id }}" data-name="{{ member.name }}"
-                                data-access_rights="{{ member.access_rights }}"
-                                data-group="{{ member.belonging_group }}">Edit</button>
-                        </td>
-                    </tr>
+                                <button type="button" class="btn btn-warning user-edit" data-toggle="modal"
+                                    data-target=".user-edit-form" data-id="{{ member.id }}"
+                                    data-name="{{ member.name }}" data-access_rights="{{ member.access_rights }}"
+                                    data-group="{{ member.belonging_group }}">Edit</button>
+                            </td>
+                        </tr>
 
-                    {% endfor %}
-                </tbody>
-            </table>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -4,67 +4,65 @@
 
 {% block body %}
 
+<div class="row">
+    <div class="col-12 mb-5">
+        <div class="card">
+            <div class="card-body d-flex">
+                <h3 class="">Manage Access</h3>
 
-
-<div class="col-12 mb-5">
-    <div class="card">
-        <div class="card-body d-flex">
-            <h3 class="">Manage Access</h3>
-
+            </div>
         </div>
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12 col-lg-12 mb-5">
+        <div class="card">
+            <div class="card-header d-flex">
+                <h4>Access Rights</h4>
 
+                <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-access">Add
+                    Access</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-center table-flush">
+                    <thead class="font-weight-bold">
+                        <tr>
+                            <th>
+                                Number
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for access in accesses %}
+                        <tr>
+                            <td>
+                                {{ access.access_rights_id }}
+                            </td>
+                            <td>
+                                {{ access.access_name }}
+                            </td>
+                            <td>
+                                {{ access.description }}
+                            </td>
+                        </tr>
 
-<div class="col-12 col-lg-12 mb-5">
-    <div class="card">
-        <div class="card-header d-flex">
-            <h4>Access Rights</h4>
-
-            <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-access">Add
-                Access</button>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-center table-flush">
-                <thead class="font-weight-bold">
-                    <tr>
-                        <th>
-                            Number
-                        </th>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for access in accesses %}
-                    <tr>
-                        <td>
-                            {{ access.access_rights_id }}
-                        </td>
-                        <td>
-                            {{ access.access_name }}
-                        </td>
-                        <td>
-                            {{ access.description }}
-                        </td>
-                    </tr>
-
-                    {% endfor %}
-                </tbody>
-            </table>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
-
-
-<div class="modal fade bd-example-modal-sm add-access" tabindex="-1" role="dialog"
-    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-sm add-access" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="card-header">
