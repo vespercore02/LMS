@@ -20,6 +20,26 @@ use \App\Flash;
 class Home extends Authenticated
 {
 
+    protected $user_info;
+    protected $members_count;
+    protected $access_rights_count;
+    protected $group_count;
+    
+    protected function before()
+    {
+
+        $this->user_info  = User::findByID($_SESSION['user_id']);
+
+        if ($this->user_info['access_rights'] == 9) {
+            $this->members_count = User::getMemberCount();
+            $this->access_rights_count = User::getAccessRights();
+            $this->group_count = User::getAccessRights();
+        }else {
+            $this->members_count = "";
+            $this->access_rights_count = "";
+            $this->group_count = "";
+        }
+    }
     /**
      * Show the index page
      *
@@ -28,19 +48,19 @@ class Home extends Authenticated
     public function indexAction()
     {
         
-            # code...
-        $user_info  = User::findByID($_SESSION['user_id']);
-
-        $member_info       = User::findByID($user_info['id']);
-        $contribution_list = Contribution::viewMember($user_info['id']);
-        $borrow_list       = Borrow::viewMember($user_info['id']);
+        $member_info       = User::findByID($this->user_info['id']);
+        $contribution_list = Contribution::viewMember($this->user_info['id']);
+        $borrow_list       = Borrow::viewMember($this->user_info['id']);
 
         //print_r($borrow_list);
 
         View::renderTemplate('Home/index.html', [
-                        'user_info'         => $user_info,
+                        'user_info'         => $this->user_info,
                         'contribution_list' => $contribution_list,
-                        'borrow_list'       => $borrow_list
+                        'borrow_list'       => $borrow_list,
+                        'members_count'     => $this->members_count,
+                        'access_rights_count'     => $this->access_rights_count,
+                        'group_count'     => $this->group_count
                     ]);
     }
 

@@ -20,7 +20,7 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'mvc_crud';
+    const DB_NAME = 'sms';
 
     /**
      * Database user
