@@ -1,5 +1,5 @@
-# loan
-loan management system
+# LMS
+Loan Management System
 
 FUNCTIONS
 
