@@ -47,6 +47,7 @@ class Members extends Authenticated
             $user_info         = User::findByID($this->route_params['id']);
             $contribution_list = Contribution::viewMember($this->route_params['id']);
             $borrow_list       = Borrow::viewMember($this->route_params['id']);
+            $term_info         = Term::viewTerm();
             /*
             echo "<pre>";
             print_r($borrow_list);
@@ -56,9 +57,46 @@ class Members extends Authenticated
                 'terms'             => $terms,
                 'user_info'         => $user_info,
                 'contribution_list' => $contribution_list,
-                'borrow_list'       => $borrow_list
+                'borrow_list'       => $borrow_list,
+                'term_list'       => $term_info
             ]);
         }
+    }
+
+    public function editAction()
+    {
+
+        if (isset($this->route_params['id'])) {
+            # code...
+
+            $user_info         = User::findByID($this->route_params['id']);          
+            $groups            = Group::getGroups();
+            $accesses           = User::getAccessRights();
+
+            View::renderTemplate('/Member/edit.html',[
+                'user_info'         => $user_info,
+                'groups' => $groups,
+                'accesses' => $accesses
+            ]);
+            
+        }
+
+    }
+
+    public function deleteAction()
+    {
+
+        if (isset($this->route_params['id'])) {
+            # code...
+
+            $member_deleted = User::delete($this->route_params['id']);
+
+            Flash::addMessage('Account Successfully Deleted');
+
+            $this->redirect('/members');
+            
+        }
+
     }
 }
 

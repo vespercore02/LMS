@@ -87,6 +87,12 @@ class Auth
         return $_SESSION['return_to'] ?? '/';
     }
 
+    public static function getReturnToPrev()
+    {
+        return $_SERVER['REQUEST_URI'];
+    }
+
+
     /**
      * Get the current logged-in user, from the session or the remember-me cookie
      *

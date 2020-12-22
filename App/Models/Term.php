@@ -57,6 +57,18 @@ class Term extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function viewTerm()
+    {
+        $sql = 'SELECT * FROM terms GROUP BY term ORDER BY term DESC';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function months($term)
     {
         $sql = 'SELECT month_start FROM terms WHERE term=:term ORDER BY month_start ASC';

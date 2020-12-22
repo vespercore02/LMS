@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row mb-3">
     
 
     {% for month in term_months %}
@@ -26,7 +26,8 @@
 
         <div class="card">
             <div class="card-body text-center">
-                <a href="/contributions/month/{{month.month_start }}">
+                <a href="#{{month.month_start }}">
+                <!-- <a href="/contributions/month/{{month.month_start }}"> -->
                     <h5 class="">
                         {{month.month_start }}
                     </h4>
@@ -37,6 +38,61 @@
     </div>
     {% endfor %}
 </div>
+
+{% for month in term_months %}
+<div class="row mb-3">
+
+    <div class="col-12" id="{{month.month_start }}">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{month.month_start }}</h5>
+                <p class="card-text">Content</p>
+                
+                
+
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Contribution</th>
+                            <th>Total Contribution w/out Interest</th>
+                            <th>Total Interest</th>
+                            <th>Total Contribution w/ Interest</th>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        {% for contri in contri_months %}
+
+                        {% if contri.contri_date == month.month_start %}
+                        <tr>
+                            <td>
+                                <a href="/contributions/edit/{{member.contribution_id}}">{{contri.name}}</a>
+                            </td>
+                            <td>
+                                {{contri.contri}}
+                            </td>
+                            <td>
+                                {{contri.total_contri_wout_int}}
+                            </td>
+                            <td>
+                                {{contri.total_int}}
+                            </td>
+                            <td>
+                                {{contri.total_contri_w_int}}
+                            </td>
+                            <td></td>
+                        </tr>
+                        {% endif %}
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endfor %}
 
 
 {% endblock %}

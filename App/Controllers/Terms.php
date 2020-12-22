@@ -55,7 +55,7 @@ class Terms extends Authenticated
 
             Flash::addMessage('Term successfully added ');
 
-            $this->redirect('/terms');
+            $this->redirect('/ControlPanel/Terms');
         }
     }
 

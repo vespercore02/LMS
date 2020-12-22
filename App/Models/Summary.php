@@ -30,6 +30,27 @@ class Summary extends \Core\Model
         };
     }
 
+    public function add()
+    {
+        $sql = 'INSERT INTO summary_records (term_id, date, contri_wout_int, amount_borrow, payment_rcv, deficit, interest_earned, est_earned, total)
+        VALUES(:term_id, :date, :contri_wout_int, :amount_borrow, :payment_rcv, :deficit, :interest_earned, :est_earned, :total)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_wout_int', $this->contri, PDO::PARAM_STR);
+        $stmt->bindValue(':amount_borrow', $this->amount_borrow, PDO::PARAM_STR);
+        $stmt->bindValue(':payment_rcv', $this->payment_rcv, PDO::PARAM_STR);
+        $stmt->bindValue(':deficit', $this->deficit, PDO::PARAM_STR);
+        $stmt->bindValue(':interest_earned', $this->interest_earned, PDO::PARAM_STR);
+        $stmt->bindValue(':est_earned', $this->est_earned, PDO::PARAM_STR);
+        $stmt->bindValue(':total', $this->total, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
     public function addContri()
     {
         $sql = 'INSERT INTO summary_records (term_id, date, contri_wout_int)
@@ -65,7 +86,8 @@ class Summary extends \Core\Model
         $sql = 'UPDATE summary_records
                 SET payment_rcv = :payment_rcv,
                 deficit = :deficit,
-                interest_earned = :interest_earned
+                interest_earned = :interest_earned,
+                total = :total
                 WHERE date = :date';
 
         $db = static::getDB();
@@ -73,7 +95,9 @@ class Summary extends \Core\Model
         $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);
         $stmt->bindValue(':payment_rcv', $this->payment_rcv, PDO::PARAM_STR);
         $stmt->bindValue(':interest_earned', $this->interest_earned, PDO::PARAM_STR);
+        //$stmt->bindValue(':est_earned', $this->est_earned, PDO::PARAM_STR);
         $stmt->bindValue(':deficit', $this->deficit, PDO::PARAM_STR);
+        $stmt->bindValue(':total', $this->total, PDO::PARAM_STR);
         
         $stmt->execute();
     }
@@ -104,5 +128,35 @@ class Summary extends \Core\Model
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public static function getEstEarned($date)
+    {
+        $sql = 'SELECT * FROM summary_records
+                WHERE date = :date';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function updateEstEarned($date, $est_earned)
+    {
+        $sql = 'UPDATE summary_records
+                SET est_earned = :est_earned
+                WHERE date = :date';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':date', $date, PDO::PARAM_STR);
+        $stmt->bindValue(':est_earned', $est_earned, PDO::PARAM_STR);
+
+        $stmt->execute();
     }
 }

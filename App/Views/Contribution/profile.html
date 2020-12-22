@@ -4,84 +4,96 @@
 
 {% block body %}
 
-<div class="row mb-4">
+<div class="row">
 
-    <div class="col-12">
+    <div class="col-12 col-lg-6 col-xl-6 mb-5">
         <div class="card">
-            <div class="card-body">
-                <h4>
-                    My Contributions
-                </h4>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="row mb-4">
-    <div class="col-12 col-lg-12 col-xl-12 mb-5">
-        <div class="card">
-            <div class="card-header d-flex">
-                <h5>Contribution</h5>
+            <div class="card-body p-4">
+                <div>
+                    <h4 class="text-success">My Contributions</h4>
+                </div>
                 
             </div>
-            <div class="table-responsive">
-                <table class="table text-center table-flush">
-                    <thead>
-                        <tr>
-                            <th>
-                                Month
-                            </th>
-                            <th>
-                                Contribution
-                            </th>
-                            <th>
-                                Interest
-                            </th>
-                            <th>
-                                Contribution + Interest
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for contribution in contribution_list %}
-                        <tr>
-                            <td>
-                                {{ contribution.contri_date}}
-                            </td>
-                            <td class="contri">
-                                {{ contribution.contri}}
-                            </td>
-                            <td class="month_int">
-                                {{ contribution.month_int}}
-                            </td>
-                            <td class="total_contri_w_int">
-                                {{ contribution.total_contri_w_int}}
-                            </td>
-                        </tr>
-                        {% endfor %}
+        </div>
+    </div>
 
-                        <tr>
-                            <td class="font-weight-bold">
-                                Total
-                            </td>
-                            <td class="total-contri">
+</div>
 
-                            </td>
-                            <td class="total-month_int">
+{% for term in term_list %}
 
-                            </td>
-                            <td class="total-total_contri_w_int">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Term {{ term.term }}</h5>
+                    <p class="card-text">Content</p>
+                </div>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table text-center table-flush">
+                        <thead>
+                            <tr class="bg-success">
+                                <th>
+                                    Month
+                                </th>
+                                <th>
+                                    Contribution
+                                </th>
+                                <th>
+                                    Interest
+                                </th>
+                                <th>
+                                    Contribution + Interest
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                {% for contribution in contribution_list %}
 
+                {% if term.term == contribution.term_id%}
+                            <tr>
+                                <td>
+                                    {{ contribution.contri_date}}
+                                </td>
+                                <td class="contri">
+                                    {{ contribution.contri}}
+                                </td>
+                                <td class="month_int">
+                                    {{ contribution.month_int}}
+                                </td>
+                                <td class="total_contri_w_int">
+                                    {{ contribution.total_contri_w_int}}
+                                </td>
+                            </tr>
+    
+                            {% endif %}
+                            {% endfor %}
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Total
+                                </td>
+                                <td class="total-contri">
+    
+                                </td>
+                                <td class="total-month_int">
+    
+                                </td>
+                                <td class="total-total_contri_w_int">
+    
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+    
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+{% endfor %}
+
 
 
 

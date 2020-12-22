@@ -109,7 +109,7 @@ class Borrow extends \Core\Model
             WHERE date = :date and belonging_group = :belonging_group';
             */
             $sql = 'UPDATE summary_records 
-            SET 	amount_borrow = :amount_borrow, deficit = :deficit 
+            SET 	amount_borrow = :amount_borrow, deficit = :deficit,  term_id = :term_id 
             WHERE date = :date ';
 
             $db = static::getDB();
@@ -117,7 +117,8 @@ class Borrow extends \Core\Model
 
             $stmt->bindValue(':amount_borrow', $total_Amount_Borrow, PDO::PARAM_STR);
             $stmt->bindValue(':deficit', $total_Amount_Remainig, PDO::PARAM_STR);
-            //$stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
+            //$stmt->bindValue(':est_earned', $est_earned, PDO::PARAM_STR);
+            $stmt->bindValue(':term_id', $this->term);
             $stmt->bindValue(':date', $this->cut_off);
 
             $stmt->execute();
@@ -130,15 +131,16 @@ class Borrow extends \Core\Model
             VALUES(:amount_borrow, :deficit, :date, :belonging_group)';
             */
             $sql = 'INSERT INTO summary_records 
-            (amount_borrow, deficit, date) 
-            VALUES(:amount_borrow, :deficit, :date)';
+            (amount_borrow, deficit, date, term_id) 
+            VALUES(:amount_borrow, :deficit,  :date, :term_id)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':amount_borrow', $total_Amount_Borrow, PDO::PARAM_STR);
             $stmt->bindValue(':deficit', $total_Amount_Remainig, PDO::PARAM_STR);
-            //$stmt->bindValue(':belonging_group', $this->group, PDO::PARAM_STR);
+            //$stmt->bindValue(':est_earned', $est_earned, PDO::PARAM_STR);
+            $stmt->bindValue(':term_id', $this->term);
             $stmt->bindValue(':date', $this->cut_off, PDO::PARAM_STR);
 
             $stmt->execute();
@@ -222,6 +224,8 @@ class Borrow extends \Core\Model
         }
     }
 
+    
+
     public static function borrowList($group_id, $month)
     {
         $sql = 'SELECT users.name, 
@@ -298,5 +302,19 @@ class Borrow extends \Core\Model
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function checkMonthBorrow($date)
+    {
+        $sql = 'SELECT amount_borrow 
+                FROM summary_records
+                WHERE date = :date';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':date', $this->cut_off);
+
+        $stmt->execute();
     }
 }

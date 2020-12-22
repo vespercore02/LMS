@@ -8,6 +8,7 @@ use \App\Models\User;
 use \App\Models\Borrow;
 use \App\Models\Payment;
 use \App\Models\Term;
+use \App\Models\Summary;
 use \App\Flash;
 
 class Borrows extends Authenticated
@@ -148,11 +149,16 @@ class Borrows extends Authenticated
 
     public function addBorrower()
     {
-        //$BorrowerInfo = explode(" - ", $_POST['borrow_by']);
+        print_r($_POST);
+        /*
+        $BorrowerInfo = explode(" - ", $_POST['borrow_by']);
 
+        $_POST['user_id'] = $BorrowerInfo[0];
+        $_POST['group'] = $BorrowerInfo[3];
+        */
         $_POST['cut_off'] = self::getContriDate($_POST['borrow_date']);
         $_POST['interest'] = self::getInterest($_POST['borrow_interest'], $_POST['borrow_amount']);
-        $_POST['remaining'] = self::getRemaining($_POST['borrow_interest'], $_POST['borrow_amount']);
+        $_POST['remaining'] = self::getRemaining($_POST['borrow_interest'], $_POST['borrow_amount'], $_POST['months_to_pay']);
         $term      = Term::term($_POST['cut_off']);
 
         //echo $term;
@@ -181,9 +187,11 @@ class Borrows extends Authenticated
             
                 echo $payment_list->constructPaymentList();
 
+                self::getEstEarned($_POST['cut_off']);
+
                 Flash::addMessage('Borrow '.$_POST['borrow_amount'].' successful.');
 
-                $this->redirect('/borrows/index');
+                $this->redirect('/members/view/'.$_POST['user_id']);
             } else {
                 Flash::addMessage('Term for date '.$_POST['cut_off'].' is not yet set, please contact your administrator.');
 
@@ -192,11 +200,37 @@ class Borrows extends Authenticated
         }
     }
 
+    public function getEstEarned($date)
+    {
+        $summary = new Summary();
+        $fetch_data = $summary->getEstEarned($date);
+
+        if (empty($fetch_data['payment_rcv'])) {
+            # code...
+            $fetch_data['payment_rcv'] = 0;
+        }
+
+        if (empty($fetch_data['interest_earned'])) {
+            # code...
+            $fetch_data['interest_earned'] = 0;
+        }
+
+        $est_earned = $fetch_data['payment_rcv'] + $fetch_data['deficit'] - $fetch_data['amount_borrow'] - $fetch_data['interest_earned'];
+        echo "<pre>";
+        print_r($summary->getEstEarned($date));
+        echo "</pre>";
+
+        echo $est_earned;
+
+        $fetch_data = $summary->updateEstEarned($date, $est_earned);
+
+    }
+
     
-    public function getRemaining($borrow_interest, $borrow_amount)
+    public function getRemaining($borrow_interest, $borrow_amount, $months_to_pay)
     {
         $int = $borrow_amount  *  ($borrow_interest/100);
-        $int_monthly = $int * 12;
+        $int_monthly = $int * $months_to_pay;
         $int_acquired = $borrow_amount + $int_monthly;
 
         return $int_acquired;
@@ -264,7 +298,28 @@ class Borrows extends Authenticated
 
         if ($set_month > '02-28' and $set_month < '03-15' or $set_month == '02-28') {
             # code...
-            return $month[0]."-02-28";
+
+            $term      = Term::term($month[0]."-02-28");
+
+            if ($term) {
+                # code...
+                
+                return $month[0]."-02-28";
+            }else {
+                # code...
+                $term      = Term::term($month[0]."-02-29");
+
+                if ($term) {
+                    # code...
+                    
+                    return $month[0]."-02-29";
+                }
+            }
+        }
+
+        if ($set_month > '02-29' and $set_month < '03-15' or $set_month == '02-29') {
+            # code...
+            return $month[0]."-02-29";
         }
 
         if ($set_month > '03-15' and $set_month < '03-31' or $set_month == '03-15') {

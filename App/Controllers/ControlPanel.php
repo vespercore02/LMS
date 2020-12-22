@@ -50,6 +50,8 @@ class ControlPanel extends Authenticated
     {
         if (isset($this->route_params['id'])) {
             # code...
+
+            /* Will be moved
             $info           = User::searchById($this->route_params['id']);
             $contri         = Contribution::records($this->route_params['id']);
             $loan_records   = Loan::records($this->route_params['id']);
@@ -59,21 +61,33 @@ class ControlPanel extends Authenticated
                 'contri_records' => $contri,
                 'loan_records' => $loan_records
             ]);
+            */
+
+            $this->id = $this->route_params['id'];
 
         } else {
-            $members = User::getMembers();
-        
-            $groups = Group::getGroups();
 
+            $this->id = 1;
+            
+
+        }
+
+            /*
+            $members = User::getMembers();
+            */
+
+            $members = User::getMembersRange($this->id);
+            $members_count = User::getMemberCount();          
+            $groups = Group::getGroups();
             $accesses = User::getAccessRights();
 
             View::renderTemplate('Admin/members.html', [
             'members' => $members,
+            'members_count' => $members_count,
+            'current_page' => $this->id,
             'groups' => $groups,
             'accesses' => $accesses
         ]);
-
-        }
     }
 
     /**

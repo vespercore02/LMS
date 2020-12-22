@@ -26,7 +26,8 @@
                     <thead>
                         <tr>
                             <th>Member</th>
-                            <th>Total Contribution</th>
+                            <th>Contribution</th>
+                            <th>Total Contribution w/out Interest</th>
                             <th>Total Interest</th>
                             <th>Total Contribution w/ Interest</th>
                         </tr>
@@ -35,10 +36,13 @@
                         {% for member in month_contri %}
                         <tr>
                             <td>
-                                <a href="/members/view/{{member.id}}">{{member.name}}</a>
+                                <a href="/contributions/edit/{{member.contribution_id}}">{{member.name}}</a>
                             </td>
                             <td>
                                 {{member.contri}}
+                            </td>
+                            <td>
+                                {{member.total_contri_wout_int}}
                             </td>
                             <td>
                                 {{member.total_int}}

@@ -142,6 +142,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            
                             <th>Date of Payment</th>
                             <th>Amount of Payment</th>
                             <th>Amount to be Paid</th>
@@ -179,9 +180,11 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 </div>
                 <div class="modal-body">
-
+                    
+                    <input type="hidden" name="term" value="{{ borrow_info[0].term_id }}">
                     <input type="hidden" name="principal" value="{{ borrow_info[0].principal }}">
                     <input type="hidden" name="borrow_id" value="{{ payment_list[0].borrow_id}}">
+                    <input type="hidden" name="date" value="{{ borrow_info[0].date}}">
 
                     <label for="date_to_pay">Date to Pay: </label>
                     <select name="date_to_pay" id="" class="form-control" required>

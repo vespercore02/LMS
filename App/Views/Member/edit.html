@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Member {% endblock %}
+
+{% block body %}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>
+                    Edit Member
+                </h4>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <form action="#" method="post">
+                    <div class="form-group row">
+                        <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label text-center font-weight-bold">Name</label>
+                        <input type="text" class="col-sm-6 col-md-12 col-xl-6 form-control-plaintext text-center" id="inputLoanId"
+                            name="member_name" placeholder="" autofocus
+                            value="{{ user_info.name }}" required />
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label text-center font-weight-bold">Email Address</label>
+                        <input type="text" class="col-sm-6 col-md-12 col-xl-6 form-control-plaintext text-center" id="inputLoanId"
+                            name="member_email" placeholder="" autofocus
+                            value="{{ user_info.email }}" required />
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label text-center font-weight-bold">Access
+                            Rights</label>
+                        <select id="" class="col-sm-6 col-md-12 col-xl-6 form-control" name="member_access" required>
+                            <option value=""></option>
+                            {% for access in accesses %}
+
+                            {% if user_info.access_rights == access.access_rights_id %}
+                            <option class=" text-center" value="{{ access.access_rights_id}}" selected>{{ access.access_name}} </option>
+                            {% else %}
+                            <option class=" text-center" value="{{ access.access_rights_id}}">{{ access.access_name}} </option>
+                            {% endif%}
+                            {% endfor%}
+                        </select>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputLoanId" class="col-sm-4 col-md-12 col-xl-4 col-form-label text-center font-weight-bold">Group</label>
+                        <select id="" class="col-sm-6 col-md-12 col-xl-6 form-control" name="member_group">
+                            <option value=""></option>
+                            {% for group in groups %}
+
+                            {% if user_info.belonging_group == group.group_id %}
+                            <option value="{{ group.group_id}}" selected>{{ group.group_name}} </option>
+                            {% else %}
+                            <option value="{{ group.group_id}}">{{ group.group_name}} </option>
+                            {% endif%}
+
+                            {% endfor%}
+                        </select>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4 col-md-12 col-xl-4"></div>
+                        <button type="submit" class="col-sm-6 col-md-12 col-xl-6 btn btn-success">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

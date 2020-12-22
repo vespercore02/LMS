@@ -46,7 +46,10 @@
                             <td>
                                 {{member.access_rights}}
                             </td>
-                            <td></td>
+                            <td>
+                                <a href="/members/edit/{{member.id}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                <a href="/members/delete/{{member.id}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

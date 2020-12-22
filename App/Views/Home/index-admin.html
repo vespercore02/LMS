@@ -1,5 +1,5 @@
 
-<div class="row mb-4">
+<div class="row">
 
     <div class="col-12">
 
@@ -17,61 +17,96 @@
 
 </div>
 
-<div class="row mb-4">
-
-    <div class="col-12 col-lg-4 col-xl-4">
-
-        <div class="card">
-            <div class="card-body d-flex">
-                <h4>
-                    Members
-                </h4>
-                <h3 class="ml-auto">
-                    <a href="/members">
-                        <span class="badge badge-primary badge-pill">
-                            {{ members_count}}
-                        </span>
-                    </a>
-                </h3>
+<section>
+    <div class="row">
+        
+        <div class="col-12 col-lg-3 col-xl-3">
+    
+            <div class="card">
+                <div class="card-body d-flex">
+                    <i class="fa fa-address-book-o fa-4x" aria-hidden="true"></i>
+                    <div class="ml-auto text-center">
+                        <h3 class="">
+                            <a href="/members">
+                                <span class="badge badge-primary badge-pill">
+                                    {{ members_count}}
+                                </span>
+                            </a>
+                        </h3>
+                        <h4>
+                            Members
+                        </h4>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    
+        <div class="col-12 col-lg-3 col-xl-3">
+            <div class="card">
+                <div class="card-body d-flex">
 
-    <div class="col-12 col-lg-4 col-xl-4">
-        <div class="card">
-            <div class="card-body d-flex">
-                <h4>
-                    Access Rights
-                </h4>
-                <h3 class="ml-auto">
-                    <a href="/ControlPanel/access">
-                        <span class="badge badge-primary badge-pill">
-                            {{ access_rights_count|length}}
-                        </span>
-                    </a>
-                </h3>
+                    <i class="fa fa-pencil fa-4x" aria-hidden="true"></i>
+                    <div class="ml-auto text-center">
+                        <h3 class="ml-auto">
+                            <a href="/ControlPanel/access">
+                                <span class="badge badge-primary badge-pill">
+                                    {{ access_rights_count|length}}
+                                </span>
+                            </a>
+                        </h3>
+                        <h4>
+                            Access Rights
+                        </h4>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-12 col-lg-4 col-xl-4">
-        <div class="card">
-            <div class="card-body d-flex">
-                <h4>
-                    Groups
-                </h4>
-                <h3 class="ml-auto">
-                    <a href="/ControlPanel/groups">
-                        <span class="badge badge-primary badge-pill">
-                            {{ group_count|length}}
-                        </span>
-                    </a>
-                </h3>
+    
+        <div class="col-12 col-lg-3 col-xl-3">
+            <div class="card">
+                <div class="card-body d-flex">
+                    
+                    <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+                    <div class="ml-auto text-center">
+                        <h3 class="ml-auto">
+                            <a href="/ControlPanel/groups">
+                                <span class="badge badge-primary badge-pill">
+                                    {{ group_count|length}}
+                                </span>
+                            </a>
+                        </h3>
+                        <h4>
+                            Groups
+                        </h4>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
+        <div class="col-12 col-lg-3 col-xl-3">
+            <div class="card">
+                <div class="card-body d-flex">
+                    
+                    <i class="fa fa-terminal fa-4x" aria-hidden="true"></i>
+                    <div class="ml-auto text-center">
+                        <h3 class="ml-auto">
+                            <a href="/ControlPanel/terms">
+                                <span class="badge badge-primary badge-pill">
+                                    {{ term_list|length}}
+                                </span>
+                            </a>
+                        </h3>
+                        <h4>
+                            Terms
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</section>
+
 
 
 

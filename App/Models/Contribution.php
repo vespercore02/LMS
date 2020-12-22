@@ -58,8 +58,8 @@ class Contribution extends \Core\Model
 
     public function add()
     {
-        $sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri, total_contri_wout_int, total_int, total_contri_w_int)
-        VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri, :total_contri_wout_int, :total_int, :total_contri_w_int)';
+        $sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri, total_contri_wout_int, month_int, total_int, total_contri_w_int)
+        VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri, :total_contri_wout_int, :month_int, :total_int, :total_contri_w_int)';
 
         //$sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri)
         //VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri)';
@@ -73,8 +73,29 @@ class Contribution extends \Core\Model
         $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
         $stmt->bindValue(':contri', $this->contri, PDO::PARAM_STR);
         $stmt->bindValue(':total_contri_wout_int', $this->total_contri_wout_int, PDO::PARAM_STR);
+        $stmt->bindValue(':month_int', $this->month_int, PDO::PARAM_STR);
         $stmt->bindValue(':total_int', $this->total_int, PDO::PARAM_STR);
         $stmt->bindValue(':total_contri_w_int', $this->total_contri_w_int, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    public function addContri()
+    {
+        $sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri)
+        VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri)';
+
+        //$sql = 'INSERT INTO contribution_records (user_id, belonging_group, term_id, contri_date, contri)
+        //VALUES (:user_id, :belonging_group, :term_id, :contri_date, :contri)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':belonging_group', $this->belonging_group, PDO::PARAM_STR);
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':contri', $this->contri, PDO::PARAM_STR);
 
         return $stmt->execute();
     }
@@ -99,6 +120,25 @@ class Contribution extends \Core\Model
         $stmt->bindValue(':contri', $this->contri, PDO::PARAM_STR);
         $stmt->bindValue(':total_contri_wout_int', $this->total_contri_wout_int, PDO::PARAM_STR);
         $stmt->bindValue(':total_contri_w_int', $this->total_contri_w_int, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    public function updateTotalContriWoutInt()
+    {
+        $sql = 'UPDATE contribution_records
+                SET total_contri_wout_int = :total_contri_wout_int
+                WHERE contri_date = :contri_date
+                AND user_id = :user_id
+                AND term_id = :term_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':contri_date', $this->month, PDO::PARAM_STR);
+        $stmt->bindValue(':term_id', $this->term, PDO::PARAM_STR);
+        $stmt->bindValue(':total_contri_wout_int', $this->total_contri_wout_int, PDO::PARAM_STR);
 
         $stmt->execute();
     }
@@ -170,6 +210,19 @@ class Contribution extends \Core\Model
         $stmt->execute();
 
         return $stmt->rowCount();
+    }
+
+    public static function getContriInfo($contribution_id)
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE contribution_id = :contribution_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':contribution_id', $contribution_id, PDO::PARAM_STR);
+
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getContriDate()
@@ -272,7 +325,36 @@ class Contribution extends \Core\Model
 
     public static function viewMember($user_id)
     {
-        $sql = 'SELECT * FROM contribution_records WHERE user_id = :user_id';
+        $sql = 'SELECT * FROM contribution_records WHERE user_id = :user_id order by term_id ASC';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':user_id', $user_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public static function viewMemberTerm($user_id, $term_id)
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE user_id = :user_id and term_id = :term_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        
+        $stmt->bindValue(':user_id', $user_id);
+        $stmt->bindValue(':term_id', $term_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function viewMemberTermContri($user_id)
+    {
+        $sql = 'SELECT * FROM contribution_records WHERE user_id = :user_id group by term_id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -458,7 +540,7 @@ class Contribution extends \Core\Model
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**

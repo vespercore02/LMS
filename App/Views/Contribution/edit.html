@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Contributions{% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-md-center">
+
+    <div class="col-12 col-lg-6 col-xl-6 mb-5">
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Contributor Info</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="form-inline">
+                    <label for="">Name :</label>
+                    <label for="" class="font-weight-bold ml-3">{{ user_info.name }}</label>
+                </div>
+
+                <div class="form-inline">
+                    <label for="">Group :</label>
+                    <label for="" class="font-weight-bold ml-3">{{ user_info.belonging_group }}</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<div class="row mb-4 justify-content-md-center">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Edit Contribution</h4>
+            </div>
+            <div class="card-body">
+
+                <form method="post" action="/contributions/update">
+                    <div class="form-group row">
+                        <label for="my-textarea" class="form-label col-lg-6 font-weight-bold text-right">Contribution Date :</label>
+                        <label for="" class="col-lg-4 text-center">{{ contri_info.contri_date }}</label>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="my-textarea" class="form-label col-lg-6 font-weight-bold text-right">Contribution :</label>
+                        <input type="number" name="contri" id="" value="{{ contri_info.contri }}" class="form-control col-lg-4 text-center">
+                    </div>
+
+                    <input type="hidden" name="contri_id" value="{{ contri_info.contribution_id }}">
+                    <input type="hidden" name="month" value="{{ contri_info.contri_date }}">
+                    <input type="hidden" name="user_id" value="{{ contri_info.user_id }}">
+                    <input type="hidden" name="term" value="{{ contri_info.term_id }}">
+
+                    <div class="form-group row">
+                        <div class="col-lg-12 text-center">
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+{% endblock %}

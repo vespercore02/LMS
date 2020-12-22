@@ -94,7 +94,7 @@ class Payment extends \Core\Model
         $principal = $this->borrow_amount;
         $int = $this->interest;
         $y=1;
-        $num_term = 12;
+        $num_term = $this->months_to_pay;
         $next_inc = "";
         //start date
         $month_sched = date($date);

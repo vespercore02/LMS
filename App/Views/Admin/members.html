@@ -20,13 +20,15 @@
 
     <div class="col-12 col-lg-12 mb-5">
         <div class="card">
-            <div class="card-header d-flex">
-                <h4>Groups</h4>
-
-                <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-member">Add
-                    member</button>
-            </div>
             <div class="table-responsive">
+                
+                <div class="d-flex m-3">
+                    <h4>Members list</h4>
+
+                    <button class="btn btn-success ml-auto" data-toggle="modal" data-target=".add-member">Add
+                    member</button>
+                </div>
+
                 <table class="table text-center table-flush">
                     <thead class="font-weight-bold">
                         <tr>
@@ -77,6 +79,91 @@
                         {% endfor %}
                     </tbody>
                 </table>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination page_list justify-content-center pt-3">
+
+                    </ul>
+                </nav>
+
+                    {% set pages = members_count / 10 %}
+
+                    {% set total_pages = pages|round %}
+
+                    {% if total_pages != 0 %}
+
+                    <ul class="pagination page_list justify-content-center pt-3">
+                        {% if current_page > 1%}
+
+                        {% set prev_page = current_page - 1%}
+
+                        {% if prev_page != 0 %}
+                        <li class='page-item '><a class='page-link'
+                                href="/ControlPanel/members{{ status |replace({' ': ''}) }}/{{ prev_page }}">Previous</a></li>
+                        {% endif%}
+
+                        {% endif%}
+
+                        {% set range = 2%}
+
+                        {% set prev_pages = current_page - range %}
+
+                        {% if prev_pages == 0 %}
+
+                        {% set prev_pages = prev_pages + 1 %}
+
+                        {% endif%}
+
+                        {% if (prev_pages > 0) or ( prev_pages == 1)  %}
+
+                        {% for page in prev_pages..current_page %}
+
+                        {%if page != current_page %}
+                        <li class='page-item '><a class='page-link'
+                                href="/ControlPanel/members{{ status |replace({' ': ''}) }}/{{ page }}">{{page}}</a></li>
+
+                        {% endif%}
+                        {% endfor %}
+                        {% endif%}
+
+                        {% for page in 1..total_pages %}
+
+                        {%if page == current_page %}
+                        <li class='page-item disabled'> <b class='page-link bg-success'>{{page}}</b> </li>
+
+                        {% endif%}
+                        {% endfor %}
+
+                        {% set next_pages = current_page + range %}
+
+                        {% if next_pages > total_pages %}
+
+                        {% set next_pages = next_pages - 1 %}
+
+                        {% endif%}
+
+                        {% if (total_pages > next_pages) or (total_pages == next_pages) %}
+                            {% for page in current_page..next_pages %}
+                                {%if page != current_page %}
+                                <li class='page-item '><a class='page-link'
+                                        href="/ControlPanel/members{{ status |replace({' ': ''}) }}/{{ page }}">{{page}}</a></li>
+
+                                {% endif%}
+                            {% endfor %}
+                        {% endif%}
+
+
+                        {% if (pages > current_page)  %}
+
+                            {% set next_page = current_page + 1%}
+
+                            <li class='page-item '><a class='page-link'
+                                    href="/ControlPanel/members{{ status |replace({' ': ''}) }}/{{ next_page }}">Next</a></li>
+
+                            {% endif%}
+
+                    </ul>
+                    {% endif %}
             </div>
         </div>
     </div>

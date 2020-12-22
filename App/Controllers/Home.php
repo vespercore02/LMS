@@ -10,6 +10,7 @@ use \App\Models\Contribution;
 use \App\Models\User;
 use \App\Models\Group;
 use \App\Models\Borrow;
+use \App\Models\Term;
 use \App\Flash;
 
 /**
@@ -27,17 +28,21 @@ class Home extends Authenticated
     
     protected function before()
     {
+        if (isset($_SESSION['user_id'])) {
+            $this->user_info  = User::findByID($_SESSION['user_id']);
 
-        $this->user_info  = User::findByID($_SESSION['user_id']);
-
-        if ($this->user_info['access_rights'] == 9) {
-            $this->members_count = User::getMemberCount();
-            $this->access_rights_count = User::getAccessRights();
-            $this->group_count = User::getAccessRights();
-        }else {
-            $this->members_count = "";
-            $this->access_rights_count = "";
-            $this->group_count = "";
+            if ($this->user_info['access_rights'] == 9) {
+                $this->members_count = User::getMemberCount();
+                $this->access_rights_count = User::getAccessRights();
+                $this->group_count = User::getAccessRights();
+            }else {
+                $this->members_count = "";
+                $this->access_rights_count = "";
+                $this->group_count = "";
+            }
+        } else {
+            # code...
+            $this->redirect('/login');
         }
     }
     /**
@@ -48,30 +53,37 @@ class Home extends Authenticated
     public function indexAction()
     {
         
+        $term_info         = Term::viewTerm();
         $member_info       = User::findByID($this->user_info['id']);
         $contribution_list = Contribution::viewMember($this->user_info['id']);
+        $contribution_term = Contribution::viewMemberTermContri($this->user_info['id']);
         $borrow_list       = Borrow::viewMember($this->user_info['id']);
-
-        //print_r($borrow_list);
 
         View::renderTemplate('Home/index.html', [
                         'user_info'         => $this->user_info,
                         'contribution_list' => $contribution_list,
+                        'contribution_term' => $contribution_term,
                         'borrow_list'       => $borrow_list,
                         'members_count'     => $this->members_count,
                         'access_rights_count'     => $this->access_rights_count,
-                        'group_count'     => $this->group_count
+                        'group_count'     => $this->group_count,
+                        'term_list'       => $term_info,
                     ]);
     }
 
     public function myContributionAction()
     {
         $member_Contribution = Contribution::viewMember($_SESSION['user_id']);
+        //$memberTerm_Contribution = Contribution::viewMemberTerm($_SESSION['user_id'], $this->route_params['id']);
+        $borrow_list       = Borrow::viewMember($this->user_info['id']);
+        $term_info         = Term::viewTerm();
         
 
         View::renderTemplate('/contribution/profile.html', [
-            
-            'contribution_list' => $member_Contribution
+            //'term' => $this->route_params['id'],
+            'borrow_list'       => $borrow_list,
+            'contribution_list' => $member_Contribution,
+            'term_list'       => $term_info
         ]);
     }
 

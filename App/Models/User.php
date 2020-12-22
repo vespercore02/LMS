@@ -92,6 +92,18 @@ class User extends \Core\Model
         return $stmt->execute();
     }
 
+    public static function delete($id)
+    {
+        $sql = 'DELETE FROM users
+                WHERE id = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
     /**
      * Validate current property values, adding valiation error messages to the errors array property
      *
@@ -188,7 +200,7 @@ class User extends \Core\Model
 
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -462,23 +474,20 @@ class User extends \Core\Model
      */
     public static function getMembersRange($page)
     {
-        $per_page = 5;
+        $per_page = 10;
 
         $start    = ($page - 1) * $per_page;
 
         $sql = 'SELECT id, name, email, access_rights, belonging_group 
                 FROM users
-                LIMIT :start, :per_page';
+                LIMIT '. $start .', '.$per_page.'';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':start', $start, PDO::PARAM_INT);
-        $stmt->bindValue(':per_page', $per_page, PDO::PARAM_INT);
-
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

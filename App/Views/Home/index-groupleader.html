@@ -14,7 +14,11 @@
                 <h3 class="ml-auto">
                     <a href="#">
                         <span class="badge badge-primary badge-pill">
+                            {% if group_info[0].total_contri == "" %}
+                            0
+                            {% else %}
                             {{ group_info[0].total_contri }}
+                            {% endif %}
                         </span>
                     </a>
                 </h4>
@@ -28,7 +32,12 @@
                 <h3 class="ml-auto">
                     <a href="#">
                         <span class="badge badge-primary badge-pill">
+
+                            {% if group_info[0].total_month_int == "" %}
+                            0
+                            {% else %}
                             {{ group_info[0].total_month_int }}
+                            {% endif %}
                         </span>
                     </a>
                 </h4>
@@ -74,14 +83,25 @@
                                 <a href="/members/view/{{member.id}}">{{member.name}}</a>
                             </td>
                             <td>
-                                {{member.contri}}
+                                {% if member.contri == "" %}
+                                0
+                                {% else %}
+                                {{ member.contri }}
+                                {% endif %}
                             </td>
                             <td>
-                                {{member.month_int}}
+                                {% if member.month_int == "" %}
+                                0
+                                {% else %}
+                                {{ member.month_int }}
+                                {% endif %}
                             </td>
                             <td>
-                                {{member.contri_w_int}}
-                            </td>
+                                {% if member.contri_w_int == "" %}
+                                0
+                                {% else %}
+                                {{ member.contri_w_int }}
+                                {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>

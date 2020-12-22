@@ -4,19 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/css/font-awesome.css" />
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/jquery-ui.css" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/chart.css" />
 
 </head>
 
 <body>
 
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <strong>Savings</strong>
+          </a>
+          <nav class="my-2 my-md-0 mr-md-3">
+            {% if current_user %}
+               
+                <a class="p-2 text-white" class="nav-link" href="/">Home</a>
+                        
+                    {% if current_user.access_rights == 2%}
+                        
+                        <a class="p-2 text-white" href="/home/mygroup">My Group</a>
+                        <a class="p-2 text-white" href="/contributions/index">Contribution</a>
+                        <a class="p-2 text-white" href="/borrows/index">Borrow</a>
+                        <a class="p-2 text-white" href="/summarys/index">Summary</a>
+                        
+                    {% endif %}
 
+                    {% if current_user.access_rights == 9%}
+                        
+                        <a class="p-2 text-white" href="/ControlPanel">Control Panel</a>
+                        
+                    {% endif %}
+                        <a class="p-2 text-white" href="/account/manages">Account</a>
+                        <a class="p-2 text-white" class="nav-link" href="/logout">Log Out</a>
+            {% endif %}
+          </nav>
+        </div>
+      </div>
 
     <div class="wrapper">
 
-        <!-- Sidebar -->
+        
+
+        <!-- Sidebar
         {% if current_user %}
         <nav id="sidebar">
             <div class="sidebar-header">
@@ -59,8 +92,9 @@
         </nav>
 
         {% endif %}
+         -->
         <!-- Page Content -->
-        <div class="container-fluid mb-3">
+        <div class="container mb-3">
             <div class="row header">
                 <div class="col-lg-2"></div>
                 <div class="col">
@@ -92,6 +126,7 @@
     <script src="/js/jquery-ui.js"></script>
     <script src="/js/jquery.validate.min.js"></script>
     <script src="/js/popper.min.js"></script>
+    <script src="/js/chart.bundle.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
 
     {% block javascript %}
