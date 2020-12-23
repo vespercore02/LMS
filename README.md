@@ -1,6 +1,11 @@
 # LMS
 Loan Management System
 
+Programming Language
+PHP OOP MVC
+learned from one of UDEMY course
+"Write PHP Like a Pro Build a PHP MVC Framework From Scratch"
+
 FUNCTIONS
 
 Accounts
